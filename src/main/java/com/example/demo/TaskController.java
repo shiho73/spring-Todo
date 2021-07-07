@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -80,7 +81,7 @@ public class TaskController {
 		// セッションスコープにカテゴリ情報を格納する
 		session.setAttribute("name", name);
 		session.setAttribute("userInfo", userInfo);
-		session.setAttribute("task", taskRepository.findAll());
+		mv.addObject("list", taskRepository.findAll());
 		mv.setViewName("list");
 
 	} else {
@@ -97,6 +98,8 @@ public class TaskController {
 	@RequestMapping("/list")
 	public ModelAndView list(ModelAndView mv) {
 
+		List<Task> taskList = taskRepository.findAll();
+		mv.addObject("list", taskList);
 		mv.setViewName("list");
 		return mv;
 	}
