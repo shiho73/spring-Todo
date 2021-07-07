@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -30,7 +33,6 @@ public class TaskController {
 	CategoryRepository categoryRepository;
 
 	//Groupデータベース
-
 	@Autowired
 	GroupRepository groupRepository;
 
@@ -42,22 +44,49 @@ public class TaskController {
 	//http://localhost:8080/
 	//ログイン画面
 	@RequestMapping("/")
-	public String task() {
-		// セッション情報はクリアする
+	public ModelAndView task(ModelAndView mv) {
 		session.invalidate();
-		return "top";
-	}
-
-	//ログイン実行
-	@PostMapping("/login")
-	public ModelAndView login(
-			@RequestParam("name") String name,
-			@RequestParam("pw") String pw,
-			ModelAndView mv) {
-
-		// 名前が空の場合にエラーとする
+		mv.setViewName("top");
 		return mv;
 	}
+
+	//ログインボタン押したとき
+	@PostMapping("/login")
+	public ModelAndView login(ModelAndView mv,
+			@RequestParam("name") String name,
+			@RequestParam("pw") String pw
+		) {
+
+		// 名前とパスワードが空の場合にエラーとする
+	if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
+		mv.addObject("message", "名前とパスワードを入力してください");
+		mv.setViewName("top");
+		return mv;
+	}
+
+	List<User> user = userRepository.findByName(name);
+	if (user.size() > 0) {
+		// 名前が存在したらログインOK
+		// リストの1件目をログインユーザとして取得する
+		User user1 = user.get(0);
+		session.setAttribute("userInfo", user1);
+
+		// セッションスコープにカテゴリ情報を格納する
+		session.setAttribute("task", taskRepository.findAll());
+		// top.htmlを表示する
+		mv.setViewName("list");
+		return mv;
+
+	} else {
+		// メールアドレスが見つからなかった場合はログインNG
+		// エラーメッセージをセット
+		mv.addObject("message", "入力された情報は登録されていません");
+		// index.html（ログイン）を表示する
+		mv.setViewName("top");
+		return mv;
+	}
+
+}
 
 
 	//タスク一覧
