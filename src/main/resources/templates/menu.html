@@ -1,6 +1,6 @@
 
 	<form action="/task/keyword"  method="post">
-	検索：<input type="text" name="keyword" th:value="${keyword}">
+	検索：<input type="search" name="keyword" th:value="${keyword}">
 	<input type="submit"  value="検索">
 <span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 </form>

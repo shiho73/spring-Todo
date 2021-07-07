@@ -2,9 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク登録</title>
 </head>
 <body>
+<h1>タスク登録</h1>
+	<span th:replace="menu"></span>
+
+		<form action="/new/list"  method="post">
+
+		<table border="1">
+	<tr>
+		<th>タスク名</th><td><input type="text" name="task"></td>
+	</tr>
+	<tr>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}"></td>
+ 	</tr>
+ 	<tr>
+		<th>期限</th><td><input type="datetime-local" name="task"></td>
+	</tr>
+<!-- 		<th>優先順位</th><td><input type=""></td> -->
+<!-- 		<th>カテゴリ番号</th><td><input type=""></td> -->
+<!-- 		<th>グループ番号</th><td><input type=""></td> -->
+	<tr>
+		<th>備考</th><td><textarea name="remarks" cols="40" rows="5"></textarea></td>
+	</tr>
+
+</table>
+
+<input type="reset" value="リセット">
+
+</form>
 
 </body>
 </html>

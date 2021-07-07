@@ -38,21 +38,21 @@ public class EditController {
 
 
 	//新規作成
-	@RequestMapping("/list/new")
+	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
 
 		mv.setViewName("addTask");
 		return mv;
 	}
-
-	//新規作成アクション
-	@PostMapping("/list/new")
-	public ModelAndView listnew1(ModelAndView mv) {
-
-		mv.setViewName("list");
-		return mv;
-	}
-
+//
+//	//新規作成アクション
+//	@PostMapping("/new/list")
+//	public ModelAndView listnew1(ModelAndView mv) {
+//
+//		mv.setViewName("list");
+//		return mv;
+//	}
+//
 	//編集
 	@RequestMapping("/list/edit")
 	public ModelAndView edit(ModelAndView mv) {
