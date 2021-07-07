@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.GroupRepository;
-import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class TaskController {
+public class EditController {
 
 	//保持用
 	@Autowired
@@ -39,14 +36,27 @@ public class TaskController {
 	UserRepository userRepository;
 
 
+	//新規作成
+	@RequestMapping("/list/new")
+	public ModelAndView listnew(ModelAndView mv) {
 
-	//タスク一覧
-	@RequestMapping("/list")
-	public ModelAndView list(ModelAndView mv) {
+		mv.setViewName("addTask");
+		return mv;
+	}
 
-		List<Task> taskList = taskRepository.findAll();
-		mv.addObject("list", taskList);
-		mv.setViewName("list");
+	//編集
+	@RequestMapping("/list/edit")
+	public ModelAndView edit(ModelAndView mv) {
+
+		mv.setViewName("editTask");
+		return mv;
+	}
+
+	//ゴミ箱
+	@RequestMapping("/list/trash")
+	public ModelAndView trash(ModelAndView mv) {
+
+		mv.setViewName("trash");
 		return mv;
 	}
 
