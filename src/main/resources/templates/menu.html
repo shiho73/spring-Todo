@@ -1,0 +1,10 @@
+
+	<form action="/task/keyword"  method="post">
+	商品名：<input type="text" name="keyword" th:value="${keyword}">
+	<input type="submit"  value="検索">
+<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+</form>
+	<form action="/task/update"  method="post">
+	<input type="submit"  value="更新">
+</form>
+<hr>
