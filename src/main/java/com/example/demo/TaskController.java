@@ -38,8 +38,6 @@ public class TaskController {
 	@Autowired
 	UserRepository userRepository;
 
-
-
 	//タスク一覧
 	@RequestMapping("/list")
 	public ModelAndView list(ModelAndView mv) {
@@ -49,6 +47,14 @@ public class TaskController {
 		mv.setViewName("list");
 		return mv;
 	}
+
+	//ゴミ箱へ投げる
+		@RequestMapping("/list/trash")
+		public ModelAndView listtrash(ModelAndView mv) {
+
+			mv.setViewName("list");
+			return mv;
+		}
 
 
 }

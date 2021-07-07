@@ -35,14 +35,6 @@ public class TrashController {
 	@Autowired
 	UserRepository userRepository;
 
-	//ゴミ箱へ投げる
-	@RequestMapping("/list/trash")
-	public ModelAndView listtrash(ModelAndView mv) {
-
-		mv.setViewName("list");
-		return mv;
-	}
-
 	//ゴミ箱を見る
 	@RequestMapping("/look/trash")
 	public ModelAndView looktrash(ModelAndView mv) {
