@@ -7,7 +7,6 @@
 <body>
 <h1>タスク一覧</h1>
 	<span th:replace="menu"></span>
-<form action="/list" method="post">
 
 <table border="1">
 	<tr>
@@ -21,6 +20,7 @@
 		<th>進歩度</th>
 		<th>備考</th>
 		<th>削除</th>
+		<th>編集</th>
 	</tr>
 
 	<tr th:each="list:${list}">
@@ -33,12 +33,11 @@
 		<td th:text="${list.group_id}"></td>
 		<td th:text="${list.progress}"></td>
 		<td th:text="${list.memo}"></td>
-		<td th:text="${list.trash}"></td>
+		<td><form action="/list/trash" method="post"><input type="hidden" value="${list.code}"><input type="submit" value="削除"></form></td>
+		<td><form action="/list/edit" method="post"><input type="hidden" value="${list.code}"><input type="submit" value="編集"></form></td>
 	</tr>
 
 </table>
-
-</form>
 
 </body>
 </html>
