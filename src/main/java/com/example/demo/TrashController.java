@@ -13,7 +13,7 @@ import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class EditController {
+public class TrashController {
 
 	//保持用
 	@Autowired
@@ -35,23 +35,36 @@ public class EditController {
 	@Autowired
 	UserRepository userRepository;
 
+	//ゴミ箱へ投げる
+	@RequestMapping("/list/trash")
+	public ModelAndView listtrash(ModelAndView mv) {
 
-	//新規作成
-	@RequestMapping("/list/new")
-	public ModelAndView listnew(ModelAndView mv) {
-
-		mv.setViewName("addTask");
+		mv.setViewName("list");
 		return mv;
 	}
 
-	//編集
-	@RequestMapping("/list/edit")
-	public ModelAndView edit(ModelAndView mv) {
+	//ゴミ箱を見る
+	@RequestMapping("/look/trash")
+	public ModelAndView looktrash(ModelAndView mv) {
 
-		mv.setViewName("editTask");
+		mv.setViewName("trash");
 		return mv;
 	}
 
+	//ゴミ箱から戻す
+	@RequestMapping("/trash/recovery")
+	public ModelAndView trash(ModelAndView mv) {
 
+		mv.setViewName("trash");
+		return mv;
+	}
+
+	//タスク完全消去
+	@RequestMapping("/delete")
+	public ModelAndView delete(ModelAndView mv) {
+
+		mv.setViewName("trash");
+		return mv;
+	}
 
 }
