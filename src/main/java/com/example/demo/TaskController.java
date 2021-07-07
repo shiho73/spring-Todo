@@ -4,7 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.CategoryRepository;
@@ -40,11 +42,23 @@ public class TaskController {
 	//http://localhost:8080/
 	//ログイン画面
 	@RequestMapping("/")
-	public ModelAndView task(ModelAndView mv) {
+	public String task() {
+		// セッション情報はクリアする
+		session.invalidate();
+		return "top";
+	}
 
-		mv.setViewName("top");
+	//ログイン実行
+	@PostMapping("/login")
+	public ModelAndView login(
+			@RequestParam("name") String name,
+			@RequestParam("pw") String pw,
+			ModelAndView mv) {
+
+		// 名前が空の場合にエラーとする
 		return mv;
 	}
+
 
 	//タスク一覧
 	@RequestMapping("/list")

@@ -13,11 +13,11 @@ public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer code;
-	private String task_name;
+	private String name;
 	private int user_id;
 	private String dline;
 	private int prt_num;
-	private int cg_id;
+	private int cg_code;
 	private int group_id;
 	private int progress;
 	private String memo;
@@ -27,25 +27,19 @@ public class Task {
 
 	}
 
-	public Task(Integer code, String task_name, int user_id, String dline, int prt_num, int cg_id, int group_id,
+	public Task(Integer code, String name, int user_id, String dline, int prt_num, int cg_code, int group_id,
 			int progress, String memo, boolean trash) {
 		super();
 		this.code = code;
-		this.task_name = task_name;
+		this.name = name;
 		this.user_id = user_id;
 		this.dline = dline;
 		this.prt_num = prt_num;
-		this.cg_id = cg_id;
+		this.cg_code = cg_code;
 		this.group_id = group_id;
 		this.progress = progress;
 		this.memo = memo;
 		this.trash = trash;
-	}
-
-	//ぷっしゅてすと
-	public Task(String task_name, int user_id, String dline, int prt_num, int cg_id, int group_id,
-			int progress) {
-
 	}
 
 	public Integer getCode() {
@@ -56,12 +50,12 @@ public class Task {
 		this.code = code;
 	}
 
-	public String getTask_name() {
-		return task_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setTask_name(String task_name) {
-		this.task_name = task_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getUser_id() {
@@ -88,12 +82,12 @@ public class Task {
 		this.prt_num = prt_num;
 	}
 
-	public int getCg_id() {
-		return cg_id;
+	public int getCg_code() {
+		return cg_code;
 	}
 
-	public void setCg_id(int cg_id) {
-		this.cg_id = cg_id;
+	public void setCg_code(int cg_code) {
+		this.cg_code = cg_code;
 	}
 
 	public int getGroup_id() {
