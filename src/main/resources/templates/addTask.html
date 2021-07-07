@@ -8,23 +8,43 @@
 <h1>タスク登録</h1>
 	<span th:replace="menu"></span>
 
-		<form action="/new/list"  method="post">
+		<form action="/list/add"  method="post">
 
 		<table border="1">
 	<tr>
 		<th>タスク名</th><td><input type="text" name="task"></td>
 	</tr>
 	<tr>
- 		<th>作成者</th><td th:text="${session.userInfo.name}"></td>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}" name="name"></td>
  	</tr>
  	<tr>
-		<th>期限</th><td><input type="datetime-local" name="task"></td>
+		<th>期限</th><td><input type="datetime-local" name="dline"></td>
 	</tr>
-<!-- 		<th>優先順位</th><td><input type=""></td> -->
-<!-- 		<th>カテゴリ番号</th><td><input type=""></td> -->
-<!-- 		<th>グループ番号</th><td><input type=""></td> -->
+<!-- 		<tr>
+<th>優先順位</th>
+<td><select name="prt_num">
+<option value="選択肢1">選択肢1</option>
+<option value="選択肢2">選択肢2</option>
+<option value="選択肢3">選択肢3</option>
+</select>
+</td></tr> -->
+<!-- 		<tr>
+<th>カテゴリ番号</th>
+<td><select name="cg_code">
+<option value="選択肢1">選択肢1</option>
+<option value="選択肢2">選択肢2</option>
+<option value="選択肢3">選択肢3</option>
+</select></td></tr> -->
+<!-- 		<tr>
+<th>グループ番号</th>
+<td><select name="group_id">
+<option value="選択肢1">選択肢1</option>
+<option value="選択肢2">選択肢2</option>
+<option value="選択肢3">選択肢3</option>
+</select></td></tr> -->
+ -->
 	<tr>
-		<th>備考</th><td><textarea name="remarks" cols="40" rows="5"></textarea></td>
+		<th>備考</th><td><textarea name="memo" cols="40" rows="5"></textarea></td>
 	</tr>
 
 </table>
