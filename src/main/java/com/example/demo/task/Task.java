@@ -1,5 +1,7 @@
 package com.example.demo.task;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,7 @@ public class Task {
 	private Integer code;
 	private String name;
 	private int user_id;
-	private String dline;
+	private Date dline;
 	private int prt_num;
 	private int cg_code;
 	private int group_id;
@@ -27,7 +29,7 @@ public class Task {
 
 	}
 
-	public Task(Integer code, String name, int user_id, String dline, int prt_num, int cg_code, int group_id,
+	public Task(Integer code, String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,
 			int progress, String memo, boolean trash) {
 		super();
 		this.code = code;
@@ -39,6 +41,13 @@ public class Task {
 		this.group_id = group_id;
 		this.progress = progress;
 		this.memo = memo;
+		this.trash = trash;
+	}
+
+	//ゴミ箱関係
+	public Task(Integer code,boolean trash) {
+		super();
+		this.code = code;
 		this.trash = trash;
 	}
 
@@ -66,11 +75,11 @@ public class Task {
 		this.user_id = user_id;
 	}
 
-	public String getDline() {
+	public Date getDline() {
 		return dline;
 	}
 
-	public void setDline(String dline) {
+	public void setDline(Date dline) {
 		this.dline = dline;
 	}
 
