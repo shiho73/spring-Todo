@@ -65,26 +65,30 @@ public class TaskController {
 	}
 
 	List<User> user = userRepository.findByName(name);
-	if (user.size() > 0) {
-		// 名前が存在したらログインOK
-		// リストの1件目をログインユーザとして取得する
-		User user1 = user.get(0);
-		session.setAttribute("userInfo", user1);
+
+	//ヒットしたら
+	if (!user.isEmpty()) {
+
+		User userInfo = user.get(0); //一致した名前を含むリスト取得
+
+		if (!pw.equals(userInfo.getPw())){
+			mv.addObject("message", "パスワードが違います");
+			mv.setViewName("top");
+			return mv;
+		}
 
 		// セッションスコープにカテゴリ情報を格納する
+		session.setAttribute("name", name);
+		session.setAttribute("userInfo", userInfo);
 		session.setAttribute("task", taskRepository.findAll());
-		// top.htmlを表示する
 		mv.setViewName("list");
-		return mv;
 
 	} else {
-		// メールアドレスが見つからなかった場合はログインNG
-		// エラーメッセージをセット
+		//見つからなかった場合ログインNG
 		mv.addObject("message", "入力された情報は登録されていません");
-		// index.html（ログイン）を表示する
 		mv.setViewName("top");
-		return mv;
 	}
+	return mv;
 
 }
 
