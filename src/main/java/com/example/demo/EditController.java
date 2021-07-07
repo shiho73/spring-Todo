@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,11 +45,27 @@ public class EditController {
 		return mv;
 	}
 
+	//新規作成アクション
+	@PostMapping("/list/new")
+	public ModelAndView listnew1(ModelAndView mv) {
+
+		mv.setViewName("list");
+		return mv;
+	}
+
 	//編集
 	@RequestMapping("/list/edit")
 	public ModelAndView edit(ModelAndView mv) {
 
 		mv.setViewName("editTask");
+		return mv;
+	}
+
+	//編集アクション
+	@PostMapping("/list/edit")
+	public ModelAndView edit1(ModelAndView mv) {
+
+		mv.setViewName("list");
 		return mv;
 	}
 
