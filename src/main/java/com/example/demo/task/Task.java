@@ -20,15 +20,15 @@ public class Task {
 	private int cg_id;
 	private int group_id;
 	private int progress;
-	private String nemo;
-	private boolean tash;
+	private String memo;
+	private boolean trash;
 
 	public Task() {
 
 	}
 
-	public Task(int code, String task_name, int user_id, String dline, int prt_num, int cg_id, int group_id,
-			int progress, String nemo, boolean tash) {
+	public Task(Integer code, String task_name, int user_id, String dline, int prt_num, int cg_id, int group_id,
+			int progress, String memo, boolean trash) {
 		super();
 		this.code = code;
 		this.task_name = task_name;
@@ -38,15 +38,15 @@ public class Task {
 		this.cg_id = cg_id;
 		this.group_id = group_id;
 		this.progress = progress;
-		this.nemo = nemo;
-		this.tash = tash;
+		this.memo = memo;
+		this.trash = trash;
 	}
 
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
@@ -106,20 +106,23 @@ public class Task {
 		this.progress = progress;
 	}
 
-	public String getNemo() {
-		return nemo;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setNemo(String nemo) {
-		this.nemo = nemo;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
-	public boolean isTash() {
-		return tash;
+	public boolean isTrash() {
+		return trash;
 	}
 
-	public void setTash(boolean tash) {
-		this.tash = tash;
+	public void setTrash(boolean trash) {
+		this.trash = trash;
 	}
+
+
+
 
 }

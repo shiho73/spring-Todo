@@ -11,19 +11,29 @@
 
 <table border="1">
 	<tr>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
+		<th>タスク番号</th>
+		<th>タスク名</th>
+		<th>作成者</th>
+		<th>期限</th>
+		<th>優先順位</th>
+		<th>カテゴリ番号</th>
+		<th>グループ番号</th>
+		<th>進歩度</th>
+		<th>備考</th>
+		<th>削除</th>
 	</tr>
-	<tr th:each="item:${items}">
-		<td th:text="${item.code}"></td>
-		<td th:text="${item.name}"></td>
-		<td th:text="${item.price}"></td>
 
+	<tr th:each="list:${task}">
+		<td th:text="${list.code}"></td>
+		<td th:text="${list.task_name}"></td>
+		<td th:text="${list.user_id}"></td>
+		<td th:text="${list.dline}"></td>
+		<td th:text="${list.prt_num}"></td>
+		<td th:text="${list.cg_id}"></td>
+		<td th:text="${list.group_id}"></td>
+		<td th:text="${list.progress}"></td>
+		<td th:text="${list.memo}"></td>
+		<td th:text="${list.trash}"></td>
 	</tr>
 
 

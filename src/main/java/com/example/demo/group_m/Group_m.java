@@ -12,30 +12,36 @@ public class Group_m {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer code;
+	private Integer group_id;
 	private String member;
 
-	public Group_m(Integer code, String member) {
+
+	public Group_m(Integer group_id, String member) {
 		super();
-		this.code = code;
+		this.group_id = group_id;
 		this.member = member;
 	}
 
-	public Integer getCode() {
-		return code;
+
+	public Integer getGroup_id() {
+		return group_id;
 	}
 
-	public void setCode(Integer code) {
-		this.code = code;
+
+	public void setGroup_id(Integer group_id) {
+		this.group_id = group_id;
 	}
+
 
 	public String getMember() {
 		return member;
 	}
 
+
 	public void setMember(String member) {
 		this.member = member;
 	}
+
 
 
 }
