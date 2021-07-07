@@ -1,4 +1,4 @@
-package com.example.demo.category;
+package com.example.demo.priority;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,30 +7,30 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="t_category")
-public class Category {
+@Table(name="t_priority")
+public class Priority {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer code;
+	private Integer num;
 	private String name;
 
-	public Category() {
+	public Priority() {
 
 	}
 
-	public Category(Integer code, String name) {
+	public Priority(Integer num, String name) {
 		super();
-		this.code = code;
+		this.num = num;
 		this.name = name;
 	}
 
-	public Integer getCode() {
-		return code;
+	public Integer getNum() {
+		return num;
 	}
 
-	public void setCode(Integer code) {
-		this.code = code;
+	public void setNum(Integer num) {
+		this.num = num;
 	}
 
 	public String getName() {
@@ -40,6 +40,7 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 
 

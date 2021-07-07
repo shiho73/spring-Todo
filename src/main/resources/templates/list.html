@@ -2,9 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク管理</title>
 </head>
 <body>
+<h1>タスク一覧</h1>
+
+<form action="" method="post">
+
+<table border="1">
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr th:each="item:${items}">
+		<td th:text="${item.code}"></td>
+		<td th:text="${item.name}"></td>
+		<td th:text="${item.price}"></td>
+
+	</tr>
+
+
+</table>
+
+</form>
 
 </body>
 </html>

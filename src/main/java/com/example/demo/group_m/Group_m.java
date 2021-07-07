@@ -1,4 +1,4 @@
-package com.example.demo.category;
+package com.example.demo.group_m;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,22 +7,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="t_category")
-public class Category {
+@Table(name="t_group_m")
+public class Group_m {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer code;
-	private String name;
+	private String member;
 
-	public Category() {
-
-	}
-
-	public Category(Integer code, String name) {
+	public Group_m(Integer code, String member) {
 		super();
 		this.code = code;
-		this.name = name;
+		this.member = member;
 	}
 
 	public Integer getCode() {
@@ -33,14 +29,13 @@ public class Category {
 		this.code = code;
 	}
 
-	public String getName() {
-		return name;
+	public String getMember() {
+		return member;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMember(String member) {
+		this.member = member;
 	}
-
 
 
 }
