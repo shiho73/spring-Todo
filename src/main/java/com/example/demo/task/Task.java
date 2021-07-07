@@ -42,6 +42,12 @@ public class Task {
 		this.trash = trash;
 	}
 
+	//ぷっしゅてすと
+	public Task(String task_name, int user_id, String dline, int prt_num, int cg_id, int group_id,
+			int progress) {
+
+	}
+
 	public Integer getCode() {
 		return code;
 	}
