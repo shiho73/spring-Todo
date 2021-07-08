@@ -3,11 +3,13 @@ package com.example.demo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +42,38 @@ public class TrashController {
 	//Userデータベース
 	@Autowired
 	UserRepository userRepository;
+
+	//編集
+		@RequestMapping("/list/edit")
+		public ModelAndView edit(
+				@RequestParam("CODE") int code,
+				ModelAndView mv) {
+			Task task = null;
+
+			Optional<Task> recode = taskRepository.findById(code);
+
+			if (recode.isEmpty() == false) {
+				task = recode.get();
+			}
+
+			mv.addObject("task", task);
+
+			mv.setViewName("editTask");
+			return mv;
+		}
+
+		//編集アクション
+		@PostMapping("/list/edit")
+		public ModelAndView edit1(ModelAndView mv) {
+
+			mv.setViewName("list");
+			return mv;
+		}
+
+
+
+
+
 
 	//ゴミ箱へ投げる
 	@RequestMapping("/list/trash")

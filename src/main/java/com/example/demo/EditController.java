@@ -2,14 +2,12 @@ package com.example.demo;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,7 +61,7 @@ public class EditController {
 			@RequestParam("memo") String memo
 ) {
 
-		//Task.javaに記述する予定
+		//Task.javaに記述する予定・
 		//新しく追加
 		Task tasklist = new Task(name,user_id,dline, prt_num, cg_code,group_id,memo);
 		taskRepository.saveAndFlush(tasklist);
@@ -74,33 +72,6 @@ public class EditController {
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
 
-
-		mv.setViewName("list");
-		return mv;
-	}
-
-	//編集
-	@RequestMapping("/list/edit")
-	public ModelAndView edit(
-			@RequestParam("CODE") int code,
-			ModelAndView mv) {
-		Task task = null;
-
-		Optional<Task> recode = taskRepository.findById(code);
-
-		if (recode.isEmpty() == false) {
-			task = recode.get();
-		}
-
-		mv.addObject("task", task);
-
-		mv.setViewName("editTask");
-		return mv;
-	}
-
-	//編集アクション
-	@PostMapping("/list/edit")
-	public ModelAndView edit1(ModelAndView mv) {
 
 		mv.setViewName("list");
 		return mv;
