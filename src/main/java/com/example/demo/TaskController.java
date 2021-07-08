@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.CategoryRepository;
@@ -23,31 +25,28 @@ public class TaskController {
 	@Autowired
 	HttpSession session;
 
-	//Taskデータベース
+	//Taskテーブル
 	@Autowired
 	TaskRepository taskRepository;
 
-	//Categoryデータベース
+	//Categoryテーブル
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	//Groupデータベース
+	//Groupテーブル
 	@Autowired
 	GroupRepository groupRepository;
 
-	//Userデータベース
+	//Userテーブル
 	@Autowired
 	UserRepository userRepository;
 
-	//タスク一覧
+	//タスク一覧を表示
 	@RequestMapping("/list")
-	public ModelAndView list(ModelAndView mv) {
+	public ModelAndView lookList(ModelAndView mv) {
 
-		//空の表示用リストを生成
-		ArrayList<Task> list = new ArrayList<Task>();
-
-		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findAll();
+		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
+		List<Task> taskList = taskRepository.findAll(); //全てのタスクを取得
 
 		//ゴミ箱に入れていなければ、表示するリストに追加
 		for (Task task : taskList) {
@@ -56,21 +55,18 @@ public class TaskController {
 			}
 		}
 
-		mv.addObject("list", list);
+		mv.addObject("list", list); //表示用オブジェクトを設定
 
-		//タスク一覧画面に遷移
-		mv.setViewName("list");
+		mv.setViewName("list");//タスク一覧画面に遷移
 		return mv;
 	}
 
 	//ゴミ箱を見る
 	@RequestMapping("/look/trash")
-	public ModelAndView looktrash(ModelAndView mv) {
-		//空の表示用リストを生成
-		ArrayList<Task> list = new ArrayList<Task>();
+	public ModelAndView lookTrash(ModelAndView mv) {
 
-		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findAll();
+		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
+		List<Task> taskList = taskRepository.findAll(); //全てのタスクを取得
 
 		//ゴミ箱に入れていれば、表示するリストに追加
 		for (Task task : taskList) {
@@ -79,12 +75,10 @@ public class TaskController {
 			}
 		}
 
-		//リストが空であれば、メッセージを表示
-		//リストの中身があれば、リストを表示
 		if (list.isEmpty() == true) {
-			mv.addObject("message", "ゴミ箱は空です");
+			mv.addObject("message", "ゴミ箱は空です"); //リストが空であれば、メッセージを表示
 		} else {
-			mv.addObject("list", list);
+			mv.addObject("list", list); //リストの中身があれば、リストを表示
 		}
 
 		//ゴミ箱画面に遷移
@@ -92,119 +86,53 @@ public class TaskController {
 		return mv;
 	}
 
-	//並べ替え関係
-	@RequestMapping("/order/code")
-	public ModelAndView orderCode(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
+	//ゴミ箱へ投げる
+	@RequestMapping("/list/trash")
+	public ModelAndView goTrash(
+			@RequestParam(name = "code") int code,
+			@RequestParam(name = "name") String name,
+			@RequestParam(name = "userId") int userId,
+			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "prtNum") int prtNum,
+			@RequestParam(name = "cgCode") int cgCode,
+			@RequestParam(name = "groupId") int groupId,
+			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "memo") String memo,
+			ModelAndView mv) {
+
+		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, false);
+		taskRepository.saveAndFlush(task);
+
+		return lookList(mv);
 	}
 
-	@RequestMapping("/order/taskName")
-	public ModelAndView orderTaskName(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByNameAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
+	//ゴミ箱から戻す
+	@RequestMapping("/trash/recovery")
+	public ModelAndView trash(
+			@RequestParam(name = "code") int code,
+			@RequestParam(name = "name") String name,
+			@RequestParam(name = "userId") int userId,
+			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "prtNum") int prtNum,
+			@RequestParam(name = "cgCode") int cgCode,
+			@RequestParam(name = "groupId") int groupId,
+			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "memo") String memo,
+			ModelAndView mv) {
+
+		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
+		taskRepository.saveAndFlush(task);
+
+		return lookTrash(mv);
 	}
 
-	@RequestMapping("/order/userId")
-	public ModelAndView orderUserId(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByUserIdAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
+	//タスク完全消去
+	@RequestMapping("/delete")
+	public ModelAndView delete(
+			@RequestParam(name = "code") int code,
+			ModelAndView mv) {
+		taskRepository.deleteById(code); //コードで指定したタスクを消去
+		return lookTrash(mv);
 	}
-
-	@RequestMapping("/order/deadline")
-	public ModelAndView orderDline(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByDlineAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
-
-	@RequestMapping("/order/priority")
-	public ModelAndView orderPriority(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByPrtNumAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
-
-	@RequestMapping("/order/category")
-	public ModelAndView orderCategory(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByCgCodeAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
-
-	@RequestMapping("/order/groupId")
-	public ModelAndView orderGroupId(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByGroupIdAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
-
-	@RequestMapping("/order/progress")
-	public ModelAndView orderProgress(ModelAndView mv) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findByOrderByProgressAsc();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
-
-
 
 }
