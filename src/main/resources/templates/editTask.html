@@ -28,30 +28,30 @@
 
 	<tr>
 		<th>優先順位</th>
-	<td><select name="prt_num">
-			<option value="1" th:selected="${task.prt_num==1}">高</option>
-			<option value="2" th:selected="${task.prt_num==2}">中</option>
-			<option value="3" th:selected="${task.prt_num==3}">低</option>
+	<td><select name="prtNum">
+			<option value="1" th:selected="${task.prtNum==1}">高</option>
+			<option value="2" th:selected="${task.prtNum==2}">中</option>
+			<option value="3" th:selected="${task.prtNum==3}">低</option>
 		</select>
 	</td>
 	</tr>
 
 	<tr>
 		<th>カテゴリ番号</th>
-	<td><select name="cg_code">
-		<option value="1" th:selected="${task.cg_code==1}">家事</option>
-		<option value="2" th:selected="${task.cg_code==2}">仕事</option>
-		<option value="3" th:selected="${task.cg_code==3}">勉強</option>
+	<td><select name="cgCode">
+		<option value="1" th:selected="${task.cgCode==1}">家事</option>
+		<option value="2" th:selected="${task.cgCode==2}">仕事</option>
+		<option value="3" th:selected="${task.cgCode==3}">勉強</option>
 		</select>
 	</td>
 	</tr>
 
 	<tr>
 		<th>グループ番号</th>
-		<td><select name="group_id">
-			<option value="1" th:selected="${task.group_id==1}">1班</option>
-			<option value="2" th:selected="${task.group_id==2}">2班</option>
-			<option value="3" th:selected="${task.group_id==3}">3班</option>
+		<td><select name="groupId">
+			<option value="1" th:selected="${task.groupId==1}">1班</option>
+			<option value="2" th:selected="${task.groupId==2}">2班</option>
+			<option value="3" th:selected="${task.groupId==3}">3班</option>
 			</select>
 		</td>
 	</tr>

@@ -1,5 +1,6 @@
 package com.example.demo.group_m;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,36 +13,34 @@ public class Group_m {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer group_id;
+	@Column(name="user_id")
+	private Integer groupId;
 	private String member;
 
+	public Group_m() {
 
-	public Group_m(Integer group_id, String member) {
+	}
+
+	public Group_m(Integer groupId, String member) {
 		super();
-		this.group_id = group_id;
+		this.groupId = groupId;
 		this.member = member;
 	}
 
-
-	public Integer getGroup_id() {
-		return group_id;
+	public Integer getGroupId() {
+		return groupId;
 	}
 
-
-	public void setGroup_id(Integer group_id) {
-		this.group_id = group_id;
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
 	}
-
 
 	public String getMember() {
 		return member;
 	}
 
-
 	public void setMember(String member) {
 		this.member = member;
 	}
-
-
 
 }

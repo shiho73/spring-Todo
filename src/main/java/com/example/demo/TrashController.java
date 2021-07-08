@@ -47,16 +47,16 @@ public class TrashController {
 	public ModelAndView listtrash(
 			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
-			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "userId") int userId,
 			@RequestParam(name = "dline") Date dline,
-			@RequestParam(name = "prt_num") int prt_num,
-			@RequestParam(name = "cg_code") int cg_code,
-			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "prtNum") int prtNum,
+			@RequestParam(name = "cgCode") int cgCode,
+			@RequestParam(name = "groupId") int groupId,
 			@RequestParam(name = "progress") int progress,
 			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
-		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, false);
+		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, false);
 		taskRepository.saveAndFlush(task);
 
 		//空の表示用リストを生成
@@ -89,16 +89,16 @@ public class TrashController {
 	public ModelAndView trash(
 			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
-			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "userId") int userId,
 			@RequestParam(name = "dline") Date dline,
-			@RequestParam(name = "prt_num") int prt_num,
-			@RequestParam(name = "cg_code") int cg_code,
-			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "prtNum") int prtNum,
+			@RequestParam(name = "cgCode") int cgCode,
+			@RequestParam(name = "groupId") int groupId,
 			@RequestParam(name = "progress") int progress,
 			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
-		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, true);
+		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
 		taskRepository.saveAndFlush(task);
 
 		//空の表示用リストを生成

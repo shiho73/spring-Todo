@@ -55,15 +55,15 @@ public class EditController {
 	@PostMapping("/list/add")
 	public ModelAndView listnew1(ModelAndView mv,
 			@RequestParam("name") String name,
-			@RequestParam("user_id") int user_id,
+			@RequestParam("userId") int userId,
 			@RequestParam("dline") Date dline,
-			@RequestParam("prt_num") int prt_num,
-			@RequestParam("cg_code") int cg_code,
-			@RequestParam("group_id") int group_id,
+			@RequestParam("prtNum") int prtNum,
+			@RequestParam("cgCode") int cgCode,
+			@RequestParam("groupId") int groupId,
 			@RequestParam("memo") String memo) {
 
 		//新しく追加
-		Task tasklist = new Task(name, user_id, dline, prt_num, cg_code, group_id, memo, true);
+		Task tasklist = new Task(name, userId, dline, prtNum, cgCode, groupId, memo, true);
 		taskRepository.saveAndFlush(tasklist);
 
 		//すべてのリスト取得
@@ -101,16 +101,16 @@ public class EditController {
 	public ModelAndView edit1(
 			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
-			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "userId") int userId,
 			@RequestParam(name = "dline") Date dline,
-			@RequestParam(name = "prt_num") int prt_num,
-			@RequestParam(name = "cg_code") int cg_code,
-			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "prtNum") int prtNum,
+			@RequestParam(name = "cgCode") int cgCode,
+			@RequestParam(name = "groupId") int groupId,
 			@RequestParam(name = "progress") int progress,
 			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
-		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, true);
+		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
 		taskRepository.saveAndFlush(task);
 
 		//空の表示用リストを生成
