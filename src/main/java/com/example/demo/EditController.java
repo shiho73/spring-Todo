@@ -61,10 +61,10 @@ public class EditController {
 			@RequestParam("memo") String memo
 ) {
 
-		//Task.javaに記述する予定・
 		//新しく追加
 		Task tasklist = new Task(name,user_id,dline, prt_num, cg_code,group_id,memo);
 		taskRepository.saveAndFlush(tasklist);
+
 
 		//すべてのリスト取得
 		List<Task> taskList = taskRepository.findAll();

@@ -9,7 +9,7 @@
 	<span th:replace="menu"></span>
 
 	<form action="/task/update"  method="post">
-		<input type="hidden" name="CODE" th:value="${list.code}">
+<!-- 		<input type="hidden" name="CODE" th:value="${list.code}"> -->
 	<input type="submit"  value="更新">
 </form>
 	<form action="/look/trash"  method="post">
@@ -42,7 +42,7 @@
 		<td th:text="${list.prt_num}"></td>
 		<td th:text="${list.cg_code}"></td>
 		<td th:text="${list.group_id}"></td>
-		<td th:text="${list.progress}"></td>
+		<td ><input th:text="${list.progress}" type="range"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
