@@ -90,7 +90,7 @@ public class EditController {
 			@RequestParam("name") String name,
 			ModelAndView mv
 			) {
-		Task tasklist = new Task(name, userId, dline, prtNum, cgCode, groupId, memo, true);
+		Category categoryList = new Category(name);
 
 		List<Category> categoryList = categoryRepository.findAll();
 		mv.addObject("list", categoryList);
