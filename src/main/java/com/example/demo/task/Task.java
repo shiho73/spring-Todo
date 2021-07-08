@@ -2,6 +2,7 @@ package com.example.demo.task;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,9 +17,15 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer code;
 	private String name;
+
+//	@Column(name="user_id")
 	private int user_id;
+
 	private Date dline;
-	private int prt_num;
+
+	@Column(name="prt_num")
+	private int prtNum;
+
 	private int cg_code;
 	private int group_id;
 	private int progress;
@@ -35,7 +42,7 @@ public class Task {
 		this.name = name;
 		this.user_id = user_id;
 		this.dline = dline;
-		this.prt_num = prt_num;
+		this.prtNum = prt_num;
 		this.cg_code = cg_code;
 		this.group_id = group_id;
 		this.memo = memo;
@@ -49,7 +56,7 @@ public class Task {
 		this.name = name;
 		this.user_id = user_id;
 		this.dline = dline;
-		this.prt_num = prt_num;
+		this.prtNum = prt_num;
 		this.cg_code = cg_code;
 		this.group_id = group_id;
 		this.progress = progress;
@@ -96,12 +103,12 @@ public class Task {
 		this.dline = dline;
 	}
 
-	public int getPrt_num() {
-		return prt_num;
+	public int getPrtNum() {
+		return prtNum;
 	}
 
-	public void setPrt_num(int prt_num) {
-		this.prt_num = prt_num;
+	public void setPrtNum(int prt_num) {
+		this.prtNum = prt_num;
 	}
 
 	public int getCg_code() {

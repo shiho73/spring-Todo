@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer>{
-	List<Task> findAllByOrderByCodeAsc();
+	List<Task> findByOrderByCodeAsc();
+	List<Task> findByOrderByPrtNumAsc();
 }

@@ -50,8 +50,8 @@ public class TaskController {
 		List<Task> taskList = taskRepository.findAll();
 
 		//ゴミ箱に入れていなければ、表示するリストに追加
-		for(Task task : taskList) {
-			if(task.isTrash() == true) {
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
 				list.add(task);
 			}
 		}
@@ -63,23 +63,6 @@ public class TaskController {
 		return mv;
 	}
 
-	//タスク一覧
-		@RequestMapping("/order/code")
-		public ModelAndView orderCode(ModelAndView mv) {
-			ArrayList<Task> list = new ArrayList<Task>();
-			List<Task> taskList = taskRepository.findAllByOrderByCodeAsc();
-			for(Task task : taskList) {
-				if(task.isTrash() == true) {
-					list.add(task);
-				}
-			}
-			mv.addObject("list", list);
-			mv.setViewName("list");
-			return mv;
-		}
-
-
-
 	//ゴミ箱を見る
 	@RequestMapping("/look/trash")
 	public ModelAndView looktrash(ModelAndView mv) {
@@ -90,15 +73,15 @@ public class TaskController {
 		List<Task> taskList = taskRepository.findAll();
 
 		//ゴミ箱に入れていれば、表示するリストに追加
-		for(Task task : taskList) {
-			if(task.isTrash() == false) {
+		for (Task task : taskList) {
+			if (task.isTrash() == false) {
 				list.add(task);
 			}
 		}
 
 		//リストが空であれば、メッセージを表示
 		//リストの中身があれば、リストを表示
-		if(list.isEmpty() == true) {
+		if (list.isEmpty() == true) {
 			mv.addObject("message", "ゴミ箱は空です");
 		} else {
 			mv.addObject("list", list);
@@ -106,6 +89,35 @@ public class TaskController {
 
 		//ゴミ箱画面に遷移
 		mv.setViewName("trash");
+		return mv;
+	}
+
+	//並べ替え関係
+	@RequestMapping("/order/code")
+	public ModelAndView orderCode(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	@RequestMapping("/order/priority")
+	public ModelAndView orderPriority(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByPrtNumAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
 		return mv;
 	}
 
