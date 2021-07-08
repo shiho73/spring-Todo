@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -69,7 +71,22 @@ public class UserController {
 		// セッションスコープにカテゴリ情報を格納する
 		session.setAttribute("name", name);
 		session.setAttribute("userInfo", userInfo);
-		mv.addObject("list", taskRepository.findAll());
+
+		//空の表示用リストを生成
+				ArrayList<Task> list = new ArrayList<Task>();
+
+				//全てのタスクを取得
+				List<Task> taskList = taskRepository.findAll();
+
+				//ゴミ箱に入れていなければ、表示するリストに追加
+				for(Task task : taskList) {
+					if(task.isTrash() == true) {
+						list.add(task);
+					}
+				}
+
+
+					mv.addObject("list", list);
 		mv.setViewName("list");
 
 	} else {
