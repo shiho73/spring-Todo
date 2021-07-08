@@ -114,7 +114,24 @@ public class TrashController {
 
 	//タスク完全消去
 	@RequestMapping("/delete")
-	public ModelAndView delete(ModelAndView mv) {
+	public ModelAndView delete(
+			@RequestParam(name="code") int code,
+			ModelAndView mv) {
+
+		taskRepository.deleteById(code);
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findAll();
+
+		//ゴミ箱に入れていなければ、表示するリストに追加
+		for(Task task1 : taskList) {
+			if(task1.isTrash() == false) {
+				list.add(task1);
+			}
+		}
 
 		mv.setViewName("trash");
 		return mv;
