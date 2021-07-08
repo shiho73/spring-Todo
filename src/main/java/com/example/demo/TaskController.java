@@ -107,6 +107,48 @@ public class TaskController {
 		return mv;
 	}
 
+	@RequestMapping("/order/taskName")
+	public ModelAndView orderTaskName(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByNameAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	@RequestMapping("/order/userId")
+	public ModelAndView orderUserId(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByUserIdAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	@RequestMapping("/order/deadline")
+	public ModelAndView orderDline(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByDlineAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
 	@RequestMapping("/order/priority")
 	public ModelAndView orderPriority(ModelAndView mv) {
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -120,5 +162,49 @@ public class TaskController {
 		mv.setViewName("list");
 		return mv;
 	}
+
+	@RequestMapping("/order/category")
+	public ModelAndView orderCategory(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByCgCodeAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	@RequestMapping("/order/groupId")
+	public ModelAndView orderGroupId(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByGroupIdAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	@RequestMapping("/order/progress")
+	public ModelAndView orderProgress(ModelAndView mv) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findByOrderByProgressAsc();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+
 
 }

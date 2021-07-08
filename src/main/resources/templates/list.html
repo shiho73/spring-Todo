@@ -22,13 +22,13 @@
 <table border="1">
 	<tr>
 		<td><a href="/order/code">番号順</a></td>
-		<td><a href="/order/taskname">名前順</a></td>
-		<td><a href="/order/userid">作成者順</a></td>
+		<td><a href="/order/taskName">名前順</a></td>
+		<td><a href="/order/userId">作成者順</a></td>
 		<td><a href="/order/deadline">期限順</a></td>
 		<td><a href="/order/priority">優先度順</a></td>
 		<td><a href="/order/category">カテゴリ順</a></td>
-		<td><a href="/order/group">グループ順</a></td>
-		<td><a href="/order/progress"></a></td>
+		<td><a href="/order/groupId">グループ順</a></td>
+		<td><a href="/order/progress">進捗度順</a></td>
 		<td></td>
 		<td></td><td></td>
 	</tr>
@@ -49,21 +49,21 @@
 	<tr th:each="list:${list}">
 		<td th:text="${list.code}"></td>
 		<td th:text="${list.name}"></td>
-		<td th:text="${list.user_id}"></td>
+		<td th:text="${list.userId}"></td>
 		<td th:text="${list.dline}"></td>
-		<td th:text="${list.prt_num}"></td>
-		<td th:text="${list.cg_code}"></td>
-		<td th:text="${list.group_id}"></td>
+		<td th:text="${list.prtNum}"></td>
+		<td th:text="${list.cgCode}"></td>
+		<td th:text="${list.groupId}"></td>
 		<td><input th:text="${list.progress}" type="range"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
 				<input type="hidden" th:value="${list.name}" name="name">
-				<input type="hidden" th:value="${list.user_id}" name="user_id">
+				<input type="hidden" th:value="${list.userId}" name="userId">
 				<input type="hidden" th:value="${list.dline}" name="dline">
-				<input type="hidden" th:value="${list.prt_num}" name="prt_num">
-				<input type="hidden" th:value="${list.cg_code}" name="cg_code">
-				<input type="hidden" th:value="${list.group_id}" name="group_id">
+				<input type="hidden" th:value="${list.prtNum}" name="prtNum">
+				<input type="hidden" th:value="${list.cgCode}" name="cgCode">
+				<input type="hidden" th:value="${list.groupId}" name="groupId">
 				<input type="hidden" th:value="${list.progress}" name="progress">
 				<input type="hidden" th:value="${list.memo}" name="memo">
 				<input type="submit" value="削除">

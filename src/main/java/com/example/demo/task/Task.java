@@ -18,16 +18,20 @@ public class Task {
 	private Integer code;
 	private String name;
 
-//	@Column(name="user_id")
-	private int user_id;
+	@Column(name="user_id")
+	private int userId;
 
 	private Date dline;
 
 	@Column(name="prt_num")
 	private int prtNum;
 
-	private int cg_code;
-	private int group_id;
+	@Column(name="cg_code")
+	private int cgCode;
+
+	@Column(name="group_id")
+	private int groupId;
+
 	private int progress;
 	private String memo;
 	private boolean trash;
@@ -40,11 +44,11 @@ public class Task {
 	public Task(String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,String memo, boolean trash) {
 		super();
 		this.name = name;
-		this.user_id = user_id;
+		this.userId = user_id;
 		this.dline = dline;
 		this.prtNum = prt_num;
-		this.cg_code = cg_code;
-		this.group_id = group_id;
+		this.cgCode = cg_code;
+		this.groupId = group_id;
 		this.memo = memo;
 		this.trash = trash;
 	}
@@ -54,11 +58,11 @@ public class Task {
 		super();
 		this.code = code;
 		this.name = name;
-		this.user_id = user_id;
+		this.userId = user_id;
 		this.dline = dline;
 		this.prtNum = prt_num;
-		this.cg_code = cg_code;
-		this.group_id = group_id;
+		this.cgCode = cg_code;
+		this.groupId = group_id;
 		this.progress = progress;
 		this.memo = memo;
 		this.trash = trash;
@@ -87,12 +91,12 @@ public class Task {
 		this.name = name;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int user_id) {
+		this.userId = user_id;
 	}
 
 	public Date getDline() {
@@ -111,20 +115,20 @@ public class Task {
 		this.prtNum = prt_num;
 	}
 
-	public int getCg_code() {
-		return cg_code;
+	public int getCgCode() {
+		return cgCode;
 	}
 
-	public void setCg_code(int cg_code) {
-		this.cg_code = cg_code;
+	public void setCgCode(int cg_code) {
+		this.cgCode = cg_code;
 	}
 
-	public int getGroup_id() {
-		return group_id;
+	public int getGroupId() {
+		return groupId;
 	}
 
-	public void setGroup_id(int group_id) {
-		this.group_id = group_id;
+	public void setGroupId(int group_id) {
+		this.groupId = group_id;
 	}
 
 	public int getProgress() {
