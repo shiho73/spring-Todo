@@ -43,7 +43,17 @@
 		<td th:text="${list.group_id}"></td>
 		<td th:text="${list.progress}"></td>
 		<td th:text="${list.memo}"></td>
-		<td><form action="/list/trash" method="post"><input type="hidden" value="${list.code}"><input type="submit" value="削除"></form></td>
+		<td><form action="/list/trash" method="post">
+				<input type="hidden" value="${list.code}" name="code">
+				<input type="hidden" value="${list.name}" name="name">
+				<input type="hidden" value="${list.user_id}" name="user_id">
+				<input type="hidden" value="${list.dline}" name="dline">
+				<input type="hidden" value="${list.prt_num}" name="prt_num">
+				<input type="hidden" value="${list.cg_code}" name="cg_code">
+				<input type="hidden" value="${list.group_id}" name="group_id">
+				<input type="hidden" value="${list.progress}" name="progress">
+				<input type="hidden" value="${list.memo}" name="memo">
+				<input type="submit" value="削除"></form></td>
 		<td><form action="/list/edit" method="post"><input type="hidden" value="${list.code}"><input type="submit" value="編集"></form></td>
 	</tr>
 
