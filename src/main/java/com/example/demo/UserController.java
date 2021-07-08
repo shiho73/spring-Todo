@@ -123,10 +123,20 @@ public class UserController {
 		return mv;
 	}
 
+	List<User> user = userRepository.findByName(name);
+
+	//同じ名前がヒットしたら
+	if (!user.isEmpty()) {
+
+			mv.addObject("message", "既にその名前は登録されています");
+			mv.setViewName("newUser");
+			return mv;
+		}else {
+
 	if(pw.equals(pw1)) {
 		//t_user新しく追加
-		User user = new User(name,pw);
-		userRepository.saveAndFlush(user);
+		User user1 = new User(name,pw);
+		userRepository.saveAndFlush(user1);
 
 		List<User> userList = userRepository.findAll();
 		mv.addObject("user", userList);
@@ -138,6 +148,7 @@ public class UserController {
 
 		mv.addObject("message", "パスワードが一致していません");
 		mv.setViewName("newUser");
+		}
 	}
 	return mv;
 }
