@@ -92,7 +92,7 @@ public class EditController {
 			) {
 		Category categoryList = new Category(name);
 
-		List<Category> categoryList = categoryRepository.findAll();
+		List<Category> categoryList1 = categoryRepository.findAll();
 		mv.addObject("list", categoryList);
 
 		mv.setViewName("addTask");
