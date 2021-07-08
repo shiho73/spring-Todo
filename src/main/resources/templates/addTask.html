@@ -12,37 +12,47 @@
 
 		<table border="1">
 	<tr>
-		<th>タスク名</th><td><input type="text" name="task"></td>
+		<th>タスク名</th><td><input type="text" name="name"></td>
 	</tr>
+
 	<tr>
- 		<th>作成者</th><td th:text="${session.userInfo.name}" name="name"></td>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}" name="user_id"></td>
  	</tr>
+
  	<tr>
-		<th>期限</th><td><input type="datetime-local" name="dline"></td>
+		<th>期限</th><td><input type="date" name="dline"></td>
 	</tr>
-<!-- 		<tr>
-<th>優先順位</th>
-<td><select name="prt_num">
-<option value="選択肢1">選択肢1</option>
-<option value="選択肢2">選択肢2</option>
-<option value="選択肢3">選択肢3</option>
-</select>
-</td></tr> -->
-<!-- 		<tr>
-<th>カテゴリ番号</th>
-<td><select name="cg_code">
-<option value="選択肢1">選択肢1</option>
-<option value="選択肢2">選択肢2</option>
-<option value="選択肢3">選択肢3</option>
-</select></td></tr> -->
-<!-- 		<tr>
-<th>グループ番号</th>
-<td><select name="group_id">
-<option value="選択肢1">選択肢1</option>
-<option value="選択肢2">選択肢2</option>
-<option value="選択肢3">選択肢3</option>
-</select></td></tr> -->
- -->
+
+	<tr>
+		<th>優先順位</th>
+	<td><select name="prt_num">
+			<option value="高">高</option>
+			<option value="中">中</option>
+			<option value="低">低</option>
+		</select>
+	</td>
+	</tr>
+
+	<tr>
+		<th>カテゴリ番号</th>
+	<td><select name="cg_code">
+		<option value="1">家事</option>
+		<option value="2">仕事</option>
+		<option value="3">勉強</option>
+		</select>
+	</td>
+	</tr>
+
+	<tr>
+		<th>グループ番号</th>
+		<td><select name="group_id">
+			<option value="1">1班</option>
+			<option value="2">2班</option>
+			<option value="3">3班</option>
+			</select>
+		</td>
+	</tr>
+
 	<tr>
 		<th>備考</th><td><textarea name="memo" cols="40" rows="5"></textarea></td>
 	</tr>
@@ -50,7 +60,10 @@
 </table>
 
 <input type="reset" value="リセット">
-
+<br>
+	<input type="submit"  value="新規作成">
+	<br>
+<a href="list">タスク一覧へ</a>
 </form>
 
 </body>

@@ -29,6 +29,18 @@ public class Task {
 
 	}
 
+	//新規アクション関係
+	public Task(String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,String memo) {
+		super();
+		this.name = name;
+		this.user_id = user_id;
+		this.dline = dline;
+		this.prt_num = prt_num;
+		this.cg_code = cg_code;
+		this.group_id = group_id;
+		this.memo = memo;
+	}
+
 	public Task(Integer code, String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,
 			int progress, String memo, boolean trash) {
 		super();

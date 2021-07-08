@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -52,18 +53,18 @@ public class EditController {
 	//新規作成アクション
 	@PostMapping("/list/add")
 	public ModelAndView listnew1(ModelAndView mv,
-			@RequestParam("task") String task,
 			@RequestParam("name") String name,
-			@RequestParam("dline") String dline,
+			@RequestParam("user_id") int user_id,
+			@RequestParam("dline") Date dline,
 			@RequestParam("prt_num") int prt_num,
-			@RequestParam("cg_code") int dlicg_codene,
+			@RequestParam("cg_code") int cg_code,
 			@RequestParam("group_id") int group_id,
 			@RequestParam("memo") String memo
 ) {
 
 		//Task.javaに記述する予定
 		//新しく追加
-		Task tasklist = new Task(task,name,dline, prt_num, dlicg_codene,group_id,memo);
+		Task tasklist = new Task(name,user_id,dline, prt_num, cg_code,group_id,memo);
 		taskRepository.saveAndFlush(tasklist);
 
 		//すべてのリスト取得
@@ -71,6 +72,7 @@ public class EditController {
 
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
+
 
 		mv.setViewName("list");
 		return mv;
