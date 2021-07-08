@@ -2,9 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク管理</title>
 </head>
 <body>
+<h1>タスク一覧</h1>
+	<span th:replace="menu"></span>
+
+<table border="1">
+	<tr>
+		<th>タスク番号</th>
+		<th>タスク名</th>
+		<th>作成者</th>
+		<th>期限</th>
+		<th>優先順位</th>
+		<th>カテゴリ番号</th>
+		<th>グループ番号</th>
+		<th>進歩度</th>
+		<th>備考</th>
+		<th>復元</th>
+		<th>完全削除</th>
+	</tr>
+
+	<tr th:each="list:${list}">
+		<td th:text="${list.code}"></td>
+		<td th:text="${list.name}"></td>
+		<td th:text="${list.user_id}"></td>
+		<td th:text="${list.dline}"></td>
+		<td th:text="${list.prt_num}"></td>
+		<td th:text="${list.cg_code}"></td>
+		<td th:text="${list.group_id}"></td>
+		<td th:text="${list.progress}"></td>
+		<td th:text="${list.memo}"></td>
+		<td><form action="/trash/recovery" method="post">
+				<input type="hidden" th:value="${list.code}" name="code">
+				<input type="hidden" th:value="${list.name}" name="name">
+				<input type="hidden" th:value="${list.user_id}" name="user_id">
+				<input type="hidden" th:value="${list.dline}" name="dline">
+				<input type="hidden" th:value="${list.prt_num}" name="prt_num">
+				<input type="hidden" th:value="${list.cg_code}" name="cg_code">
+				<input type="hidden" th:value="${list.group_id}" name="group_id">
+				<input type="hidden" th:value="${list.progress}" name="progress">
+				<input type="hidden" th:value="${list.memo}" name="memo">
+				<input type="submit" value="復元">
+			</form>
+		</td>
+		<td><form action="/delete" method="post">
+				<input type="hidden" value="${list.code}" name="code">
+				<input type="submit" value="完全削除">
+			</form>
+		</td>
+	</tr>
+
+</table>
+
 
 </body>
 </html>

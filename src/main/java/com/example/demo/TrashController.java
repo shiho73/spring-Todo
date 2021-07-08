@@ -80,7 +80,33 @@ public class TrashController {
 
 	//ゴミ箱から戻す
 	@RequestMapping("/trash/recovery")
-	public ModelAndView trash(ModelAndView mv) {
+	public ModelAndView trash(
+			@RequestParam(name="code") int code,
+			@RequestParam(name="name") String name,
+			@RequestParam(name="user_id") int user_id,
+			@RequestParam(name="dline") Date dline,
+			@RequestParam(name="prt_num") int prt_num,
+			@RequestParam(name="cg_code") int cg_code,
+			@RequestParam(name="group_id") int group_id,
+			@RequestParam(name="progress") int progress,
+			@RequestParam(name="memo") String memo,
+			ModelAndView mv) {
+
+		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, true);
+		taskRepository.saveAndFlush(task);
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findAll();
+
+		//ゴミ箱に入れていなければ、表示するリストに追加
+		for(Task task1 : taskList) {
+			if(task1.isTrash() == false) {
+				list.add(task1);
+			}
+		}
 
 		mv.setViewName("trash");
 		return mv;
