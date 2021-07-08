@@ -42,7 +42,7 @@
 		<td th:text="${list.prt_num}"></td>
 		<td th:text="${list.cg_code}"></td>
 		<td th:text="${list.group_id}"></td>
-		<td ><input th:text="${list.progress}" type="range"></td>
+		<td><input th:text="${list.progress}" type="range"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
@@ -54,8 +54,14 @@
 				<input type="hidden" th:value="${list.group_id}" name="group_id">
 				<input type="hidden" th:value="${list.progress}" name="progress">
 				<input type="hidden" th:value="${list.memo}" name="memo">
-				<input type="submit" value="削除"></form></td>
-		<td><form action="/list/edit" method="post"><input type="hidden" value="${list.code}"><input type="submit" value="編集"></form></td>
+				<input type="submit" value="削除">
+			</form>
+		</td>
+		<td><form action="/list/edit" method="post">
+				<input type="hidden" th:value="${list.code}" name="code">
+				<input type="submit" value="編集">
+			</form>
+		</td>
 	</tr>
 
 </table>

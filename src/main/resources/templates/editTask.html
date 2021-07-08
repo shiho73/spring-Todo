@@ -2,9 +2,77 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク管理</title>
 </head>
 <body>
+
+<h1>タスク編集</h1>
+	<span th:replace="menu"></span>
+
+		<form action="/update"  method="post">
+		<input type="hidden" name="code" th:value="${task.code}">
+		<input type="hidden" name="user_id" th:value="${session.userInfo.id}">
+
+		<table border="1">
+	<tr>
+		<th>タスク名</th><td><input type="text" name="name" th:value="${task.name}"></td>
+	</tr>
+
+	<tr>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}"></td>
+ 	</tr>
+
+ 	<tr>
+		<th>期限</th><td><input type="date" name="dline" th:value="${task.dline}"></td>
+	</tr>
+
+	<tr>
+		<th>優先順位</th>
+	<td><select name="prt_num">
+			<option value="1" th:selected="${task.prt_num==1}">高</option>
+			<option value="2" th:selected="${task.prt_num==2}">中</option>
+			<option value="3" th:selected="${task.prt_num==3}">低</option>
+		</select>
+	</td>
+	</tr>
+
+	<tr>
+		<th>カテゴリ番号</th>
+	<td><select name="cg_code">
+		<option value="1" th:selected="${task.cg_code==1}">家事</option>
+		<option value="2" th:selected="${task.cg_code==2}">仕事</option>
+		<option value="3" th:selected="${task.cg_code==3}">勉強</option>
+		</select>
+	</td>
+	</tr>
+
+	<tr>
+		<th>グループ番号</th>
+		<td><select name="group_id">
+			<option value="1" th:selected="${task.group_id==1}">1班</option>
+			<option value="2" th:selected="${task.group_id==2}">2班</option>
+			<option value="3" th:selected="${task.group_id==3}">3班</option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<th>進捗度</th>
+		<td><input th:value="${task.progress}" type="number" name="progress"></td>
+	<tr>
+		<th>備考</th>
+		<td><textarea  th:value="${task.memo}" name="memo" cols="40" rows="5"></textarea></td>
+	</tr>
+
+</table>
+
+<br>
+	<input type="submit"  value="更新">
+	<br>
+<a href="list">タスク一覧へ</a>
+</form>
+
+
 
 </body>
 </html>
