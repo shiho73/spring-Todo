@@ -9,7 +9,7 @@
 	<span th:replace="menu"></span>
 
 		<form action="/list/add"  method="post">
-		<input type="hidden" name="user_id" th:value="${session.userInfo.id}">
+		<input type="hidden" name="userId" th:value="${session.userInfo.id}">
 
 		<table border="1">
 	<tr>
@@ -36,7 +36,7 @@
 
 	<tr>
 		<th>カテゴリ番号</th>
-	<td><select name="cgNode">
+	<td><select name="cgCode">
 		<option value="1">家事</option>
 		<option value="2">仕事</option>
 		<option value="3">勉強</option>
