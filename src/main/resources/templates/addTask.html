@@ -9,6 +9,7 @@
 	<span th:replace="menu"></span>
 
 		<form action="/list/add"  method="post">
+		<input type="hidden" name="user_id" th:value="${session.userInfo.id}">
 
 		<table border="1">
 	<tr>
@@ -16,7 +17,7 @@
 	</tr>
 
 	<tr>
- 		<th>作成者</th><td th:text="${session.userInfo.name}" name="user_id"></td>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}"></td>
  	</tr>
 
  	<tr>
