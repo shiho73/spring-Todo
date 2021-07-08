@@ -9,6 +9,7 @@
 	<span th:replace="menu"></span>
 
 	<form action="/task/update"  method="post">
+		<input type="hidden" name="CODE" th:value="${list.code}">
 	<input type="submit"  value="更新">
 </form>
 	<form action="/look/trash"  method="post">

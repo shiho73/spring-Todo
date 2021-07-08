@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -80,7 +81,18 @@ public class EditController {
 
 	//編集
 	@RequestMapping("/list/edit")
-	public ModelAndView edit(ModelAndView mv) {
+	public ModelAndView edit(
+			@RequestParam("CODE") int code,
+			ModelAndView mv) {
+		Task task = null;
+
+		Optional<Task> recode = taskRepository.findById(code);
+
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+
+		mv.addObject("task", task);
 
 		mv.setViewName("editTask");
 		return mv;
