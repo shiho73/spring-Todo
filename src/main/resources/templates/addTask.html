@@ -38,9 +38,7 @@
 		<th>カテゴリ番号</th>
 	<td><select name="cgCode">
 		<option value="">カテゴリを選択してください</option>
-		<option value="1">家事</option>
-		<option value="2">仕事</option>
-		<option value="3">勉強</option>
+		<option th:each="i:${clist}" th:value="${i}" th:text="${i}+'：'+${i.name}">
 		</select>
 		<a href="/option" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>

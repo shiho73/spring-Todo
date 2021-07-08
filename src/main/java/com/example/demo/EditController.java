@@ -46,8 +46,9 @@ public class EditController {
 
 	//新規作成
 	@PostMapping("/list/new")
-	public ModelAndView listnew(ModelAndView mv) {
-
+	public ModelAndView listnew(ModelAndView mv){
+		List<Category> categoryList1 = categoryRepository.findAll();
+		mv.addObject("clist", categoryList1);
 		mv.setViewName("addTask");
 		return mv;
 	}
@@ -88,12 +89,14 @@ public class EditController {
 	@PostMapping("/option/new")
 	public ModelAndView newoption(
 			@RequestParam("name") String name,
+			@RequestParam("code") int code,
 			ModelAndView mv
 			) {
-		Category categoryList = new Category(name);
+		Category category = new Category(code, name);
+		categoryRepository.saveAndFlush(category);
 
 		List<Category> categoryList1 = categoryRepository.findAll();
-		mv.addObject("list", categoryList);
+		mv.addObject("clist", categoryList1);
 
 		mv.setViewName("addTask");
 		return mv;
