@@ -39,13 +39,77 @@ public class OrderController {
 	@Autowired
 	UserRepository userRepository;
 
-	//並べ替え関係
+	//コードで並べ替え・昇順
 	@RequestMapping("/order/code")
 	public ModelAndView orderCode(ModelAndView mv) {
 		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
 		return showList(mv, taskList);
 	}
 
+	//コードで並べ替え・降順
+	@RequestMapping("/order/code/desc")
+	public ModelAndView orderCodeDesc(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByCodeDesc();
+		return showList(mv, taskList);
+	}
+
+
+	//締め切りで並べ替え・昇順
+	@RequestMapping("/order/deadline")
+	public ModelAndView orderDline(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByDlineAsc();
+		return showList(mv, taskList);
+	}
+
+	//締め切りで並べ替え・降順
+	@RequestMapping("/order/deadline/desc")
+	public ModelAndView orderDlineDesc(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByDlineDesc();
+		return showList(mv, taskList);
+	}
+
+	//優先度で並べ替え・昇順
+	@RequestMapping("/order/priority")
+	public ModelAndView orderPriority(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByPrtNumAsc();
+		return showList(mv, taskList);
+	}
+
+	//優先度で並べ替え・降順
+	@RequestMapping("/order/priority/desc")
+	public ModelAndView orderPriorityDesc(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByPrtNumDesc();
+		return showList(mv, taskList);
+	}
+
+	//進捗で並べ替え・昇順
+	@RequestMapping("/order/progress")
+	public ModelAndView orderProgress(ModelAndView mv) {
+		List<Task> taskList = taskRepository.findByOrderByProgressAsc();
+		return showList(mv, taskList);
+	}
+
+	//進捗で並べ替え・降順
+		@RequestMapping("/order/progress/desc")
+		public ModelAndView orderProgressDesc(ModelAndView mv) {
+			List<Task> taskList = taskRepository.findByOrderByProgressDesc();
+			return showList(mv, taskList);
+		}
+
+	//表示用関数
+	public ModelAndView showList(ModelAndView mv, List<Task> taskList) {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (Task task : taskList) {
+			if (task.isTrash() == true) {
+				list.add(task);
+			}
+		}
+		mv.addObject("list", list);
+		mv.setViewName("list");
+		return mv;
+	}
+
+	//以下、現在未使用
 	@RequestMapping("/order/taskName")
 	public ModelAndView orderTaskName(ModelAndView mv) {
 		List<Task> taskList = taskRepository.findByOrderByNameAsc();
@@ -55,18 +119,6 @@ public class OrderController {
 	@RequestMapping("/order/userId")
 	public ModelAndView orderUserId(ModelAndView mv) {
 		List<Task> taskList = taskRepository.findByOrderByUserIdAsc();
-		return showList(mv, taskList);
-	}
-
-	@RequestMapping("/order/deadline")
-	public ModelAndView orderDline(ModelAndView mv) {
-		List<Task> taskList = taskRepository.findByOrderByDlineAsc();
-		return showList(mv, taskList);
-	}
-
-	@RequestMapping("/order/priority")
-	public ModelAndView orderPriority(ModelAndView mv) {
-		List<Task> taskList = taskRepository.findByOrderByPrtNumAsc();
 		return showList(mv, taskList);
 	}
 
@@ -82,22 +134,4 @@ public class OrderController {
 		return showList(mv, taskList);
 	}
 
-	@RequestMapping("/order/progress")
-	public ModelAndView orderProgress(ModelAndView mv) {
-		List<Task> taskList = taskRepository.findByOrderByProgressAsc();
-		return showList(mv, taskList);
-	}
-
-	//表示用関数
-	public ModelAndView showList(ModelAndView mv, List<Task> taskList) {
-		ArrayList<Task> list = new ArrayList<Task>();
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-		mv.addObject("list", list);
-		mv.setViewName("list");
-		return mv;
-	}
 }
