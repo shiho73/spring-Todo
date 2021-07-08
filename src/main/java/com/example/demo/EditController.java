@@ -1,13 +1,16 @@
 package com.example.demo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +43,6 @@ public class EditController {
 	@Autowired
 	UserRepository userRepository;
 
-
 	//新規作成
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
@@ -58,13 +60,11 @@ public class EditController {
 			@RequestParam("prt_num") int prt_num,
 			@RequestParam("cg_code") int cg_code,
 			@RequestParam("group_id") int group_id,
-			@RequestParam("memo") String memo
-) {
+			@RequestParam("memo") String memo) {
 
 		//新しく追加
-		Task tasklist = new Task(name,user_id,dline, prt_num, cg_code,group_id,memo);
+		Task tasklist = new Task(name, user_id, dline, prt_num, cg_code, group_id, memo, true);
 		taskRepository.saveAndFlush(tasklist);
-
 
 		//すべてのリスト取得
 		List<Task> taskList = taskRepository.findAll();
@@ -72,11 +72,64 @@ public class EditController {
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
 
-
 		mv.setViewName("list");
 		return mv;
 	}
 
+	//編集
+	@RequestMapping("/list/edit")
+	public ModelAndView edit(
+			@RequestParam(name = "code") int code,
+			ModelAndView mv) {
 
+		Task task = null;
+
+		Optional<Task> recode = taskRepository.findById(code);
+
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+
+		mv.addObject("task", task);
+
+		mv.setViewName("editTask");
+		return mv;
+	}
+
+	//編集アクション
+	@RequestMapping("/update")
+	public ModelAndView edit1(
+			@RequestParam(name = "code") int code,
+			@RequestParam(name = "name") String name,
+			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "prt_num") int prt_num,
+			@RequestParam(name = "cg_code") int cg_code,
+			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "memo") String memo,
+			ModelAndView mv) {
+
+		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, true);
+		taskRepository.saveAndFlush(task);
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findAll();
+
+		//ゴミ箱に入れていなければ、表示するリストに追加
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == true) {
+				list.add(task1);
+			}
+		}
+
+		mv.addObject("list", list);
+
+		mv.setViewName("list");
+		return mv;
+	}
 
 }

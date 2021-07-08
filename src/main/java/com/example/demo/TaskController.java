@@ -63,6 +63,23 @@ public class TaskController {
 		return mv;
 	}
 
+	//タスク一覧
+		@RequestMapping("/order/code")
+		public ModelAndView orderCode(ModelAndView mv) {
+			ArrayList<Task> list = new ArrayList<Task>();
+			List<Task> taskList = taskRepository.findAllByOrderByCodeAsc();
+			for(Task task : taskList) {
+				if(task.isTrash() == true) {
+					list.add(task);
+				}
+			}
+			mv.addObject("list", list);
+			mv.setViewName("list");
+			return mv;
+		}
+
+
+
 	//ゴミ箱を見る
 	@RequestMapping("/look/trash")
 	public ModelAndView looktrash(ModelAndView mv) {

@@ -30,7 +30,7 @@ public class Task {
 	}
 
 	//新規アクション関係
-	public Task(String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,String memo) {
+	public Task(String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,String memo, boolean trash) {
 		super();
 		this.name = name;
 		this.user_id = user_id;
@@ -39,6 +39,7 @@ public class Task {
 		this.cg_code = cg_code;
 		this.group_id = group_id;
 		this.memo = memo;
+		this.trash = trash;
 	}
 
 	public Task(Integer code, String name, int user_id, Date dline, int prt_num, int cg_code, int group_id,
