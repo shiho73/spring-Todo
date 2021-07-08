@@ -15,4 +15,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer>{
 	List<Task> findByOrderByNameAsc();
 	List<Task> findByOrderByGroupIdAsc();
 	List<Task> findByOrderByProgressAsc();
+	List<Task> findByNameLike(String string);
 }
