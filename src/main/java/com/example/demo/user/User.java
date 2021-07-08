@@ -19,6 +19,13 @@ public class User {
 
 	}
 
+	public User(String name, String pw) {
+		super();
+		this.name = name;
+		this.pw = pw;
+	}
+
+
 	public User(Integer id, String name, String pw) {
 		super();
 		this.id = id;

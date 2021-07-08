@@ -41,7 +41,7 @@ public class UserController {
 		return mv;
 	}
 
-	//ログインボタン押したとき
+	//ログイン
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
 			@RequestParam("name") String name,
@@ -97,10 +97,56 @@ public class UserController {
 	return mv;
 }
 
+
+	//新規ユーザー登録
+	//ログイン画面
+	@RequestMapping("/user")
+	public ModelAndView user(ModelAndView mv) {
+		session.invalidate();
+		mv.setViewName("newUser");
+		return mv;
+	}
+
+
+	//新規ユーザー登録アクション
+	@PostMapping("/user/new")
+	public ModelAndView newuser(ModelAndView mv,
+			@RequestParam("name") String name,
+			@RequestParam("pw") String pw,
+			@RequestParam("pw1") String pw1
+			) {
+
+		// 名前とパスワードが空の場合にエラーとする
+	if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
+		mv.addObject("message", "名前とパスワードを入力してください");
+		mv.setViewName("newUser");
+		return mv;
+	}
+
+	if(pw.equals(pw1)) {
+		//t_user新しく追加
+		User user = new User(name,pw);
+		userRepository.saveAndFlush(user);
+
+		List<User> userList = userRepository.findAll();
+		mv.addObject("user", userList);
+
+		mv.setViewName("finished");
+		return mv;
+
+		}else {
+
+		mv.addObject("message", "パスワードが一致していません");
+		mv.setViewName("newUser");
+	}
+	return mv;
+}
+
+
 	//ログアウト
 	@RequestMapping("/logout")
 	public ModelAndView logout(ModelAndView mv) {
-
+		session.invalidate();
 		mv.setViewName("top");
 		return mv;
 	}
