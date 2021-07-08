@@ -42,6 +42,7 @@ public class TaskController {
 	//タスク一覧
 	@RequestMapping("/list")
 	public ModelAndView list(ModelAndView mv) {
+
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
 
@@ -55,8 +56,7 @@ public class TaskController {
 			}
 		}
 
-
-			mv.addObject("list", list);
+		mv.addObject("list", list);
 
 		//タスク一覧画面に遷移
 		mv.setViewName("list");
@@ -79,13 +79,13 @@ public class TaskController {
 			}
 		}
 
-//		//リストが空であれば、メッセージを表示
-//		//リストの中身があれば、リストを表示
-//		if(list == null) {
-//			mv.addObject("message", "ゴミ箱は空です");
-//		} else {
+		//リストが空であれば、メッセージを表示
+		//リストの中身があれば、リストを表示
+		if(list.isEmpty() == true) {
+			mv.addObject("message", "ゴミ箱は空です");
+		} else {
 			mv.addObject("list", list);
-//		}
+		}
 
 		//ゴミ箱画面に遷移
 		mv.setViewName("trash");

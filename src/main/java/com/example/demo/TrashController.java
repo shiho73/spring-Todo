@@ -44,15 +44,15 @@ public class TrashController {
 	//ゴミ箱へ投げる
 	@RequestMapping("/list/trash")
 	public ModelAndView listtrash(
-			@RequestParam(name="code") int code,
-			@RequestParam(name="name") String name,
-			@RequestParam(name="user_id") int user_id,
-			@RequestParam(name="dline") Date dline,
-			@RequestParam(name="prt_num") int prt_num,
-			@RequestParam(name="cg_code") int cg_code,
-			@RequestParam(name="group_id") int group_id,
-			@RequestParam(name="progress") int progress,
-			@RequestParam(name="memo") String memo,
+			@RequestParam(name = "code") int code,
+			@RequestParam(name = "name") String name,
+			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "prt_num") int prt_num,
+			@RequestParam(name = "cg_code") int cg_code,
+			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
 		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, false);
@@ -65,31 +65,36 @@ public class TrashController {
 		List<Task> taskList = taskRepository.findAll();
 
 		//ゴミ箱に入れていなければ、表示するリストに追加
-		for(Task task1 : taskList) {
-			if(task1.isTrash() == true) {
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == true) {
 				list.add(task1);
 			}
 		}
 
-		mv.addObject("list", list);
+		//リストが空であれば、メッセージを表示
+		//リストの中身があれば、リストを表示
+		if (list.isEmpty() == true) {
+			mv.addObject("message", "ゴミ箱は空です");
+		} else {
+			mv.addObject("list", list);
+		}
 
 		mv.setViewName("list");
 		return mv;
 	}
 
-
 	//ゴミ箱から戻す
 	@RequestMapping("/trash/recovery")
 	public ModelAndView trash(
-			@RequestParam(name="code") int code,
-			@RequestParam(name="name") String name,
-			@RequestParam(name="user_id") int user_id,
-			@RequestParam(name="dline") Date dline,
-			@RequestParam(name="prt_num") int prt_num,
-			@RequestParam(name="cg_code") int cg_code,
-			@RequestParam(name="group_id") int group_id,
-			@RequestParam(name="progress") int progress,
-			@RequestParam(name="memo") String memo,
+			@RequestParam(name = "code") int code,
+			@RequestParam(name = "name") String name,
+			@RequestParam(name = "user_id") int user_id,
+			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "prt_num") int prt_num,
+			@RequestParam(name = "cg_code") int cg_code,
+			@RequestParam(name = "group_id") int group_id,
+			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
 		Task task = new Task(code, name, user_id, dline, prt_num, cg_code, group_id, progress, memo, true);
@@ -101,11 +106,19 @@ public class TrashController {
 		//全てのタスクを取得
 		List<Task> taskList = taskRepository.findAll();
 
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for(Task task1 : taskList) {
-			if(task1.isTrash() == false) {
+		//ゴミ箱に入れていれば、表示するリストに追加
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == false) {
 				list.add(task1);
 			}
+		}
+
+		//リストが空であれば、メッセージを表示
+		//リストの中身があれば、リストを表示
+		if (list.isEmpty() == true) {
+			mv.addObject("message", "ゴミ箱は空です");
+		} else {
+			mv.addObject("list", list);
 		}
 
 		mv.setViewName("trash");
@@ -115,7 +128,7 @@ public class TrashController {
 	//タスク完全消去
 	@RequestMapping("/delete")
 	public ModelAndView delete(
-			@RequestParam(name="code") int code,
+			@RequestParam(name = "code") int code,
 			ModelAndView mv) {
 
 		taskRepository.deleteById(code);
@@ -126,11 +139,19 @@ public class TrashController {
 		//全てのタスクを取得
 		List<Task> taskList = taskRepository.findAll();
 
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for(Task task1 : taskList) {
-			if(task1.isTrash() == false) {
+		//ゴミ箱に入れていれば、表示するリストに追加
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == false) {
 				list.add(task1);
 			}
+		}
+
+		//リストが空であれば、メッセージを表示
+		//リストの中身があれば、リストを表示
+		if (list.isEmpty() == true) {
+			mv.addObject("message", "ゴミ箱は空です");
+		} else {
+			mv.addObject("list", list);
 		}
 
 		mv.setViewName("trash");
