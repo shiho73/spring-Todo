@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.task.Task;
@@ -75,6 +76,29 @@ public class EditController {
 		mv.setViewName("list");
 		return mv;
 	}
+
+	//新規カテゴリー作成
+	@RequestMapping("/option")
+	public ModelAndView option(ModelAndView mv) {
+		mv.setViewName("optionCategory");
+		return mv;
+	}
+
+	//新規カテゴリー作成アクション
+	@PostMapping("/option/new")
+	public ModelAndView newoption(
+			@RequestParam("name") String name,
+			ModelAndView mv
+			) {
+		Task tasklist = new Task(name, userId, dline, prtNum, cgCode, groupId, memo, true);
+
+		List<Category> categoryList = categoryRepository.findAll();
+		mv.addObject("list", categoryList);
+
+		mv.setViewName("addTask");
+		return mv;
+	}
+
 
 	//編集
 	@RequestMapping("/list/edit")
