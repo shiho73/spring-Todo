@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CalenderController {
 
-	//カレンダー
+	//カレンダー・
 	@RequestMapping("/list/calender")
 	public ModelAndView calender(ModelAndView mv) {
 
