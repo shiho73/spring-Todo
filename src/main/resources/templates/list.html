@@ -100,12 +100,12 @@ $(function() {
 	<tr th:each="list:${list}">
 		<td >
 <!-- 一番にしか作用していない -->
-		<input type="submit" th:value="${list.code}" id="dialog-link" >
-		<div id="dialog" style="display:none;">
- 		<p>
+			<input type="submit" th:value="${list.code}" id="dialog-link">
+			<div id="dialog" style="display:none;">
+ 			<p>
 <!-- 表示させる内容記述 -->
- 		 </p>
-		</div>
+ 		 	</p>
+			</div>
 		</td>
 		<td th:text="${list.name}"></td>
 		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></td>
