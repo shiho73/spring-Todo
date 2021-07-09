@@ -99,7 +99,7 @@ $(function() {
 		<td th:text="${list.prtNum}"></td>
 		<td th:text="${list.cgCode}"></td>
 		<td th:text="${list.groupId}"></td>
-		<td><input th:text="${list.progress}" type="range"></td>
+		<td><input th:text="${list.progress}" type="range" min="1" max="10" step="1" value="1"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
