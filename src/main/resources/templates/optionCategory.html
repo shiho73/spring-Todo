@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -8,11 +8,14 @@
 <form action="/option/new" method="post">
 
 カテゴリー名:<input type="text" name="name"><br>
-カテゴリー番号：<input type="number" name="code"><br>
+カテゴリー番号：<input type="number" name="code" min="1"><br>
 <input type="submit" value="登録">
 	<span th:text="${message}" style="color:red"></span>
 	<br>
 </form>
+
+<p th:text="${msg1}"></p>
+<p th:text="${msg2}"></p>
 
 </body>
 </html>

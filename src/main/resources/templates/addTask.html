@@ -8,6 +8,9 @@
 <h1>タスク登録</h1>
 	<span th:replace="menu"></span>
 
+	<p th:text="${msg1}"></p>
+	<p th:text="${msg2}"></p>
+
 		<form action="/list/add"  method="post">
 		<input type="hidden" name="userId" th:value="${session.userInfo.id}">
 
@@ -37,7 +40,7 @@
 	<tr>
 		<th>カテゴリ番号</th>
 	<td><select name="cgCode">
-		<option value="">カテゴリを選択してください</option>
+		<option value="0">カテゴリを選択してください</option>
 		<option th:each="i:${clist}" th:value="${i.code}" th:text="${i.code}+'：'+${i.name}">
 		</select>
 		<a href="/option" onclick="openPopup();">新規カテゴリ登録</a>

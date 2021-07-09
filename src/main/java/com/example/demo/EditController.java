@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
@@ -46,7 +47,7 @@ public class EditController {
 
 	//新規作成
 	@PostMapping("/list/new")
-	public ModelAndView listnew(ModelAndView mv){
+	public ModelAndView listnew(ModelAndView mv) {
 		List<Category> categoryList1 = categoryRepository.findAll();
 		mv.addObject("clist", categoryList1);
 		mv.setViewName("addTask");
@@ -58,14 +59,45 @@ public class EditController {
 	public ModelAndView listnew1(ModelAndView mv,
 			@RequestParam("name") String name,
 			@RequestParam("userId") int userId,
-			@RequestParam("dline") Date dline,
+			@RequestParam("dline") String dline,
 			@RequestParam("prtNum") int prtNum,
 			@RequestParam("cgCode") int cgCode,
 			@RequestParam("groupId") int groupId,
 			@RequestParam("memo") String memo) {
 
+		//未入力チェック
+		if(name == null || name == "" || dline == null || dline == "") {
+			String msg1 = null;
+			String msg2 = null;
+			if (name == null || name == "") {
+				msg1 = "タスク名を入力してください";
+				mv.addObject("msg1", msg1);
+			}
+			if (dline == null || dline == "") {
+				msg2 = "期限を設定してください";
+				mv.addObject("msg2", msg2);
+			}
+			mv.setViewName("addTask");
+			return mv;
+		}
+
+		//カテゴリ未選択
+		if(cgCode == 0) {
+			categoryZero();
+			cgCode = 0;
+		}
+
+		//グループ未選択
+		if(groupId == 0) {
+			groupZero();
+			groupId = 0;
+		}
+
+		//期限日の型変換
+		Date dline1 = Date.valueOf(dline);
+
 		//新しく追加
-		Task tasklist = new Task(name, userId, dline, prtNum, cgCode, groupId, memo, true);
+		Task tasklist = new Task(name, userId, dline1, prtNum, cgCode, groupId, memo, true);
 		taskRepository.saveAndFlush(tasklist);
 
 		//すべてのリスト取得
@@ -90,8 +122,22 @@ public class EditController {
 	public ModelAndView newoption(
 			@RequestParam("name") String name,
 			@RequestParam("code") int code,
-			ModelAndView mv
-			) {
+			ModelAndView mv) {
+
+		//カテゴリコードチェック
+		List<Category> list = categoryRepository.findByCode(code);
+		List<Category> list2 = categoryRepository.findByName(name);
+		if(!list.isEmpty() || !list2.isEmpty()) {
+			if(!list.isEmpty()) {
+			mv.addObject("msg", "使用済みのカテゴリコードです");
+			}
+			if(!list.isEmpty()) {
+				mv.addObject("msg", "使用済みのカテゴリ名です");
+			}
+			mv.setViewName("optionCategory");
+			return mv;
+		}
+
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
@@ -101,7 +147,6 @@ public class EditController {
 		mv.setViewName("addTask");
 		return mv;
 	}
-
 
 	//編集
 	@RequestMapping("/list/edit")
@@ -157,6 +202,24 @@ public class EditController {
 
 		mv.setViewName("list");
 		return mv;
+	}
+
+	//カテゴリコードのデフォルト設定
+	private void categoryZero() {
+		List<Category> list = categoryRepository.findByCode(0);
+		if(list.isEmpty()) {
+			Category category = new Category(0, "なし");
+			categoryRepository.saveAndFlush(category);
+		}
+	}
+
+	//グループのデフォルト設定
+	private void groupZero() {
+		List<Group> list = groupRepository.findById(0);
+		if(list.isEmpty()) {
+			Group group = new Group(0, "なし");
+			groupRepository.saveAndFlush(group);
+		}
 	}
 
 }
