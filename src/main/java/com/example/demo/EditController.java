@@ -56,7 +56,7 @@ public class EditController {
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
 		categoryZero();
-////		groupZero();
+		////		groupZero();
 
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
@@ -96,18 +96,18 @@ public class EditController {
 
 		//期限日の型変換
 		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
-        java.util.Date date = null;
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+		java.util.Date date = null;
 		try {
 			date = sdFormat.parse(dline);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date2 = sdf.format(date);
-        //String型をData型(SQL)dline2に変換
-        Date dline2 = Date.valueOf(date2);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date2 = sdf.format(date);
+		//String型をData型(SQL)dline2に変換
+		Date dline2 = Date.valueOf(date2);
 
 		//新しく追加
 		Task task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
@@ -198,7 +198,7 @@ public class EditController {
 			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "userId") int userId,
-			@RequestParam(name = "dline") Date dline,
+			@RequestParam(name = "dline") String dline,
 			@RequestParam(name = "prtNum") int prtNum,
 			@RequestParam(name = "cgCode") int cgCode,
 			@RequestParam(name = "groupId") int groupId,
@@ -213,7 +213,22 @@ public class EditController {
 			return mv;
 		}
 
-		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
+		//期限日の型変換
+		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+		java.util.Date date = null;
+		try {
+			date = sdFormat.parse(dline);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date2 = sdf.format(date);
+		//String型をData型(SQL)dline2に変換
+		Date dline2 = Date.valueOf(date2);
+
+		Task task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
 		taskRepository.saveAndFlush(task);
 
 		//空の表示用リストを生成
