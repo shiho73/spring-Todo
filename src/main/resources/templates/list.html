@@ -7,6 +7,16 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+<script type="text/javascript">
+$(function() {
+    $("#datepicker").datepicker({
+        // 日付が選択された時、日付をテキストフィールドへセット
+        onSelect: function(dateText, inst) {
+                    $("#date_val").val(dateText);
+                }
+    });
+});
+</script>
 
 <script>
 
@@ -28,8 +38,12 @@ $(function() {
 </head>
 <body>
 <h1>タスク一覧</h1>
-	<span th:replace="menu"></span>
+<header>
+<div id="datepicker"/>
+<br/>
 
+</header>
+	<span th:replace="menu"></span>
 	<form action="/task/update"  method="post">
 <!-- 		<input type="hidden" name="CODE" th:value="${list.code}"> -->
 	<input type="submit"  value="更新">
