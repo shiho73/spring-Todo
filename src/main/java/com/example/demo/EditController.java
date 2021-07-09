@@ -114,7 +114,7 @@ public class EditController {
 		taskRepository.saveAndFlush(task);
 
 		//すべてのリスト取得
-		List<Task> taskList = taskRepository.findAll();
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
 
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
@@ -240,7 +240,7 @@ public class EditController {
 		ArrayList<Task> list = new ArrayList<Task>();
 
 		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findAll();
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
 
 		//ゴミ箱に入れていなければ、表示するリストに追加
 		for (Task task1 : taskList) {

@@ -46,7 +46,7 @@ public class TaskController {
 	public ModelAndView lookList(ModelAndView mv) {
 
 		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-		List<Task> taskList = taskRepository.findAll(); //全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
 
 		//ゴミ箱に入れていなければ、表示するリストに追加
 		for (Task task : taskList) {
@@ -66,7 +66,7 @@ public class TaskController {
 	public ModelAndView lookTrash(ModelAndView mv) {
 
 		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-		List<Task> taskList = taskRepository.findAll(); //全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
 
 		//ゴミ箱に入れていれば、表示するリストに追加
 		for (Task task : taskList) {
