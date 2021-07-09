@@ -26,7 +26,7 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class UserController {
 
-	//保持用
+	//保持用/
 	@Autowired
 	HttpSession session;
 
