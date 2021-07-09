@@ -246,7 +246,7 @@ public class EditController {
 
 	//グループのデフォルト設定
 	private void groupZero() {
-		List<Group> list = groupRepository.findAll();
+		List<Group> list = groupRepository.findById(0);
 		if (list.isEmpty()) {
 			Group group = new Group(0, "なし");
 			groupRepository.saveAndFlush(group);
