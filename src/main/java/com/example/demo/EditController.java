@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.priority.Priority;
+import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
@@ -45,11 +48,18 @@ public class EditController {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	PriorityRepository priorityRepository;
+
 	//新規作成
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
-		List<Category> categoryList1 = categoryRepository.findAll();
-		mv.addObject("clist", categoryList1);
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 		mv.setViewName("addTask");
 		return mv;
 	}
@@ -66,7 +76,7 @@ public class EditController {
 			@RequestParam("memo") String memo) {
 
 		//未入力チェック
-		if(name == null || name == "" || dline == null || dline == "") {
+		if (name == null || name == "" || dline == null || dline == "") {
 			String msg1 = null;
 			String msg2 = null;
 			if (name == null || name == "") {
@@ -77,28 +87,27 @@ public class EditController {
 				msg2 = "期限を設定してください";
 				mv.addObject("msg2", msg2);
 			}
-			mv.setViewName("addTask");
-			return mv;
+			return listnew(mv);
 		}
 
 		//カテゴリ未選択
-		if(cgCode == 0) {
+		if (cgCode == 0) {
 			categoryZero();
 			cgCode = 0;
 		}
 
-		//グループ未選択
-		if(groupId == 0) {
-			groupZero();
-			groupId = 0;
-		}
-
 		//期限日の型変換
+		Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = simpleDateFormat.format(date);
+        java.sql.Date date1 = java.sql.Date.valueOf(formattedDate);
+
+
 		Date dline1 = Date.valueOf(dline);
 
 		//新しく追加
-		Task tasklist = new Task(name, userId, dline1, prtNum, cgCode, groupId, memo, true);
-		taskRepository.saveAndFlush(tasklist);
+		Task task = new Task(name, userId, dline1, prtNum, cgCode, groupId, memo, true);
+		taskRepository.saveAndFlush(task);
 
 		//すべてのリスト取得
 		List<Task> taskList = taskRepository.findAll();
@@ -117,21 +126,21 @@ public class EditController {
 		return mv;
 	}
 
-	//新規カテゴリー作成アクション
+	//新規カテゴリ作成アクション
 	@PostMapping("/option/new")
 	public ModelAndView newoption(
 			@RequestParam("name") String name,
 			@RequestParam("code") int code,
 			ModelAndView mv) {
 
-		//カテゴリコードチェック
+		//カテゴリチェック
 		List<Category> list = categoryRepository.findByCode(code);
 		List<Category> list2 = categoryRepository.findByName(name);
-		if(!list.isEmpty() || !list2.isEmpty()) {
-			if(!list.isEmpty()) {
-			mv.addObject("msg", "使用済みのカテゴリコードです");
+		if (!list.isEmpty() || !list2.isEmpty()) {
+			if (!list.isEmpty()) {
+				mv.addObject("msg", "使用済みのカテゴリコードです");
 			}
-			if(!list.isEmpty()) {
+			if (!list.isEmpty()) {
 				mv.addObject("msg", "使用済みのカテゴリ名です");
 			}
 			mv.setViewName("optionCategory");
@@ -182,6 +191,13 @@ public class EditController {
 			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
+		//未入力チェック
+		if (name == null || name == "") {
+			mv.addObject("msg1", "タスク名を入力してください");
+			mv.setViewName("addTask");
+			return mv;
+		}
+
 		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
 		taskRepository.saveAndFlush(task);
 
@@ -207,18 +223,9 @@ public class EditController {
 	//カテゴリコードのデフォルト設定
 	private void categoryZero() {
 		List<Category> list = categoryRepository.findByCode(0);
-		if(list.isEmpty()) {
+		if (list.isEmpty()) {
 			Category category = new Category(0, "なし");
 			categoryRepository.saveAndFlush(category);
-		}
-	}
-
-	//グループのデフォルト設定
-	private void groupZero() {
-		List<Group> list = groupRepository.findById(0);
-		if(list.isEmpty()) {
-			Group group = new Group(0, "なし");
-			groupRepository.saveAndFlush(group);
 		}
 	}
 

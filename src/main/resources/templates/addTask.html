@@ -39,9 +39,7 @@
 	<tr>
 		<th>優先順位</th>
 	<td><select name="prtNum">
-			<option value="1">高</option>
-			<option value="2">中</option>
-			<option value="3">低</option>
+			<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
 		</select>
 	</td>
 	</tr>
@@ -49,8 +47,8 @@
 	<tr>
 		<th>カテゴリ番号</th>
 	<td><select name="cgCode">
-		<option value="0">カテゴリを選択してください</option>
-		<option th:each="i:${clist}" th:value="${i.code}" th:text="${i.code}+'：'+${i.name}">
+		<option value="0">カテゴリなし</option>
+		<option th:each="c:${clist}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 		</select>
 		<a href="/option" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>
@@ -59,10 +57,9 @@
 	<tr>
 		<th>グループ番号</th>
 		<td><select name="groupId">
-			<option value="1">1班</option>
-			<option value="2">2班</option>
-			<option value="3">3班</option>
-			<option onclick="openPopup();">新規登録</option>
+<!-- 			<option value="0">グループなし</option> -->
+		<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+			<!-- <option onclick="openPopup();">新規登録</option> -->
 			</select>
 		</td>
 	</tr>

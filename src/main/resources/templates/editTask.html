@@ -9,6 +9,8 @@
 <h1>タスク編集</h1>
 	<span th:replace="menu"></span>
 
+	<p th:text="${msg1}"></p>
+
 		<form action="/update"  method="post">
 		<input type="hidden" name="code" th:value="${task.code}">
 		<input type="hidden" name="userId" th:value="${session.userInfo.id}">
