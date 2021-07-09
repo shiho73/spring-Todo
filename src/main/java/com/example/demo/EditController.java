@@ -259,13 +259,13 @@ public class EditController {
 		}
 	}
 
-	//グループのデフォルト設定・どうさしない
-	private void groupZero() {
-		List<Group> list2 = groupRepository.findById(0);
-		if (list2.isEmpty()) {
-			Group group = new Group(0, "なし");
-			groupRepository.saveAndFlush(group);
-		}
-	}
+//	//グループのデフォルト設定・どうさしない
+//	private void groupZero() {
+//		List<Group> list2 = groupRepository.findById(0);
+//		if (list2.isEmpty()) {
+//			Group group = new Group(0, "なし");
+//			groupRepository.saveAndFlush(group);
+//		}
+//	}
 
 }
