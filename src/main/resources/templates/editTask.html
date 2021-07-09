@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+<script>
+  $(function() {
+    $("#datepicker").datepicker();
+  });
+</script>
 </head>
 <body>
 
@@ -25,7 +34,7 @@
  	</tr>
 
  	<tr>
-		<th>期限</th><td><input type="date" name="dline" th:value="${task.dline}"></td>
+		<th>期限</th><td><input type="text" name="dline" th:value="${task.dline}" id="datepicker"></td>
 	</tr>
 
 	<tr>
