@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
+import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
+import com.example.demo.group.GroupRepository;
+import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
@@ -25,16 +30,24 @@ public class UserController {
 	@Autowired
 	HttpSession session;
 
-	//Userデータベース
-	@Autowired
-	UserRepository userRepository;
-
 	//Taskデータベース
 	@Autowired
 	TaskRepository taskRepository;
 
+	//Userデータベース
+	@Autowired
+	UserRepository userRepository;
+
+	//Groupデータベース
+	@Autowired
+	GroupRepository groupRepository;
+
 	@Autowired
 	PriorityRepository priorityRepository;
+
+	//Categoryデータベース
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	//http://localhost:8080/
 	//ログイン画面
@@ -87,6 +100,15 @@ public class UserController {
 					list.add(task);
 				}
 			}
+
+			List<User> userList = userRepository.findAll();
+			List<Category> categoryList = categoryRepository.findAll();
+			List<Priority> priorityList = priorityRepository.findAll();
+			List<Group> groupList = groupRepository.findAll();
+			mv.addObject("ulist", userList);
+			mv.addObject("clist", categoryList);
+			mv.addObject("plist", priorityList);
+			mv.addObject("glist", groupList);
 
 			mv.addObject("list", list);
 			mv.setViewName("list");
