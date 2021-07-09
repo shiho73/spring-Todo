@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
@@ -86,15 +85,6 @@ public class UserController {
 			for (Task task : taskList) {
 				if (task.isTrash() == true) {
 					list.add(task);
-				}
-			}
-
-			ArrayList<String> list2 = new ArrayList<String>();
-			for(Task a:list) {
-				List<Priority> plist = priorityRepository.findByNum(a.getPrtNum());
-				if(!plist.isEmpty()) {
-					Priority p = plist.get(0);
-					list2.add(p.getName());
 				}
 			}
 
