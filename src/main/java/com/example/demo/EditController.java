@@ -259,7 +259,7 @@ public class EditController {
 		}
 	}
 
-	//グループのデフォルト設定
+	//グループのデフォルト設定・どうさしない
 	private void groupZero() {
 		List<Group> list2 = groupRepository.findById(0);
 		if (list2.isEmpty()) {

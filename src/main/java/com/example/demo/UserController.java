@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.priority.Priority;
+import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
@@ -32,6 +34,9 @@ public class UserController {
 	@Autowired
 	TaskRepository taskRepository;
 
+	@Autowired
+	PriorityRepository priorityRepository;
+
 	//http://localhost:8080/
 	//ログイン画面
 	@RequestMapping("/")
@@ -45,58 +50,64 @@ public class UserController {
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
 			@RequestParam("name") String name,
-			@RequestParam("pw") String pw
-		) {
+			@RequestParam("pw") String pw) {
 
 		// 名前とパスワードが空の場合にエラーとする
-	if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
-		mv.addObject("message", "名前とパスワードを入力してください");
-		mv.setViewName("top");
-		return mv;
-	}
-
-	List<User> user = userRepository.findByName(name);
-
-	//ヒットしたら
-	if (!user.isEmpty()) {
-
-		User userInfo = user.get(0); //一致した名前を含むリスト取得
-
-		if (!pw.equals(userInfo.getPw())){
-			mv.addObject("message", "パスワードが違います");
+		if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
+			mv.addObject("message", "名前とパスワードを入力してください");
 			mv.setViewName("top");
 			return mv;
 		}
 
-		// セッションスコープにカテゴリ情報を格納する
-		session.setAttribute("name", name);
-		session.setAttribute("userInfo", userInfo);
+		List<User> user = userRepository.findByName(name);
 
-		//空の表示用リストを生成
-				ArrayList<Task> list = new ArrayList<Task>();
+		//ヒットしたら
+		if (!user.isEmpty()) {
 
-				//全てのタスクを取得
-				List<Task> taskList = taskRepository.findAll();
+			User userInfo = user.get(0); //一致した名前を含むリスト取得
 
-				//ゴミ箱に入れていなければ、表示するリストに追加
-				for(Task task : taskList) {
-					if(task.isTrash() == true) {
-						list.add(task);
-					}
+			if (!pw.equals(userInfo.getPw())) {
+				mv.addObject("message", "パスワードが違います");
+				mv.setViewName("top");
+				return mv;
+			}
+
+			// セッションスコープにカテゴリ情報を格納する
+			session.setAttribute("name", name);
+			session.setAttribute("userInfo", userInfo);
+
+			//空の表示用リストを生成
+			ArrayList<Task> list = new ArrayList<Task>();
+
+			//全てのタスクを取得
+			List<Task> taskList = taskRepository.findAll();
+
+			//ゴミ箱に入れていなければ、表示するリストに追加
+			for (Task task : taskList) {
+				if (task.isTrash() == true) {
+					list.add(task);
 				}
+			}
 
+			ArrayList<String> list2 = new ArrayList<String>();
+			for(Task a:list) {
+				List<Priority> plist = priorityRepository.findByNum(a.getPrtNum());
+				if(!plist.isEmpty()) {
+					Priority p = plist.get(0);
+					list2.add(p.getName());
+				}
+			}
 
-					mv.addObject("list", list);
-		mv.setViewName("list");
+			mv.addObject("list", list);
+			mv.setViewName("list");
 
-	} else {
-		//見つからなかった場合ログインNG
-		mv.addObject("message", "入力された情報は登録されていません");
-		mv.setViewName("top");
+		} else {
+			//見つからなかった場合ログインNG
+			mv.addObject("message", "入力された情報は登録されていません");
+			mv.setViewName("top");
+		}
+		return mv;
 	}
-	return mv;
-}
-
 
 	//新規ユーザー登録
 	//ログイン画面
@@ -107,52 +118,49 @@ public class UserController {
 		return mv;
 	}
 
-
 	//新規ユーザー登録アクション
 	@PostMapping("/user/new")
 	public ModelAndView newuser(ModelAndView mv,
 			@RequestParam("name") String name,
 			@RequestParam("pw") String pw,
-			@RequestParam("pw1") String pw1
-			) {
+			@RequestParam("pw1") String pw1) {
 
 		// 名前とパスワードが空の場合にエラーとする
-	if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
-		mv.addObject("message", "名前とパスワードを入力してください");
-		mv.setViewName("newUser");
-		return mv;
-	}
+		if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
+			mv.addObject("message", "名前とパスワードを入力してください");
+			mv.setViewName("newUser");
+			return mv;
+		}
 
-	List<User> user = userRepository.findByName(name);
+		List<User> user = userRepository.findByName(name);
 
-	//同じ名前がヒットしたら
-	if (!user.isEmpty()) {
+		//同じ名前がヒットしたら
+		if (!user.isEmpty()) {
 
 			mv.addObject("message", "既にその名前は登録されています");
 			mv.setViewName("newUser");
 			return mv;
-		}else {
+		} else {
 
-	if(pw.equals(pw1)) {
-		//t_user新しく追加
-		User user1 = new User(name,pw);
-		userRepository.saveAndFlush(user1);
+			if (pw.equals(pw1)) {
+				//t_user新しく追加
+				User user1 = new User(name, pw);
+				userRepository.saveAndFlush(user1);
 
-		List<User> userList = userRepository.findAll();
-		mv.addObject("user", userList);
+				List<User> userList = userRepository.findAll();
+				mv.addObject("user", userList);
 
-		mv.setViewName("finished");
-		return mv;
+				mv.setViewName("finished");
+				return mv;
 
-		}else {
+			} else {
 
-		mv.addObject("message", "パスワードが一致していません");
-		mv.setViewName("newUser");
+				mv.addObject("message", "パスワードが一致していません");
+				mv.setViewName("newUser");
+			}
 		}
+		return mv;
 	}
-	return mv;
-}
-
 
 	//ログアウト
 	@RequestMapping("/logout")
