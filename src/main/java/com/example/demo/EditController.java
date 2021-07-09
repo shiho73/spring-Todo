@@ -56,7 +56,7 @@ public class EditController {
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
 		categoryZero();
-//		groupZero();
+////		groupZero();
 
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
