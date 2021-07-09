@@ -55,8 +55,8 @@ public class EditController {
 	//新規作成
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
-		groupZero();
 		categoryZero();
+//		groupZero();
 
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
@@ -246,8 +246,8 @@ public class EditController {
 
 	//グループのデフォルト設定
 	private void groupZero() {
-		List<Group> list = groupRepository.findById(0);
-		if (list.isEmpty()) {
+		List<Group> list2 = groupRepository.findById(0);
+		if (list2.isEmpty()) {
 			Group group = new Group(0, "なし");
 			groupRepository.saveAndFlush(group);
 		}

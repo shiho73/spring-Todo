@@ -46,19 +46,21 @@
 
 	<tr>
 		<th>カテゴリ番号</th>
-	<td><select name="cgCode">
-		<option value="0">カテゴリなし</option>
-		<option th:each="c:${clist}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
-		</select>
+		<td>
+			<select name="cgCode">
+				<option value="0">カテゴリを選択してください</option>
+				<option th:each="c:${clist}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+			</select>
 		<a href="/option" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>
 	</tr>
 
 	<tr>
 		<th>グループ番号</th>
-		<td><select name="groupId">
-<!-- 			<option value="0">グループなし</option> -->
-		<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+		<td>
+			<select name="groupId">
+				<option value="0">グループを選択してください</option>
+				<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
 			<!-- <option onclick="openPopup();">新規登録</option> -->
 			</select>
 		</td>
