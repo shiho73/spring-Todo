@@ -193,7 +193,7 @@ public class EditController {
 	}
 
 	//編集アクション
-	@RequestMapping("/update")
+	@PostMapping("/update")
 	public ModelAndView edit1(
 			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
@@ -222,14 +222,19 @@ public class EditController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		if (date==null) {
+			Date dline3 = Date.valueOf(dline);
+			Task task = new Task(code, name, userId, dline3, prtNum, cgCode, groupId, progress, memo, true);
+			taskRepository.saveAndFlush(task);
+		} else {
 		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date2 = sdf.format(date);
 		//String型をData型(SQL)dline2に変換
 		Date dline2 = Date.valueOf(date2);
-
 		Task task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
-		taskRepository.saveAndFlush(task);
+		taskRepository.saveAndFlush(task);}
 
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
