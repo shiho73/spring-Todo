@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,16 +98,23 @@ public class EditController {
 		}
 
 		//期限日の型変換
-		Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = simpleDateFormat.format(date);
-        java.sql.Date date1 = java.sql.Date.valueOf(formattedDate);
-
-
-		Date dline1 = Date.valueOf(dline);
+		//取得した文字列型の期限日(dline)をDate型(yyyy/MM/dd)に変換
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date date = null;
+		try {
+			date = sdFormat.parse(dline);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		//Date型(yyyy/MM/dd)のdateをDate型(yyyy-MM-dd)に変換し、
+		//String型のdate2に変換
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date2 = sdf.format(date);
+        //String型のdate2をData型(SQL)dline2に変換
+        Date dline2 = Date.valueOf(date2);
 
 		//新しく追加
-		Task task = new Task(name, userId, dline1, prtNum, cgCode, groupId, memo, true);
+		Task task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
 		taskRepository.saveAndFlush(task);
 
 		//すべてのリスト取得
