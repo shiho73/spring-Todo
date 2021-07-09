@@ -58,7 +58,7 @@
 	<tr>
 		<th>グループ番号</th>
 				<td><select name="groupId">
-		<option value="0">グループを選択してください</option>
+<!-- 		<option value="0">グループを選択してください</option> -->
 		<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
 			<!-- <option onclick="openPopup();">新規登録</option> -->
 			</select>
