@@ -17,8 +17,8 @@
 <h1>タスク登録</h1>
 	<span th:replace="menu"></span>
 
-	<p th:text="${msg1}"></p>
-	<p th:text="${msg2}"></p>
+	<p th:text="${msg1}" style="color:red"></p>
+	<p th:text="${msg2}" style="color:red"></p>
 
 		<form action="/list/add"  method="post">
 		<input type="hidden" name="userId" th:value="${session.userInfo.id}">
