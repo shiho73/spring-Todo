@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>タスク一覧</title>
+</head>
+<body>
+<h4>詳細</h4>
+
+		<form action="/detailed"  method="post">
+		<input type="hidden" name="code" th:value="${task.code}">
+		<input type="hidden" name="userId" th:value="${session.userInfo.id}">
+
+		<table border="1">
+	<tr>
+		<th>タスク名</th><td th:text="${task.name}"></td>
+	</tr>
+
+	<tr>
+ 		<th>作成者</th><td th:text="${session.userInfo.name}"></td>
+ 	</tr>
+
+ 	<tr>
+		<th>期限</th><td th:text="${task.dline}"></td>
+	</tr>
+
+	<tr>
+		<th>優先順位</th><td th:text="${task.prtNum}"></td>
+	</tr>
+
+	<tr>
+		<th>カテゴリ番号</th><td th:text="${task.cgCode}"></td>
+	</tr>
+
+	<tr>
+		<th>グループ番号</th><td th:text="${task.groupId}"></td>
+	</tr>
+
+	<tr>
+		<th>進捗度</th>
+		<td th:text="${task.progress}"></td>
+	<tr>
+		<th>備考</th>
+		<td th:text="${task.memo}" cols="40" rows="5"></textarea></td>
+	</tr>
+
+</table>
+
+<br>
+<!-- 	<input type="submit"  value="更新"> -->
+	<br>
+<a href="list">タスク一覧へ</a>
+</form>
+
+</body>
+</html>
