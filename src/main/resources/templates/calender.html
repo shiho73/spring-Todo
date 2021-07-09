@@ -1,19 +1,30 @@
-<!-- <!DOCTYPE html> -->
-<!-- <html xmlns:th="http://www.thymeleaf.org"> -->
-<!-- <head> -->
-<!-- <meta charset="UTF-8"> -->
-<!-- <title>カレンダー</title> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script> -->
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script> -->
-<!-- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" > -->
-<!-- <script> -->
-//   $(function() {
-//     $("#datepicker").datepicker();
-//   });
-<!-- </script> -->
-<!-- </head> -->
-<!-- <body> -->
-<!-- <input type="text" id="datepicker"> -->
-<!-- </body> -->
-<!-- </html> -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>カレンダー</title>
+<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    $("#datepicker").datepicker({
+        // 日付が選択された時、日付をテキストフィールドへセット
+        onSelect: function(dateText, inst) {
+                    $("#date_val").val(dateText);
+                }
+    });
+});
+</script>
+</head>
+<body>
+<h1>カレンダー</h1>
+
+<div id="datepicker"/></div>
+<br/>
+<p>日付: <input type="text" id="date_val"/></p>
+
+</body>
+</html>

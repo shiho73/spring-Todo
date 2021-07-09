@@ -3,6 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+
+<!-- <script> -->
+<!--// $( "#dialog" ).dialog({
+// 	autoOpen: false,
+// 	width: 400,
+// 	buttons: [
+// 		{
+// 			text: "Ok",
+// 			click: function() {
+// 				$( this ).dialog( "close" );
+// 			}
+// 		}
+// 	]
+// });
+// //Link to open the dialog
+// $( "#dialog-link" ).click(function( event ) {
+// 	$( "#dialog" ).dialog( "open" );
+// 	event.preventDefault();
+// });-->
+
+<!-- </script> -->
+
+<script>
+
+$(function() {
+  $("#dialog-link").click(function() {
+    $("#dialog").dialog({
+      modal:true,
+      title:"タスク詳細",
+      buttons: {
+        "ＯＫ": function() {$(this).dialog("close");},
+        "キャンセル": function() {$(this).dialog("close");}
+      }
+    });
+  });
+});
+
+</script>
+
 </head>
 <body>
 <h1>タスク一覧</h1>
@@ -62,7 +105,12 @@
 	</tr>
 
 	<tr th:each="list:${list}">
-		<td th:text="${list.code}"></td>
+		<td >
+		<input type="button" th:value="${list.code}" id="dialog-link" >
+		<div id="dialog" style="display:none;">
+ 		 <p>a</p>
+		</div>
+		</td>
 		<td th:text="${list.name}"></td>
 		<td th:text="${list.userId}"></td>
 		<td th:text="${list.dline}"></td>
