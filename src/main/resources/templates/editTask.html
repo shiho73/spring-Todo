@@ -31,9 +31,7 @@
 	<tr>
 		<th>優先順位</th>
 	<td><select name="prtNum">
-			<option value="1" th:selected="${task.prtNum==1}">高</option>
-			<option value="2" th:selected="${task.prtNum==2}">中</option>
-			<option value="3" th:selected="${task.prtNum==3}">低</option>
+			<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}" th:selected="${task.prtNum==p.num}">
 		</select>
 	</td>
 	</tr>
@@ -41,19 +39,19 @@
 	<tr>
 		<th>カテゴリ番号</th>
 	<td><select name="cgCode">
-		<option value="1" th:selected="${task.cgCode==1}">家事</option>
-		<option value="2" th:selected="${task.cgCode==2}">仕事</option>
-		<option value="3" th:selected="${task.cgCode==3}">勉強</option>
+		<option value="0">カテゴリを選択してください</option>
+		<option th:each="c:${clist}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}" th:selected="${task.cgCode==c.code}">
 		</select>
+		<a href="/option" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>
 	</tr>
 
 	<tr>
 		<th>グループ番号</th>
-		<td><select name="groupId">
-			<option value="1" th:selected="${task.groupId==1}">1班</option>
-			<option value="2" th:selected="${task.groupId==2}">2班</option>
-			<option value="3" th:selected="${task.groupId==3}">3班</option>
+				<td><select name="groupId">
+		<option value="0">グループを選択してください</option>
+		<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
+			<!-- <option onclick="openPopup();">新規登録</option> -->
 			</select>
 		</td>
 	</tr>
@@ -63,7 +61,7 @@
 		<td><input th:value="${task.progress}" type="number" name="progress"></td>
 	<tr>
 		<th>備考</th>
-		<td><textarea  th:value="${task.memo}" name="memo" cols="40" rows="5"></textarea></td>
+		<td><textarea th:value="${task.memo}" name="memo" cols="40" rows="5"></textarea></td>
 	</tr>
 
 </table>
@@ -71,7 +69,7 @@
 <br>
 	<input type="submit"  value="更新">
 	<br>
-<a href="list">タスク一覧へ</a>
+<a href="/list">タスク一覧へ</a>
 </form>
 
 

@@ -55,6 +55,9 @@ public class EditController {
 	//新規作成
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
+		groupZero();
+		categoryZero();
+
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
 		List<Group> groupList = groupRepository.findAll();
@@ -91,14 +94,8 @@ public class EditController {
 			return listnew(mv);
 		}
 
-		//カテゴリ未選択
-		if (cgCode == 0) {
-			categoryZero();
-			cgCode = 0;
-		}
-
 		//期限日の型変換
-		//取得した文字列型の期限日(dline)をDate型(yyyy/MM/dd)に変換
+		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
         java.util.Date date = null;
 		try {
@@ -106,11 +103,10 @@ public class EditController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		//Date型(yyyy/MM/dd)のdateをDate型(yyyy-MM-dd)に変換し、
-		//String型のdate2に変換
+		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date2 = sdf.format(date);
-        //String型のdate2をData型(SQL)dline2に変換
+        //String型をData型(SQL)dline2に変換
         Date dline2 = Date.valueOf(date2);
 
 		//新しく追加
@@ -158,8 +154,12 @@ public class EditController {
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
-		List<Category> categoryList1 = categoryRepository.findAll();
-		mv.addObject("clist", categoryList1);
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 
 		mv.setViewName("addTask");
 		return mv;
@@ -178,6 +178,13 @@ public class EditController {
 		if (recode.isEmpty() == false) {
 			task = recode.get();
 		}
+
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 
 		mv.addObject("task", task);
 
@@ -234,6 +241,15 @@ public class EditController {
 		if (list.isEmpty()) {
 			Category category = new Category(0, "なし");
 			categoryRepository.saveAndFlush(category);
+		}
+	}
+
+	//グループのデフォルト設定
+	private void groupZero() {
+		List<Group> list = groupRepository.findAll();
+		if (list.isEmpty()) {
+			Group group = new Group(0, "なし");
+			groupRepository.saveAndFlush(group);
 		}
 	}
 
