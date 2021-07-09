@@ -8,27 +8,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 
-<!-- <script> -->
-<!--// $( "#dialog" ).dialog({
-// 	autoOpen: false,
-// 	width: 400,
-// 	buttons: [
-// 		{
-// 			text: "Ok",
-// 			click: function() {
-// 				$( this ).dialog( "close" );
-// 			}
-// 		}
-// 	]
-// });
-// //Link to open the dialog
-// $( "#dialog-link" ).click(function( event ) {
-// 	$( "#dialog" ).dialog( "open" );
-// 	event.preventDefault();
-// });-->
-
-<!-- </script> -->
-
 <script>
 
 $(function() {
@@ -106,9 +85,12 @@ $(function() {
 
 	<tr th:each="list:${list}">
 		<td >
-		<input type="button" th:value="${list.code}" id="dialog-link" >
+<!-- 一番にしか作用していない -->
+		<input type="submit" th:value="${list.code}" id="dialog-link" >
 		<div id="dialog" style="display:none;">
- 		 <p>a</p>
+ 		<p>
+<!-- 表示させる内容記述 -->
+ 		 </p>
 		</div>
 		</td>
 		<td th:text="${list.name}"></td>
