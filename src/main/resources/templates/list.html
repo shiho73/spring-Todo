@@ -43,7 +43,6 @@ $("submit").click(function() {
 
 </script>
 
-
 <!-- jQueryカレンダーのテンプレート取得 -->
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 
@@ -57,6 +56,7 @@ $(function() {
                 }
     });
 });
+
 </script>
 
 <!-- ダイアログ作成用jQuery -->
@@ -194,7 +194,7 @@ $(function(){
 		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
 
 <!-- 進捗度をデータベースと紐づける予定 -->
-		<td><input th:text="${list.progress}" type="range" min="1" max="10" step="1" value="1"></td>
+		<td><input th:text="${list.progress}" type="range" min="0" max="100" step="10" value="0" name="progress"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
