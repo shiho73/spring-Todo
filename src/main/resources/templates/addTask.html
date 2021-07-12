@@ -74,8 +74,13 @@
 <br>
 	<input type="submit"  value="新規作成">
 	<br>
-<a href="/list">タスク一覧へ</a>
 </form>
+<br>
+<form action="/group/edit" method="POST"><select name="gid">
+				<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+			</select><input type="submit" value="グループ編集"></form>
+
+<a href="/list">タスク一覧へ</a>
 
 </body>
 </html>
