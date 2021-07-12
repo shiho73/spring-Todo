@@ -5,12 +5,12 @@
 <title>タスク管理</title>
 
 <!-- jQuery使用のための記述 -->
-<link rel="stylesheet" href="/Loading.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
+<link rel="stylesheet" href="/Loading.css">
 <script type="text/javascript">
 $(function() {
   var h = $(window).height();
@@ -64,7 +64,7 @@ $(function() {
 $(function() {
   $(".dialog-link").click(function() {
   	var selectNo = $(this).val();
-    $(".dialog").dialog({
+    $("#dialog").dialog({
       modal:true,
       title:"タスク詳細",
       buttons: {
@@ -76,19 +76,14 @@ $(function() {
 });
 </script>
 
-<!-- 先生から頂いたボタン　確認用 -->
-
 <script type="text/javascript">
-$(function(){
-
-	$(".AAA").click(function(){
-	    var selectNo = $(this).val();
-	    alert(selectNo);
-	});
-
-});
-
+function f(){
+	var progress = $("#progress").val();
+// 	alert(data);
+	location.href = "/task/update?progress=" + progress;
+}
 </script>
+
 </head>
 <body>
 
@@ -123,10 +118,11 @@ $(function(){
 </header>
 
 	<span th:replace="menu"></span>
+
 	<form action="/task/update"  method="post">
-<!-- 		<input type="hidden" name="CODE" th:value="${list.code}">あ -->
-	<input type="submit"  value="更新">
+	<input type="button"  value="更新" onclick="f();">
 </form>
+
 	<form action="/look/trash"  method="post">
 	<input type="submit"  value="ゴミ箱を見る">
 </form>
@@ -178,11 +174,11 @@ $(function(){
 
 	<tr th:each="list:${list}">
 		<td >
-<!-- 一番にしか作用していない -->
+
 				<input class="dialog-link" type="submit" th:value="${list.code}">
-				<div class="dialog" style="display:none;">
+				<div id="dialog" style="display:none;">
  					<p>
-						<!-- 表示させる内容記述 -->
+						田中志歩<!-- 表示させる内容記述 -->
  		 			</p>
 				</div>
 		</td>
@@ -194,8 +190,10 @@ $(function(){
 		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
 
 <!-- 進捗度をデータベースと紐づける予定 -->
-		<td><input th:text="${list.progress}" type="range" min="0" max="100" step="10" value="0" name="progress"></td>
+		<td><input th:text="${list.progress}" type="range" min="0" max="100" step="10" value="0" name="progress" id="progress"></td>
 		<td th:text="${list.memo}"></td>
+
+
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
 				<input type="hidden" th:value="${list.name}" name="name">
@@ -209,6 +207,8 @@ $(function(){
 				<input type="submit" value="削除">
 			</form>
 		</td>
+
+
 		<td><form action="/list/edit" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
 				<input type="submit" value="編集">
@@ -219,12 +219,6 @@ $(function(){
 </table>
 
 	<span th:replace="logout"></span>
-
-<!-- 確認用 -->
-<input type="button" class="AAA" value="ボタン１">
-<input type="button" class="AAA" value="ボタン２">
-<input type="button" class="AAA" value="ボタン３">
-<input type="button" class="AAA" value="ボタン４">
 
 </div>
 </body>

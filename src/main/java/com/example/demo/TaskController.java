@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -163,34 +163,34 @@ public class TaskController {
 	}
 
 	//一括更新ボタン
-	@PostMapping("/task/update")
+	@GetMapping("/task/update")
 	public ModelAndView update(
 			@RequestParam(name = "progress") int progress,
 			ModelAndView mv) {
-
-			Task task = new Task(progress);
-			taskRepository.saveAndFlush(task);
-
-			ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-			List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
-
-			//ゴミ箱に入れていなければ、表示するリストに追加
-			for (Task task1 : taskList) {
-				if (task1.isTrash() == true) {
-					list.add(task1);
-				}
-			}
-
-			List<User> userList = userRepository.findAll();
-			List<Category> categoryList = categoryRepository.findAll();
-			List<Priority> priorityList = priorityRepository.findAll();
-			List<Group> groupList = groupRepository.findAll();
-			mv.addObject("ulist", userList);
-			mv.addObject("clist", categoryList);
-			mv.addObject("plist", priorityList);
-			mv.addObject("glist", groupList);
-
-			mv.addObject("list", list); //表示用オブジェクトを設定
+ System.out.println("progress=" + progress);
+//			Task task = new Task(progress);
+//			taskRepository.saveAndFlush(task);
+//
+//			ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
+//			List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
+//
+//			//ゴミ箱に入れていなければ、表示するリストに追加
+//			for (Task task1 : taskList) {
+//				if (task1.isTrash() == true) {
+//					list.add(task1);
+//				}
+//			}
+//
+//			List<User> userList = userRepository.findAll();
+//			List<Category> categoryList = categoryRepository.findAll();
+//			List<Priority> priorityList = priorityRepository.findAll();
+//			List<Group> groupList = groupRepository.findAll();
+//			mv.addObject("ulist", userList);
+//			mv.addObject("clist", categoryList);
+//			mv.addObject("plist", priorityList);
+//			mv.addObject("glist", groupList);
+//
+//			mv.addObject("list", list); //表示用オブジェクトを設定
 
 			mv.setViewName("list");//タスク一覧画面に遷移
 
