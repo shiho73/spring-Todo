@@ -152,10 +152,10 @@ public class EditController {
 		List<Category> list2 = categoryRepository.findByName(name);
 		if (!list.isEmpty() || !list2.isEmpty()) {
 			if (!list.isEmpty()) {
-				mv.addObject("msg", "使用済みのカテゴリコードです");
+				mv.addObject("msg1", "使用済みのカテゴリコードです");
 			}
-			if (!list.isEmpty()) {
-				mv.addObject("msg", "使用済みのカテゴリ名です");
+			if (!list2.isEmpty()) {
+				mv.addObject("msg2", "使用済みのカテゴリ名です");
 			}
 			mv.setViewName("optionCategory");
 			return mv;
@@ -164,9 +164,11 @@ public class EditController {
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
+		List<User> userList = userRepository.findAll();
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
 		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
 		mv.addObject("clist", categoryList);
 		mv.addObject("plist", priorityList);
 		mv.addObject("glist", groupList);

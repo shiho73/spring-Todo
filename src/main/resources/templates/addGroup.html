@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>グループ登録</title>
+</head>
+<body>
+<form action="/group/add" method="post">
+
+グループ名(※):<input type="text" name="name"><br>
+グループ番号(※)：<input type="number" name="id" min="1"><br>
+グループメンバー：<input type="text" name="member"><br>
+<input type="submit" value="登録">
+	<span th:text="${message}" style="color:red"></span>
+	<br>
+</form>
+
+※のついた項目は必須です<br>
+<span th:text="${msg1}" style="color:red"></span>
+<p th:text="${msg2}" style="color:red"></p>
+
+</body>
+</html>

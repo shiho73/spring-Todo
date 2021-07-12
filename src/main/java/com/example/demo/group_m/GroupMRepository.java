@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Group_mRepository extends JpaRepository<Group_m, Integer>{
+public interface GroupMRepository extends JpaRepository<GroupM, Integer>{
 
 }
