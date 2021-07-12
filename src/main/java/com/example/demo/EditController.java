@@ -57,7 +57,7 @@ public class EditController {
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
 		categoryZero();
-		////		groupZero();
+		groupZero();
 
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
@@ -233,18 +233,19 @@ public class EditController {
 			e.printStackTrace();
 		}
 
-		if (date==null) {
+		if (date == null) {
 			Date dline3 = Date.valueOf(dline);
 			Task task = new Task(code, name, userId, dline3, prtNum, cgCode, groupId, progress, memo, true);
 			taskRepository.saveAndFlush(task);
 		} else {
-		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date2 = sdf.format(date);
-		//String型をData型(SQL)dline2に変換
-		Date dline2 = Date.valueOf(date2);
-		Task task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
-		taskRepository.saveAndFlush(task);}
+			//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date2 = sdf.format(date);
+			//String型をData型(SQL)dline2に変換
+			Date dline2 = Date.valueOf(date2);
+			Task task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
+			taskRepository.saveAndFlush(task);
+		}
 
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -283,13 +284,15 @@ public class EditController {
 		}
 	}
 
-//	//グループのデフォルト設定・どうさしない
-//	private void groupZero() {
-//		List<Group> list2 = groupRepository.findById(0);
-//		if (list2.isEmpty()) {
-//			Group group = new Group(0, "なし");
-//			groupRepository.saveAndFlush(group);
-//		}
-//	}
+	//グループのデフォルト設定・どうさしない
+	private void groupZero() {
+		List<Group> list2 = groupRepository.findAll();
+		if (list2.isEmpty()) {
+			Group group = new Group(0, "なし");
+			groupRepository.saveAndFlush(group);
+		} else {
+
+		}
+	}
 
 }
