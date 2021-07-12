@@ -75,6 +75,13 @@ public class Task {
 		this.trash = trash;
 	}
 
+	//一括更新
+	public Task(int progress) {
+		super();
+		this.progress = progress;
+	}
+
+	//ゲッタとセッタ
 	public Integer getCode() {
 		return code;
 	}
