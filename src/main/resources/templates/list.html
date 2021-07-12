@@ -18,29 +18,10 @@ $(function() {
 });
 </script>
 
-<!-- 一回退避 -->
-<script>
-
-// $(function() {
-//   $("#dialog-link").click(function() {
-//     $("#dialog").dialog({
-//       modal:true,
-//       title:"タスク詳細",
-//       buttons: {
-//         "ＯＫ": function() {$(this).dialog("close");},
-//         "キャンセル": function() {$(this).dialog("close");}
-//       }
-//     });
-//   });
-// });
-
-</script>
-
-<!-- 挑戦中 -->
 <script>
 
 $(function() {
-  $("#dialog-link").on('click',function() {
+  $("#dialog-link").click(function() {
     $("#dialog").dialog({
       modal:true,
       title:"タスク詳細",
@@ -128,9 +109,7 @@ $(function() {
 		</td>
 		<td th:text="${list.name}"></td>
 		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
-		<td><span th:if="${dflag==true}" style="color:red" th:text="${list.dline}"></span>
-		<span th:if="${dflag==false}" style="color:red" th:text="${list.dline}"></span>
-		</td>
+		<td><span th:text="${list.dline}"></span></td>
 		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
 		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
 		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>

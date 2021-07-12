@@ -101,8 +101,6 @@ public class UserController {
 				}
 			}
 
-
-
 			List<User> userList = userRepository.findAll();
 			List<Category> categoryList = categoryRepository.findAll();
 			List<Priority> priorityList = priorityRepository.findAll();
