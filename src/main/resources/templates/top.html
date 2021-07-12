@@ -4,62 +4,9 @@
 <meta charset="UTF-8">
 <title>タスク管理</title>
 
-<!-- jQuery使用のための記述 -->
-<link rel="stylesheet" href="/Loading.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
-
-<!-- ロード時間についてjQuery -->
-<script>
-$(function() {
-  var h = $(window).height();
-
-  $('#wrap').css('display','none');
-  $('#loader-bg ,#loader').height(h).css('display','block');
-});
-
-$(window).load(function () { //全ての読み込みが完了したら実行
-  $('#loader-bg').delay(900).fadeOut(800);
-  $('#loader').delay(600).fadeOut(300);
-  $('#wrap').css('display', 'block');
-});
-
-//10秒たったら強制的にロード画面を非表示
-$(function(){
-  setTimeout('stopload()',10000);
-});
-
-function stopload(){
-  $('#wrap').css('display','block');
-  $('#loader-bg').delay(900).fadeOut(800);
-  $('#loader').delay(600).fadeOut(300);
-}
-</script>
-<script type="text/javascript">
-$("submit").click(function() {
-	$("#try").fadeOut(400, function(){ $(this).remove(); });
-});
-</script>
 
 </head>
 <body>
-
-  <div id="try">
-  <div class='triangles'>
-  <div class='tri invert'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-</div>
-<p>Now Loading...</p>
-</div>
-<div id="wrap">
 
 <h1>ログイン</h1>
 
@@ -74,7 +21,8 @@ PASS:<input type="password" name="pw">
 	<br>
 </form>
 <a href="/user">新規ユーザー登録</a>
-</div>
+
+
 </body>
 </html>
 
