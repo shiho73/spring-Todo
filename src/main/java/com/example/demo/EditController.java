@@ -24,6 +24,7 @@ import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -248,6 +249,15 @@ public class EditController {
 				list.add(task1);
 			}
 		}
+
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 
 		mv.addObject("list", list);
 
