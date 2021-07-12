@@ -18,10 +18,29 @@ $(function() {
 });
 </script>
 
+<!-- 一回退避 -->
+<script>
+
+// $(function() {
+//   $("#dialog-link").click(function() {
+//     $("#dialog").dialog({
+//       modal:true,
+//       title:"タスク詳細",
+//       buttons: {
+//         "ＯＫ": function() {$(this).dialog("close");},
+//         "キャンセル": function() {$(this).dialog("close");}
+//       }
+//     });
+//   });
+// });
+
+</script>
+
+<!-- 挑戦中 -->
 <script>
 
 $(function() {
-  $("#dialog-link").click(function() {
+  $("#dialog-link").on('click',function() {
     $("#dialog").dialog({
       modal:true,
       title:"タスク詳細",
