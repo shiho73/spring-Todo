@@ -75,7 +75,7 @@ public class GroupController {
 			return mv;
 		}
 
-		//グループの重複チェック
+		//グループの重複チェック/
 		Optional<Group> list = groupRepository.findById(id);
 		List<Group> list2 = groupRepository.findByName(name);
 
