@@ -17,3 +17,30 @@ css
 カテゴリ別表示
 
 ★詳細ポップアップの中身：備考欄とグループ番号、グループメンバーの表示
+
+
+
+<!-- 挑戦中 -->
+<script>
+"${list.code}".each(function(index, element) {
+  $('button').on('click',"#dialog-link",function() {
+    $("#dialog").dialog({
+      modal:true,
+      title:"タスク詳細",
+      buttons: {
+        "ＯＫ": function() {$(this).dialog("close");},
+        "キャンセル": function() {$(this).dialog("close");}
+      }
+    });
+  });
+});
+</script>
+			<td th:text="${list.code}">
+			<input type="hidden" th:value="${list.code}" name="code">
+			<input type="submit" value="詳細"id="dialog-link">
+			<div id="dialog" style="display:none;">
+ 			<p>
+<!-- 表示させる内容記述 -->
+ 		 	</p>
+			</div>
+			</td>

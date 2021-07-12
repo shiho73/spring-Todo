@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
+
+<link rel="stylesheet" href="/Loading.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<script type="text/javascript">
+$("submit").click(function() {
+	$("#try").fadeOut(400, function(){ $(this).remove(); });
+});
+</script>
+
 </head>
 <body>
 
@@ -23,3 +35,17 @@ PASS:<input type="password" name="pw">
 </html>
 
 <!-- sss -->
+
+  <div id="try">
+  <div class='triangles'>
+  <div class='tri invert'></div>
+  <div class='tri invert'></div>
+  <div class='tri'></div>
+  <div class='tri invert'></div>
+  <div class='tri invert'></div>
+  <div class='tri'></div>
+  <div class='tri invert'></div>
+  <div class='tri'></div>
+  <div class='tri invert'></div>
+</div>
+</div>
