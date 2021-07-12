@@ -30,11 +30,11 @@
 	<tr th:each="list:${list}">
 		<td th:text="${list.code}"></td>
 		<td th:text="${list.name}"></td>
-		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></td>
+		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
 		<td th:text="${list.dline}"></td>
-		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></td>
-		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></td>
-		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></td>
+		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
+		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
+		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
 		<td th:text="${list.progress}"></td>
 		<td th:text="${list.memo}"></td>
 		<td><form action="/trash/recovery" method="post">

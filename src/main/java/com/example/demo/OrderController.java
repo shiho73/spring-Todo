@@ -10,10 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.priority.Priority;
+import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -38,6 +43,9 @@ public class OrderController {
 	//Userデータベース
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	PriorityRepository priorityRepository;
 
 	//コードで並べ替え・昇順
 	@RequestMapping("/order/code")
@@ -105,6 +113,16 @@ public class OrderController {
 			}
 		}
 		mv.addObject("list", list);
+
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
+
 		mv.setViewName("list");
 		return mv;
 	}
