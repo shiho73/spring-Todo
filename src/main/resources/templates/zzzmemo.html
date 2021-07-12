@@ -1,7 +1,7 @@
 田中さん
 ☆カレンダーの利用
 ★詳細ページの作成、一覧ページの編集
-　詳細ポップアップの番号との紐づけ
+
 
 css
 
@@ -20,27 +20,21 @@ css
 
 
 
-<!-- 挑戦中 -->
-<script>
-"${list.code}".each(function(index, element) {
-  $('button').on('click',"#dialog-link",function() {
-    $("#dialog").dialog({
-      modal:true,
-      title:"タスク詳細",
-      buttons: {
-        "ＯＫ": function() {$(this).dialog("close");},
-        "キャンセル": function() {$(this).dialog("close");}
-      }
-    });
-  });
-});
-</script>
-			<td th:text="${list.code}">
-			<input type="hidden" th:value="${list.code}" name="code">
-			<input type="submit" value="詳細"id="dialog-link">
-			<div id="dialog" style="display:none;">
- 			<p>
-<!-- 表示させる内容記述 -->
- 		 	</p>
-			</div>
-			</td>
+
+
+
+　詳細ポップアップの出現おかしいやつ
+ポップアップの中身
+進捗バー更新
+ログアウト
+
+メモ消える問題
+グループ作成・グループメンバー登録
+カテゴリ編集
+グループ編集
+カテゴリ別表示
+期限が近づいたときの色変更
+パスワード変更
+検索結果内並べ替え
+カテゴリリスト表示
+パスワード忘れ

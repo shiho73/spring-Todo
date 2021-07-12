@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
+
+<!-- jQuery使用のための記述 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<!-- jQueryカレンダーのテンプレート取得 -->
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+
+<!-- カレンダー表示用jQuery -->
 <script type="text/javascript">
 $(function() {
     $("#datepicker").datepicker({
@@ -18,11 +24,12 @@ $(function() {
 });
 </script>
 
+<!-- ダイアログ作成用jQuery -->
 <script>
-
 $(function() {
-  $("#dialog-link").click(function() {
-    $("#dialog").dialog({
+  $(".dialog-link").click(function() {
+  	var selectNo = $(this).val();
+    $(".dialog").dialog({
       modal:true,
       title:"タスク詳細",
       buttons: {
@@ -32,17 +39,31 @@ $(function() {
     });
   });
 });
-
 </script>
 
+<!-- 先生から頂いたボタン　確認用 -->
+
+<script type="text/javascript">
+$(function(){
+
+	$(".AAA").click(function(){
+	    var selectNo = $(this).val();
+	    alert(selectNo);
+	});
+
+});
+
+</script>
 </head>
 <body>
 <h1>タスク一覧</h1>
+
+<!-- カレンダー表示用 -->
 <header>
 <div id="datepicker"/>
 <br/>
-
 </header>
+
 	<span th:replace="menu"></span>
 	<form action="/task/update"  method="post">
 <!-- 		<input type="hidden" name="CODE" th:value="${list.code}">あ -->
@@ -100,12 +121,12 @@ $(function() {
 	<tr th:each="list:${list}">
 		<td >
 <!-- 一番にしか作用していない -->
-			<input type="submit" th:value="${list.code}" id="dialog-link">
-			<div id="dialog" style="display:none;">
- 			<p>
-<!-- 表示させる内容記述 -->
- 		 	</p>
-			</div>
+				<input class="dialog-link" type="submit" th:value="${list.code}">
+				<div class="dialog" style="display:none;">
+ 					<p>
+						<!-- 表示させる内容記述 -->
+ 		 			</p>
+				</div>
 		</td>
 		<td th:text="${list.name}"></td>
 		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
@@ -138,6 +159,12 @@ $(function() {
 	</tr>
 
 </table>
+
+<!-- 確認用 -->
+<input type="button" class="AAA" value="ボタン１">
+<input type="button" class="AAA" value="ボタン２">
+<input type="button" class="AAA" value="ボタン３">
+<input type="button" class="AAA" value="ボタン４">
 
 </body>
 </html>
