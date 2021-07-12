@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.priority.Priority;
+import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -41,6 +46,9 @@ public class TaskController {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	PriorityRepository priorityRepository;
+
 	//タスク一覧を表示
 	@RequestMapping("/list")
 	public ModelAndView lookList(ModelAndView mv) {
@@ -54,6 +62,15 @@ public class TaskController {
 				list.add(task);
 			}
 		}
+
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 
 		mv.addObject("list", list); //表示用オブジェクトを設定
 
@@ -80,6 +97,15 @@ public class TaskController {
 		} else {
 			mv.addObject("list", list); //リストの中身があれば、リストを表示
 		}
+
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 
 		//ゴミ箱画面に遷移
 		mv.setViewName("trash");
