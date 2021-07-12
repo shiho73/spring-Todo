@@ -120,6 +120,15 @@ public class EditController {
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
 
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
+
 		mv.setViewName("list");
 		return mv;
 	}
