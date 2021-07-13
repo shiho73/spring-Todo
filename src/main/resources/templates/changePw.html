@@ -6,18 +6,26 @@
 </head>
 <body>
 	<h1>登録情報変更</h1>
-	<form action="/change/pw" method="post">
-		登録情報の確認を行います
-		NAME:<input type="text" name="name">
-		<br>
-		<select>
-			<option value="出身地">出身地</option>
-			<option value="ペットの名前">ペットの名前</option>
-			<option value="両親の旧姓">両親の旧姓</option>
-		</select>
-		 <br>
-		  秘密の言葉：<input type="text" name="himitu">
-		   <input type="submit" value="変更">
+
+	<p th:text="${message}"></p>
+
+	登録情報の確認を行います
+	<br>
+	名前を入力すると秘密の質問が表示されます
+	<br>
+
+	<form action="/himitu/get" method="POST">
+		NAME:<input type="text" name="name" th:value="${userName}">
+		<input type="submit" value="送信">
 	</form>
+
+	<form action="/change/pw" method="post">
+		<span th:text="${quiz}"></span><br>
+		答え：<input type="text" name="himitu">
+		<input type="hidden" th:value="${userName}" name="userName">
+		<input type="submit" value="送信">
+	</form>
+
+
 </body>
 </html>

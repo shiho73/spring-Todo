@@ -13,6 +13,14 @@ PASS:<input type="password" name="pw">
 <br>
 PASS再確認:<input type="password" name="pw1">
 <br>
+秘密の質問:<select name="himituCode">
+			<option value="1" th:text="出身地は？">
+			<option value="2" th:text="ペットの名前は？">
+			<option value="3" th:text="両親の旧姓は？">
+	</select>
+<br>
+答え:<input type="text" name="himitu">
+<br>
 <input type="submit" value="登録">
 	<span th:text="${message}" style="color:red"></span>
 </form>

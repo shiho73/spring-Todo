@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,9 @@ public class User {
 	private String name;
 	private String pw;
 	private String himitu;
+
+	@Column(name="himitu_code")
+	private Integer himituCode;
 
 	public User() {
 
@@ -40,6 +44,22 @@ public class User {
 		this.name = name;
 		this.pw = pw;
 		this.himitu = himitu;
+	}
+
+	public User(String name, String pw, String himitu, Integer himituCode) {
+		super();
+		this.name = name;
+		this.pw = pw;
+		this.himitu = himitu;
+		this.himituCode = himituCode;
+	}
+
+	public Integer getHimituCode() {
+		return himituCode;
+	}
+
+	public void setHimituCode(Integer himituCode) {
+		this.himituCode = himituCode;
 	}
 
 	public String getHimitu() {
