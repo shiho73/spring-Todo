@@ -3,28 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <title>新規ユーザー登録</title>
+
+<!-- jQuery -->
+		<span th:replace="jquery"></span>
+
 </head>
 <body>
+
 <h1>新規ユーザー登録</h1>
-<form action="/user/new" method="post">
-NAME:<input type="text" name="name">
-<br>
-PASS:<input type="password" name="pw">
-<br>
-PASS再確認:<input type="password" name="pw1">
-<br>
-秘密の質問:<select name="himituCode">
-			<option value="1" th:text="出身地は？">
-			<option value="2" th:text="ペットの名前は？">
-			<option value="3" th:text="両親の旧姓は？">
-	</select>
-<br>
-答え:<input type="text" name="himitu">
-<br>
-<input type="submit" value="登録">
-	<span th:text="${message}" style="color:red"></span>
-</form>
-<br>
-<a href="/">ログイン画面へ</a>
+
+	<form action="/user/new" method="post">
+
+		<span th:text="${message}" style="color:red"></span>
+		<br>
+
+		NAME:<input type="text" name="name">
+		<br>
+		PASS:<input type="password" name="pw">
+		<br>
+		PASS再確認:<input type="password" name="pw1">
+		<br>
+		秘密の質問:<select name="himituCode">
+				<option value="1" th:text="出身地は？">
+				<option value="2" th:text="ペットの名前は？">
+				<option value="3" th:text="両親の旧姓は？">
+			</select>
+		<br>
+		答え:<input type="text" name="himitu">
+		<br>
+
+	<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
+
+		<br>
+		<button class="btnSubmit" value="登録">登録</button>
+		<button class="btnSubmit" type="reset" value="リセット">リセット</button>
+
+
+	</form>
+	<br>
+	<a href="/">ログイン画面へ</a>
 </body>
 </html>

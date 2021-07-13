@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<!-- jQuery -->
+			<span th:replace="jquery"></span>
+
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 <script>
   $(function() {
     $("#datepicker").datepicker();
   });
 </script>
+
 </head>
 <body>
 
@@ -77,7 +79,7 @@
 </table>
 
 <br>
-	<input type="submit"  value="更新">
+		<button class="btnSubmit" value="更新">更新</button>
 	<br>
 <a href="/list">タスク一覧へ</a>
 </form>
