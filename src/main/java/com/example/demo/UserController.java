@@ -184,7 +184,7 @@ public class UserController {
 	//パスワード忘れた人
 	@RequestMapping("/change")
 	public ModelAndView change(ModelAndView mv) {
-		session.invalidate();
+		mv.addObject("flag", false);
 		mv.setViewName("changePw");
 		return mv;
 	}
@@ -200,8 +200,7 @@ public class UserController {
 		if (user.isEmpty()) {
 			//見つからなかった場合取得NG
 			mv.addObject("message", "入力された情報は登録されていません");
-			mv.setViewName("changePw");
-			return mv;
+			return change(mv);
 		}
 
 		User user1 = user.get(0);
@@ -216,6 +215,7 @@ public class UserController {
 		}
 
 		mv.addObject("userName", user1.getName());
+		mv.addObject("flag", true);
 		mv.setViewName("changePw");
 
 		return mv;
@@ -230,8 +230,7 @@ public class UserController {
 		// 名前と秘密が空の場合にエラーとする
 		if (name == null || name.length() == 0 || himitu == null || himitu.length() == 0) {
 			mv.addObject("message", "名前と秘密の言葉を入力してください");
-			mv.setViewName("changePw");
-			return mv;
+			return change(mv);
 		}
 
 		List<User> user = userRepository.findByName(name);
@@ -246,15 +245,16 @@ public class UserController {
 				mv.setViewName("change");
 			} else if (!himitu.equals(userInfo.getHimitu())) {
 				mv.addObject("message", "秘密の言葉が違います");
-				mv.setViewName("changePw");
-				return mv;
+				return himitu(userInfo.getName(), mv);
 			} else {
 				//見つからなかった場合ログインNG
 				mv.addObject("message", "入力された情報は登録されていません");
-				mv.setViewName("changePw");
+				return change(mv);
 			}
 		}
+
 		return mv;
+
 	}
 
 	//ログアウト
