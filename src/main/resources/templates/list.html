@@ -96,12 +96,17 @@
 
 	<tr th:each="list:${list}">
 		<td >
-
+				<!-- ダイアログ作成、コード取得 -->
 				<input class="dialog-link" type="submit" th:value="${list.code}">
 				<div id="dialog" style="display:none;">
- 					<p>
-						田中志歩<!-- 表示させる内容記述 -->
- 		 			</p>
+ <!-- 表示させる内容記述 -->
+  					<p>tanaka</p>
+<!--  					<p th:text="${list}"></p> -->
+<!--  					<p th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></p> -->
+<!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></p> -->
+<!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.member}"></p> -->
+<!--  					<p th:text="${list.memo}"></p> -->
+
 				</div>
 		</td>
 		<td th:text="${list.name}"></td>
@@ -110,8 +115,6 @@
 		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
 		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
 		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
-
-<!-- 進捗度をデータベースと紐づける予定 -->
 		<td><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 		<td th:text="${list.memo}"></td>
 
