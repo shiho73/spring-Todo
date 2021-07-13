@@ -24,30 +24,22 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class CategoryController {
 
-	//保持用/
+	//セッションのレポジトリをセット
 	@Autowired
 	HttpSession session;
-
-	//Taskデータベース
+	//各テーブルのレポジトリをセット
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Categoryデータベース
 	@Autowired
 	CategoryRepository categoryRepository;
-
-	//Groupデータベース
 	@Autowired
 	GroupRepository groupRepository;
-
-	//Userデータベース
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	PriorityRepository priorityRepository;
 
-		//新規カテゴリー作成
+	//新規カテゴリー作成
 	@RequestMapping("/option")
 	public ModelAndView option(ModelAndView mv) {
 		mv.setViewName("optionCategory");
@@ -61,7 +53,7 @@ public class CategoryController {
 			@RequestParam("code") int code,
 			ModelAndView mv) {
 
-		//カテゴリチェック
+		//カテゴリの重複チェック
 		List<Category> list = categoryRepository.findByCode(code);
 		List<Category> list2 = categoryRepository.findByName(name);
 		if (!list.isEmpty() || !list2.isEmpty()) {

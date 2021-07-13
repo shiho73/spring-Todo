@@ -14,6 +14,7 @@ public class User {
 	private Integer id;
 	private String name;
 	private String pw;
+	private String himitu;
 
 	public User() {
 
@@ -31,6 +32,22 @@ public class User {
 		this.id = id;
 		this.name = name;
 		this.pw = pw;
+	}
+
+	public User(Integer id, String name, String pw, String himitu) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.pw = pw;
+		this.himitu = himitu;
+	}
+
+	public String getHimitu() {
+		return himitu;
+	}
+
+	public void setHimitu(String himitu) {
+		this.himitu = himitu;
 	}
 
 	public Integer getId() {

@@ -30,26 +30,18 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class EditController {
 
-	//保持用/
+	//セッションのレポジトリをセット
 	@Autowired
 	HttpSession session;
-
-	//Taskデータベース
+	//各テーブルのレポジトリをセット
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Categoryデータベース
 	@Autowired
 	CategoryRepository categoryRepository;
-
-	//Groupデータベース
 	@Autowired
 	GroupRepository groupRepository;
-
-	//Userデータベース
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	PriorityRepository priorityRepository;
 
@@ -96,7 +88,7 @@ public class EditController {
 
 		mv = prepareList(mv);//リストを準備
 		mv.setViewName("list");//遷移先(リスト一覧)を指定
-		return mv;	
+		return mv;
 
 	}
 
@@ -151,9 +143,6 @@ public class EditController {
 		return mv;
 	}
 
-
-
-
 	//道具
 
 	//期限日型変換
@@ -170,18 +159,24 @@ public class EditController {
 			e.printStackTrace();
 		}
 
+		//文字列が元々sqlの書式だった場合
 		if (date == null) {
+			//String型からsqlのDate型に変換
 			Date dline3 = Date.valueOf(dline);
+			//Taskを編集
 			Task task = new Task(code, name, userId, dline3, prtNum, cgCode, groupId, progress, memo, true);
 			taskRepository.saveAndFlush(task);
 		} else {
-			//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
+			//文字列dlineのjava・Date型への変換が行われていた場合
+			//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			//String型に戻す
 			String date2 = sdf.format(date);
 
 			//String型をData型(SQL)dline2に変換
 			Date dline2 = Date.valueOf(date2);
 
+			//作成と編集を分岐させ、それぞれ実行
 			Task task = null;
 			if (code == 0) {
 				task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
@@ -195,14 +190,11 @@ public class EditController {
 
 	//リスト表示の予備動作
 	private ModelAndView prepareList(ModelAndView mv) {
+		//各テーブルから全件検索
 		List<User> userList = userRepository.findAll();
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
 		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
 
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -218,6 +210,10 @@ public class EditController {
 		}
 
 		//Thymeleafで表示する準備
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
 		mv.addObject("list", list);
 
 		return mv;
@@ -232,7 +228,7 @@ public class EditController {
 		}
 	}
 
-	//グループのデフォルト設定・どうさしない
+	//グループのデフォルト設定・なぜかコードからの検索がうまくいかない
 	private void groupZero() {
 		List<Group> list2 = groupRepository.findAll();
 		if (list2.isEmpty()) {
