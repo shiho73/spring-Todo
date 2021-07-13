@@ -11,6 +11,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	List<Task> findByNameLike(String string);
 
 	List<Task> findByGroupId(int id);
+	List<Task> findByCgCode(int cgCode);
 
 	//コード順
 	List<Task> findByOrderByCodeAsc();

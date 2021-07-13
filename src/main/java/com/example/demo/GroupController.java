@@ -94,7 +94,7 @@ public class GroupController {
 		return mv;
 	}
 
-	//グループ編集アクション
+	//グループ編集
 	@PostMapping("/group/edit")
 	public ModelAndView editGroup(
 			@RequestParam(name = "gid") int gid,
@@ -121,7 +121,7 @@ public class GroupController {
 		return mv;
 	}
 
-	//編集アクション
+	//グループ編集アクション
 	@PostMapping("/group/update")
 	public ModelAndView updateGroup(
 			@RequestParam(name = "id", defaultValue = "0") int id,
