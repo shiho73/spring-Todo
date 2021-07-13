@@ -1,92 +1,92 @@
 <!-- jQuery使用のための記述 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
-<link rel="stylesheet" href="/Loading.css">
-<script type="text/javascript">
-$(function() {
-  var h = $(window).height();
+	<link rel="stylesheet" href="/Loading.css">
+		<script type="text/javascript">
+			$(function() {
+			  var h = $(window).height();
 
-  $('#wrap').css('display','none');
-  $('#try ,#triangles').height(h).css('display','block');
-});
+			  $('#wrap').css('display','none');
+			  $('#try ,#triangles').height(h).css('display','block');
+			});
 
-$(window).load(function () { //全ての読み込みが完了したら実行
-  $('#try').delay(900).fadeOut(800);
-  $('#triangles').delay(600).fadeOut(300);
-  $('#wrap').css('display', 'block');
-});
+			$(window).load(function () { //全ての読み込みが完了したら実行
+			  $('#try').delay(900).fadeOut(800);
+			  $('#triangles').delay(600).fadeOut(300);
+			  $('#wrap').css('display', 'block');
+			});
 
 //10秒たったら強制的にロード画面を非表示
-$(function(){
-  setTimeout('stopload()',10000);
-});
+			$(function(){
+			  setTimeout('stopload()',10000);
+			});
 
-function stopload(){
-  $('#wrap').css('display','block');
-  $('#try').delay(900).fadeOut(800);
-  $('#triangles').delay(600).fadeOut(300);
-}
+			function stopload(){
+			  $('#wrap').css('display','block');
+			  $('#try').delay(900).fadeOut(800);
+			  $('#triangles').delay(600).fadeOut(300);
+			}
 
 //ローディング画面の消え方
-$("submit").click(function() {
-	$("#try").fadeOut(400, function(){ $(this).remove(); });
-});
+			$("submit").click(function() {
+				$("#try").fadeOut(400, function(){ $(this).remove(); });
+			});
 
-</script>
+		</script>
 
 <!-- jQueryカレンダーのテンプレート取得 -->
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 
 <!-- カレンダー表示用jQuery -->
-<script type="text/javascript">
-$(function() {
-    $("#datepicker").datepicker({
-        // 日付が選択された時、日付をテキストフィールドへセット
-        onSelect: function(dateText, inst) {
-                    $("#date_val").val(dateText);
-                }
-    });
-});
+		<script type="text/javascript">
+			$(function() {
+			    $("#datepicker").datepicker({
+ // 日付が選択された時、日付をテキストフィールドへセット
+			        onSelect: function(dateText, inst) {
+			          $("#date_val").val(dateText);
+			        }
+			    });
+			});
 
-</script>
+		</script>
 
 <!-- ダイアログ作成用jQuery -->
-<script>
-$(function() {
-  $(".dialog-link").click(function() {
-  	var selectNo = $(this).val();
-    $("#dialog").dialog({
-      modal:true,
-      title:"タスク詳細",
-      buttons: {
-        "閉じる": function() {$(this).dialog("close");},
-      }
-    });
-  });
-});
-</script>
+		<script>
+			$(function() {
+			  $(".dialog-link").click(function() {
+			  	var selectNo = $(this).val();
+			    $("#dialog").dialog({
+			      modal:true,
+			      title:"タスク詳細",
+			      buttons: {
+			        "閉じる": function() {$(this).dialog("close");},
+			      }
+			    });
+			  });
+			});
+		</script>
 
 <!-- プログレスバーとコード情報取得 -->
-<script type="text/javascript">
-function f(){
-	var dialogLink = $(".dialog-link").get();
-	var ary1 = [];
+		<script type="text/javascript">
+			function f(){
+				var dialogLink = $(".dialog-link").get();
+				var ary1 = [];
 
-	for (var i = 0; i < dialogLink.length; i++) {
-		ary1[i] = dialogLink[i].value
-	}
+				for (var i = 0; i < dialogLink.length; i++) {
+					ary1[i] = dialogLink[i].value
+				}
 
-	var progress = $(".progress").get();
-	var ary2 = [];
+				var progress = $(".progress").get();
+				var ary2 = [];
 
-	for (var i = 0; i < progress.length; i++) {
-		ary2[i] = progress[i].value
-	}
+				for (var i = 0; i < progress.length; i++) {
+					ary2[i] = progress[i].value
+				}
 
-	location.href = "/task/update?code="+ ary1 + "&progress=" + ary2;
-}
+				location.href = "/task/update?code="+ ary1 + "&progress=" + ary2;
+			}
 
-</script>
+		</script>

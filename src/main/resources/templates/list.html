@@ -4,82 +4,87 @@
 <meta charset="UTF-8">
 <title>タスク管理</title>
 
-<span th:replace="listJquery"></span>
+<!-- jQuery -->
+		<span th:replace="listJquery"></span>
 
 </head>
 <body>
 
 <!-- ローディング画面表示 -->
-  <div id="try">
-  <div class='triangles'>
-  <div class='tri invert'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-  <div class='tri'></div>
-  <div class='tri invert'></div>
-  <br>
-  <br>
-  <br>
-  <p> Loading...</p>
-</div>
-</div>
+		  <div id="try">
+		  <div class='triangles'>
+		  <div class='tri invert'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <br>
+		  <br>
+		  <br>
+		  <p> Loading...</p>
+		</div>
+		</div>
 
 <!-- ローディング後に表示させるもの -->
-<div id="wrap">
+		<div id="wrap">
 
-<h1>タスク一覧</h1>
+		<h1>タスク一覧</h1>
 
 <!-- カレンダー表示用 -->
-<header>
-<div id="datepicker"/>
-<br/>
-</header>
+		<header>
+			<div id="datepicker"/>
+			<br/>
+		</header>
 
-	<span th:replace="menu"></span>
+		<span th:replace="menu"></span>
 
-	<form action="/task/update"  method="post">
-	<input type="button"  value="更新" onclick="f();">
-</form>
+<!-- 操作ボタン -->
 
-	<form action="/look/trash"  method="post">
-	<input type="submit"  value="ゴミ箱を見る">
-</form>
-	<form action="/list/new"  method="post">
-	<input type="submit"  value="タスク作成">
-</form>
+		<form action="/task/update"  method="post">
+			<input type="button"  value="更新" onclick="f();">
+		</form>
 
-<table border="1">
-	<tr>
-		<td><a href="/order/code">昇順</a></td>
-		<td></td>
-		<td></td>
-		<td><a href="/order/deadline">近い順</a></td>
-		<td><a href="/order/priority">高い順</a></td>
-		<td></td>
-		<td></td>
-		<td><a href="/order/progress/desc">高い順</a></td>
-		<td></td>
-		<td></td><td></td>
-	</tr>
+		<form action="/look/trash"  method="post">
+			<input type="submit"  value="ゴミ箱を見る">
+		</form>
 
-	<tr>
-		<td><a href="/order/code/desc">降順</a></td>
-		<td></td>
-		<td></td>
-		<td><a href="/order/deadline/desc">遠い順</a></td>
-		<td><a href="/order/priority/desc">低い順</a></td>
-		<td></td>
-		<td></td>
-		<td><a href="/order/progress">低い順</a></td>
-		<td></td>
-		<td></td><td></td>
-	</tr>
+		<form action="/list/new"  method="post">
+			<input type="submit"  value="タスク作成">
+		</form>
 
+<!-- 並べ方変更 -->
+	<table border="1">
+		<tr>
+			<td><a href="/order/code">昇順</a></td>
+			<td></td>
+			<td></td>
+			<td><a href="/order/deadline">近い順</a></td>
+			<td><a href="/order/priority">高い順</a></td>
+			<td></td>
+			<td></td>
+			<td><a href="/order/progress/desc">高い順</a></td>
+			<td></td>
+			<td></td><td></td>
+		</tr>
 
+		<tr>
+			<td><a href="/order/code/desc">降順</a></td>
+			<td></td>
+			<td></td>
+			<td><a href="/order/deadline/desc">遠い順</a></td>
+			<td><a href="/order/priority/desc">低い順</a></td>
+			<td></td>
+			<td></td>
+			<td><a href="/order/progress">低い順</a></td>
+			<td></td>
+			<td></td><td></td>
+		</tr>
+
+<!-- 表示バー -->
 	<tr>
 		<th>タスク番号</th>
 		<th>タスク名</th>
@@ -94,19 +99,20 @@
 		<th>編集</th>
 	</tr>
 
+<!-- タスク一覧表示 -->
 	<tr th:each="list:${list}">
+
+<!-- ダイアログ作成、コード取得 -->
 		<td >
-				<!-- ダイアログ作成、コード取得 -->
-				<input class="dialog-link" type="submit" th:value="${list.code}">
-				<div id="dialog" style="display:none;">
- <!-- 表示させる内容記述 -->
+					<input class="dialog-link" type="submit" th:value="${list.code}">
+					<div id="dialog" style="display:none;">
+ <!-- ダイアログに表示させる内容記述 -->
   					<p>tanaka</p>
 <!--  					<p th:text="${list}"></p> -->
 <!--  					<p th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></p> -->
 <!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></p> -->
 <!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.member}"></p> -->
 <!--  					<p th:text="${list.memo}"></p> -->
-
 				</div>
 		</td>
 		<td th:text="${list.name}"></td>
@@ -118,7 +124,7 @@
 		<td><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 		<td th:text="${list.memo}"></td>
 
-
+<!-- 消去ボタン -->
 		<td><form action="/list/trash" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
 				<input type="hidden" th:value="${list.name}" name="name">
@@ -133,7 +139,7 @@
 			</form>
 		</td>
 
-
+<!-- 編集ボタン -->
 		<td><form action="/list/edit" method="post">
 				<input type="hidden" th:value="${list.code}" name="code">
 				<input type="submit" value="編集">
@@ -143,6 +149,7 @@
 
 </table>
 
+<!-- ログアウト -->
 	<span th:replace="logout"></span>
 
 </div>

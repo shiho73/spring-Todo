@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
-<link rel="stylesheet" href="/top.css">
+
 </head>
 <body>
-<div class="bg">
-  <span class="bg-wrap"><span class="inn">背景色が流れてくる</span></span><br>
-  <span class="bg-wrap"><span class="inn">アニメーション</span></span>
-</div>
+
 <h1>ログイン</h1>
 
 <form action="/login" method="post">
 
-NAME:<input type="text" name="name">
-<br>
-PASS:<input type="password" name="pw">
-<br>
-<input type="submit" value="ログイン">
+	NAME:<input type="text" name="name">
+	<br>
+	PASS:<input type="password" name="pw">
+	<br>
+
+	<input type="submit" value="ログイン">
+
 	<span th:text="${message}" style="color:red"></span>
 	<br>
 </form>
+
 <a href="/user">新規ユーザー登録</a>
 <a href="/change">パスワードを忘れた方はこちら</a>
-<!-- <a href="">パスワード変更</a> -->
+
 
 </body>
 </html>
