@@ -28,53 +28,27 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class TaskController {
 
-	//保持用
+	//セッションのレポジトリをセット
 	@Autowired
 	HttpSession session;
 
-	//Taskテーブル
+	//各テーブルのレポジトリをセット
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Categoryテーブル
 	@Autowired
 	CategoryRepository categoryRepository;
-
-	//Groupテーブル
 	@Autowired
 	GroupRepository groupRepository;
-
-	//Userテーブル
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	PriorityRepository priorityRepository;
 
 	//タスク一覧を表示
 	@RequestMapping("/list")
 	public ModelAndView lookList(ModelAndView mv) {
-
-		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
-
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for (Task task : taskList) {
-			if (task.isTrash() == true) {
-				list.add(task);
-			}
-		}
-
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
-		mv.addObject("list", list); //表示用オブジェクトを設定
+		//リスト一覧を準備
+		mv = listAndTrash(false, mv);
 
 		mv.setViewName("list");//タスク一覧画面に遷移
 		return mv;
@@ -83,31 +57,8 @@ public class TaskController {
 	//ゴミ箱を見る
 	@RequestMapping("/look/trash")
 	public ModelAndView lookTrash(ModelAndView mv) {
-
-		ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
-
-		//ゴミ箱に入れていれば、表示するリストに追加
-		for (Task task : taskList) {
-			if (task.isTrash() == false) {
-				list.add(task);
-			}
-		}
-
-		if (list.isEmpty() == true) {
-			mv.addObject("message", "ゴミ箱は空です"); //リストが空であれば、メッセージを表示
-		} else {
-			mv.addObject("list", list); //リストの中身があれば、リストを表示
-		}
-
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
+		//ゴミ箱内一覧を準備
+		mv = listAndTrash(true, mv);
 
 		//ゴミ箱画面に遷移
 		mv.setViewName("trash");
@@ -159,7 +110,9 @@ public class TaskController {
 	public ModelAndView delete(
 			@RequestParam(name = "code") int code,
 			ModelAndView mv) {
-		taskRepository.deleteById(code); //コードで指定したタスクを消去
+		//コードで指定したタスクを消去
+		taskRepository.deleteById(code);
+
 		return lookTrash(mv);
 	}
 
@@ -169,12 +122,9 @@ public class TaskController {
 			@RequestParam(name = "code") int[] code,
 			@RequestParam(name = "progress") int[] progress,
 			ModelAndView mv) {
-//		 System.out.println("progress=" + code[0]);
-//		 System.out.println("progress=" + code[1]);
-//		 System.out.println("progress=" + code[2]);
 
-		 //コードの数だけプログレスバーを取得する
-for (int i = 0; i < code.length; i++) {
+		//コードの数だけプログレスバーを取得する
+		for (int i = 0; i < code.length; i++) {
 			Optional<Task> record = taskRepository.findById(code[i]);
 
 			if (record.isEmpty() == false) {
@@ -184,32 +134,54 @@ for (int i = 0; i < code.length; i++) {
 			}
 		}
 
-			ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-			List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
+		return lookList(mv);
+	}
 
+
+
+	//表示するための道具
+	private ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
+		//各テーブルから全件検索
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+
+		//タスク一覧とゴミ箱で分岐
+		if (tflag == true) {
+			//ゴミ箱に入れていれば、表示するリストに追加
+			for (Task task : taskList) {
+				if (task.isTrash() == false) {
+					list.add(task);
+				}
+			}
+			//リストが空であれば、メッセージを表示
+			if (list.isEmpty() == true) {
+				mv.addObject("message", "ゴミ箱は空です");
+			}
+		} else if (tflag == false) {
 			//ゴミ箱に入れていなければ、表示するリストに追加
 			for (Task task1 : taskList) {
 				if (task1.isTrash() == true) {
 					list.add(task1);
 				}
 			}
+		}
 
-			List<User> userList = userRepository.findAll();
-			List<Category> categoryList = categoryRepository.findAll();
-			List<Priority> priorityList = priorityRepository.findAll();
-			List<Group> groupList = groupRepository.findAll();
-			mv.addObject("ulist", userList);
-			mv.addObject("clist", categoryList);
-			mv.addObject("plist", priorityList);
-			mv.addObject("glist", groupList);
-
-			mv.addObject("list", list); //表示用オブジェクトを設定
-
-			mv.setViewName("list");//タスク一覧画面に遷移
-
+		//Thymeleafで表示する準備
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
+		mv.addObject("list", list);
 
 		return mv;
 	}
-
 
 }
