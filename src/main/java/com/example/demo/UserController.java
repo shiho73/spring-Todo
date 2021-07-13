@@ -122,7 +122,6 @@ public class UserController {
 	}
 
 	//新規ユーザー登録
-	//ログイン画面
 	@RequestMapping("/user")
 	public ModelAndView user(ModelAndView mv) {
 		session.invalidate();
@@ -169,6 +168,48 @@ public class UserController {
 
 				mv.addObject("message", "パスワードが一致していません");
 				mv.setViewName("newUser");
+			}
+		}
+		return mv;
+	}
+
+	//パスワード忘れた人
+	@RequestMapping("/change")
+	public ModelAndView change(ModelAndView mv) {
+		session.invalidate();
+		mv.setViewName("changePw");
+		return mv;
+	}
+
+	//パスワード忘れた人アクション
+	@PostMapping("/change/pw")
+	public ModelAndView changepw(
+			@RequestParam("name") String name,
+			@RequestParam("himitu") String himitu,
+			ModelAndView mv
+			) {
+		// 名前と秘密が空の場合にエラーとする
+		if (name == null || name.length() == 0 || himitu == null || himitu.length() == 0 ) {
+			mv.addObject("message", "名前と秘密の言葉を入力してください");
+			mv.setViewName("changePw");
+			return mv;
+		}
+
+		List<User> user = userRepository.findByName(name);
+
+		//ヒットしたら
+		if (!user.isEmpty()) {
+
+			User userInfo = user.get(0); //一致した名前を含むリスト取得
+
+			if (!himitu.equals(userInfo.getHimitu())) {
+				mv.addObject("message", "秘密の言葉が違います");
+				mv.setViewName("changePw");
+				return mv;
+			} else {
+				//見つからなかった場合ログインNG
+				mv.addObject("message", "入力された情報は登録されていません");
+				mv.setViewName("top");
 			}
 		}
 		return mv;

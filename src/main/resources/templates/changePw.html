@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー情報</title>
+</head>
+<body>
+	<h1>登録情報変更</h1>
+	<form action="/change/pw" method="post">
+		登録情報の確認を行います
+		NAME:<input type="text" name="name">
+		<br>
+		<select>
+			<option value="出身地">出身地</option>
+			<option value="ペットの名前">ペットの名前</option>
+			<option value="両親の旧姓">両親の旧姓</option>
+		</select>
+		 <br>
+		  秘密の言葉：<input type="text" name="himitu">
+		   <input type="submit" value="変更">
+	</form>
+</body>
+</html>
