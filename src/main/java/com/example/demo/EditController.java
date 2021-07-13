@@ -59,14 +59,8 @@ public class EditController {
 		categoryZero();
 		groupZero();
 
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
 		mv.setViewName("addTask");
-		return mv;
+		return prepareList(mv);
 	}
 
 	//新規作成アクション
@@ -95,24 +89,14 @@ public class EditController {
 			return listnew(mv);
 		}
 
-		//期限日の型変換
-		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
-		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
-		java.util.Date date = null;
-		try {
-			date = sdFormat.parse(dline);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date2 = sdf.format(date);
-		//String型をData型(SQL)dline2に変換
-		Date dline2 = Date.valueOf(date2);
+		int code = 0;
+		int progress = 0;
+		dateExchange(code,name, userId, dline, prtNum, cgCode, groupId,
+				progress,memo);
 
-		//新しく追加
-		Task task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
-		taskRepository.saveAndFlush(task);
+//		//新しく追加
+//		Task task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
+//		taskRepository.saveAndFlush(task);
 
 		//すべてのリスト取得
 		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
@@ -120,61 +104,8 @@ public class EditController {
 		//Thymeleafで表示する準備
 		mv.addObject("list", taskList);
 
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
 		mv.setViewName("list");
-		return mv;
-	}
-
-	//新規カテゴリー作成
-	@RequestMapping("/option")
-	public ModelAndView option(ModelAndView mv) {
-		mv.setViewName("optionCategory");
-		return mv;
-	}
-
-	//新規カテゴリ作成アクション
-	@PostMapping("/option/new")
-	public ModelAndView newoption(
-			@RequestParam("name") String name,
-			@RequestParam("code") int code,
-			ModelAndView mv) {
-
-		//カテゴリチェック
-		List<Category> list = categoryRepository.findByCode(code);
-		List<Category> list2 = categoryRepository.findByName(name);
-		if (!list.isEmpty() || !list2.isEmpty()) {
-			if (!list.isEmpty()) {
-				mv.addObject("msg1", "使用済みのカテゴリコードです");
-			}
-			if (!list2.isEmpty()) {
-				mv.addObject("msg2", "使用済みのカテゴリ名です");
-			}
-			mv.setViewName("optionCategory");
-			return mv;
-		}
-
-		Category category = new Category(code, name);
-		categoryRepository.saveAndFlush(category);
-
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
-		mv.setViewName("addTask");
-		return mv;
+		return prepareList(mv);
 	}
 
 	//編集
@@ -191,17 +122,10 @@ public class EditController {
 			task = recode.get();
 		}
 
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
 		mv.addObject("task", task);
 
 		mv.setViewName("editTask");
-		return mv;
+		return prepareList(mv);
 	}
 
 	//編集アクション
@@ -225,6 +149,37 @@ public class EditController {
 			return mv;
 		}
 
+		//期限日の型を変換し、タスクを更新
+		dateExchange(code,name, userId, dline, prtNum, cgCode, groupId,
+				progress,memo);
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+
+		//ゴミ箱に入れていなければ、表示するリストに追加
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == true) {
+				list.add(task1);
+			}
+		}
+
+		mv.addObject("list", list);
+
+		mv.setViewName("list");
+		return prepareList(mv);
+	}
+
+
+
+	//道具
+
+	//期限日型変換
+	private void dateExchange(int code, String name, int userId, String dline, int prtNum, int cgCode, int groupId,
+			int progress, String memo) {
+
 		//期限日の型変換
 		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -243,25 +198,23 @@ public class EditController {
 			//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換し、String型に戻す
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String date2 = sdf.format(date);
+
 			//String型をData型(SQL)dline2に変換
 			Date dline2 = Date.valueOf(date2);
-			Task task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
+
+			Task task = null;
+			if(code == 0) {
+				task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
+			} else {
+				task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
+			}
 			taskRepository.saveAndFlush(task);
 		}
 
-		//空の表示用リストを生成
-		ArrayList<Task> list = new ArrayList<Task>();
+	}
 
-		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for (Task task1 : taskList) {
-			if (task1.isTrash() == true) {
-				list.add(task1);
-			}
-		}
-
+	//リスト表示の予備動作
+	private ModelAndView prepareList(ModelAndView mv) {
 		List<User> userList = userRepository.findAll();
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
@@ -270,10 +223,6 @@ public class EditController {
 		mv.addObject("clist", categoryList);
 		mv.addObject("plist", priorityList);
 		mv.addObject("glist", groupList);
-
-		mv.addObject("list", list);
-
-		mv.setViewName("list");
 		return mv;
 	}
 
