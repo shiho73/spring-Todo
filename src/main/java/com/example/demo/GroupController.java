@@ -20,6 +20,7 @@ import com.example.demo.group_m.GroupM;
 import com.example.demo.group_m.GroupMRepository;
 import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
+import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -27,29 +28,21 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class GroupController {
 
-	//保持用
+	//セッションのレポジトリをセット
 	@Autowired
 	HttpSession session;
 
-	//Taskデータベース
+	//各テーブルのレポジトリをセット
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Categoryデータベース
 	@Autowired
 	CategoryRepository categoryRepository;
-
-	//Groupデータベース
 	@Autowired
 	GroupRepository groupRepository;
-
-	//Userデータベース
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	PriorityRepository priorityRepository;
-
 	@Autowired
 	GroupMRepository groupMRepository;
 
@@ -96,15 +89,7 @@ public class GroupController {
 		GroupM groupM = new GroupM(id, member);
 		groupMRepository.saveAndFlush(groupM);
 
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
+		mv = prepare01(mv);
 		mv.setViewName("addTask");
 		return mv;
 	}
@@ -115,14 +100,14 @@ public class GroupController {
 			@RequestParam(name = "gid") int gid,
 			ModelAndView mv) {
 
+		//編集するグループの取得
 		Group group = null;
-
-		List<Group> recode = groupRepository.findById(gid);
-
+		Optional<Group> recode = groupRepository.findById(gid);
 		if (recode.isEmpty() == false) {
-			group = recode.get(0);
+			group = recode.get();
 		}
 
+		//編集するグループのメンバーを取得
 		GroupM groupM = null;
 		Optional<GroupM> recode2 = groupMRepository.findById(group.getId());
 		if (recode2.isEmpty() == false) {
@@ -139,90 +124,79 @@ public class GroupController {
 	//編集アクション
 	@PostMapping("/group/update")
 	public ModelAndView updateGroup(
-			@RequestParam(name = "id") int id,
+			@RequestParam(name = "id", defaultValue = "0") int id,
 			@RequestParam("name") String name,
 			@RequestParam("gname") String gname,
-			@RequestParam(name="member", defaultValue="") String member,
+			@RequestParam(name = "member", defaultValue = "") String member,
 			@RequestParam(name = "gid") int gid,
 			ModelAndView mv) {
 
 		//未入力チェック
 		if (name == null || name == "" || id == 0) {
 			mv.addObject("msg1", "未入力の項目があります");
-
-			Group group = null;
-
-			List<Group> recode = groupRepository.findById(gid);
-
-			if (recode.isEmpty() == false) {
-				group = recode.get(0);
-			}
-
-			GroupM groupM = null;
-			Optional<GroupM> recode2 = groupMRepository.findById(group.getId());
-			if (recode2.isEmpty() == false) {
-				groupM = recode2.get();
-			}
-
-			mv.addObject("group", group);
-			mv.addObject("groupM", groupM);
-
-			mv.setViewName("editGroup");
-
-			return mv;
+			return editGroup(gid, mv);
 		}
 
 		//グループの重複チェック/
-		List<Group> list = groupRepository.findById(id);
+		Optional<Group> list = groupRepository.findById(id);
 		List<Group> list2 = groupRepository.findByName(name);
 
-		if ((!list.isEmpty() && id != gid) || (!list2.isEmpty()  && !name.equals(gname))) {
-			if (!list.isEmpty() && id != gid) {
-				mv.addObject("msg1", "使用済みのグループ番号です");
+		if (!list.isEmpty()) {
+			if (id != gid) {
+			mv.addObject("msg1", "使用済みのグループ番号です");
+			return editGroup(gid, mv);
 			}
-			if (!list2.isEmpty() && !name.equals(gname)) {
-				mv.addObject("msg2", "使用済みのグループ名です");
-			}
-
-			Group group = null;
-
-			List<Group> recode = groupRepository.findById(gid);
-
-			if (recode.isEmpty() == false) {
-				group = recode.get(0);
-			}
-
-			GroupM groupM = null;
-			Optional<GroupM> recode2 = groupMRepository.findById(group.getId());
-			if (recode2.isEmpty() == false) {
-				groupM = recode2.get();
-			}
-
-			mv.addObject("group", group);
-			mv.addObject("groupM", groupM);
-
-			mv.setViewName("editGroup");
-			return mv;
 		}
 
+		if (!list2.isEmpty() && !name.equals(gname)) {
+			mv.addObject("msg2", "使用済みのグループ名です");
+			return editGroup(gid, mv);
+		}
+
+		//外部キー参照制約解消 グループ100に一時退避
+		List<Task> taskList =  taskRepository.findByGroupId(gid);
+		for(Task a : taskList) {
+			a.setGroupId(100);
+			taskRepository.saveAndFlush(a);
+		}
+
+		//外部キー参照制約解消 メンバーデータ消去
+		groupMRepository.deleteById(gid);
+
+		groupRepository.deleteById(gid);
 		Group group = new Group(id, name);
 		groupRepository.saveAndFlush(group);
+
+		//退避したタスクを新しいグループに再登録
+		List<Task> taskList2 =  taskRepository.findByGroupId(100);
+		for(Task a : taskList2) {
+			a.setGroupId(id);
+			taskRepository.saveAndFlush(a);
+		}
 
 		GroupM groupM = new GroupM(id, member);
 		groupMRepository.saveAndFlush(groupM);
 
+		mv = prepare01(mv);
+
+		mv.setViewName("addTask");
+		return mv;
+	}
+
+	//リスト表示の予備動作
+	private ModelAndView prepare01(ModelAndView mv) {
+		//各テーブルから全件検索
 		List<User> userList = userRepository.findAll();
 		List<Category> categoryList = categoryRepository.findAll();
 		List<Priority> priorityList = priorityRepository.findAll();
 		List<Group> groupList = groupRepository.findAll();
+
+		//Thymeleafで表示する準備
 		mv.addObject("ulist", userList);
 		mv.addObject("clist", categoryList);
 		mv.addObject("plist", priorityList);
 		mv.addObject("glist", groupList);
 
-		mv.addObject("list", list);
-
-		mv.setViewName("addTask");
 		return mv;
 	}
 

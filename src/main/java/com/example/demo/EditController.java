@@ -234,6 +234,8 @@ public class EditController {
 		if (list2.isEmpty()) {
 			Group group = new Group(0, "なし");
 			groupRepository.saveAndFlush(group);
+			Group group2 = new Group(100, "退避用");
+			groupRepository.saveAndFlush(group2);
 		} else {
 
 		}

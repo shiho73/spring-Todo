@@ -18,23 +18,16 @@
 
 		<form action="/category/update"  method="post">
 		<input type="hidden" name="code" th:value="${category.code}">
-		<input type="hidden" name="gname" th:value="${group.name}">
+		<input type="hidden" name="name" th:value="${category.name}">
 
-		<table border="1">
-
+<table border="1">
 	<tr>
-		<th>グループ番号</th><td><input type="number" name="id" th:value="${group.id}"></td>
+		<th>カテゴリ番号</th><td><input type="number" name="code" min="1" th:value="${category.code}"></td>
 	</tr>
 
 	<tr>
-		<th>グループ名</th><td><input type="text" name="name" th:value="${group.name}"></td>
+		<th>カテゴリ名</th><td><input type="text" name="name" th:value="${category.name}"></td>
 	</tr>
-
-	<tr>
-		<th>グループメンバー</th>
-		<td><input type="text" name="member" th:value="${groupM.member}"></td>
-	</tr>
-
 </table>
 
 <br>

@@ -62,7 +62,7 @@
 		<th>グループ番号</th>
 		<td>
 			<select name="groupId">
-				<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
 			</select>
 			<a href="/group/new" onclick="openPopup();">新規グループ登録</a>
 		</td>
@@ -88,7 +88,7 @@
 <!-- グループ編集ボタン -->
 			<form action="/group/edit" method="POST">
 			<select name="gid">
-				<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+				<option th:each="g:${glist}" th:if="${g.id!=100 && g.id!=0}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
 			</select>
 			<input type="submit" value="グループ編集"></form>
 
