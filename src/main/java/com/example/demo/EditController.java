@@ -56,11 +56,14 @@ public class EditController {
 	//新規作成
 	@PostMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
+		//カテゴリとグループの初期登録
 		categoryZero();
 		groupZero();
 
-		mv.setViewName("addTask");
-		return prepareList(mv);
+		mv = prepareList(mv);//リストを準備
+
+		mv.setViewName("addTask");//遷移先(タスク作成ページ)を指定
+		return mv;
 	}
 
 	//新規作成アクション
@@ -76,36 +79,25 @@ public class EditController {
 
 		//未入力チェック
 		if (name == null || name == "" || dline == null || dline == "") {
-			String msg1 = null;
-			String msg2 = null;
 			if (name == null || name == "") {
-				msg1 = "タスク名を入力してください";
-				mv.addObject("msg1", msg1);
+				mv.addObject("msg1", "タスク名を入力してください");
 			}
 			if (dline == null || dline == "") {
-				msg2 = "期限を設定してください";
-				mv.addObject("msg2", msg2);
+				mv.addObject("msg2", "期限を設定してください");
 			}
-			return listnew(mv);
+			return listnew(mv);//編集ページに戻る
 		}
 
+		//期限日の型を変換し、タスクを登録
 		int code = 0;
 		int progress = 0;
-		dateExchange(code,name, userId, dline, prtNum, cgCode, groupId,
-				progress,memo);
+		dateExchange(code, name, userId, dline, prtNum, cgCode, groupId,
+				progress, memo);
 
-//		//新しく追加
-//		Task task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
-//		taskRepository.saveAndFlush(task);
+		mv = prepareList(mv);//リストを準備
+		mv.setViewName("list");//遷移先(リスト一覧)を指定
+		return mv;	
 
-		//すべてのリスト取得
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-
-		//Thymeleafで表示する準備
-		mv.addObject("list", taskList);
-
-		mv.setViewName("list");
-		return prepareList(mv);
 	}
 
 	//編集
@@ -124,8 +116,9 @@ public class EditController {
 
 		mv.addObject("task", task);
 
-		mv.setViewName("editTask");
-		return prepareList(mv);
+		mv = prepareList(mv);//リストを準備
+		mv.setViewName("editTask");//遷移先(編集ページ)を指定
+		return mv;
 	}
 
 	//編集アクション
@@ -145,32 +138,19 @@ public class EditController {
 		//未入力チェック
 		if (name == null || name == "") {
 			mv.addObject("msg1", "タスク名を入力してください");
-			mv.setViewName("addTask");
+			edit(code, mv);
 			return mv;
 		}
 
 		//期限日の型を変換し、タスクを更新
-		dateExchange(code,name, userId, dline, prtNum, cgCode, groupId,
-				progress,memo);
+		dateExchange(code, name, userId, dline, prtNum, cgCode, groupId,
+				progress, memo);
 
-		//空の表示用リストを生成
-		ArrayList<Task> list = new ArrayList<Task>();
-
-		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for (Task task1 : taskList) {
-			if (task1.isTrash() == true) {
-				list.add(task1);
-			}
-		}
-
-		mv.addObject("list", list);
-
-		mv.setViewName("list");
-		return prepareList(mv);
+		mv = prepareList(mv);//リストを準備
+		mv.setViewName("list");//遷移先(リスト一覧)を指定
+		return mv;
 	}
+
 
 
 
@@ -203,7 +183,7 @@ public class EditController {
 			Date dline2 = Date.valueOf(date2);
 
 			Task task = null;
-			if(code == 0) {
+			if (code == 0) {
 				task = new Task(name, userId, dline2, prtNum, cgCode, groupId, memo, true);
 			} else {
 				task = new Task(code, name, userId, dline2, prtNum, cgCode, groupId, progress, memo, true);
@@ -223,6 +203,23 @@ public class EditController {
 		mv.addObject("clist", categoryList);
 		mv.addObject("plist", priorityList);
 		mv.addObject("glist", groupList);
+
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
+
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+
+		//ゴミ箱に入れていなければ、表示するリストに追加
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == true) {
+				list.add(task1);
+			}
+		}
+
+		//Thymeleafで表示する準備
+		mv.addObject("list", list);
+
 		return mv;
 	}
 
