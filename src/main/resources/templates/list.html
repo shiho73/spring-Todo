@@ -76,12 +76,26 @@ $(function() {
 });
 </script>
 
+<!-- プログレスバーとコード情報取得 -->
 <script type="text/javascript">
 function f(){
-	var progress = $("#progress").val();
-// 	alert(data);
-	location.href = "/task/update?progress=" + progress;
+	var dialogLink = $(".dialog-link").get();
+	var ary1 = [];
+
+	for (var i = 0; i < dialogLink.length; i++) {
+		ary1[i] = dialogLink[i].value
+	}
+
+	var progress = $(".progress").get();
+	var ary2 = [];
+
+	for (var i = 0; i < progress.length; i++) {
+		ary2[i] = progress[i].value
+	}
+
+	location.href = "/task/update?code="+ ary1 + "&progress=" + ary2;
 }
+
 </script>
 
 </head>
@@ -190,7 +204,7 @@ function f(){
 		<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
 
 <!-- 進捗度をデータベースと紐づける予定 -->
-		<td><input th:text="${list.progress}" type="range" min="0" max="100" step="10" value="0" name="progress" id="progress"></td>
+		<td><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 		<td th:text="${list.memo}"></td>
 
 

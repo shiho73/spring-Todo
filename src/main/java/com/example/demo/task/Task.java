@@ -76,8 +76,10 @@ public class Task {
 	}
 
 	//一括更新
-	public Task(int progress) {
+	public Task(Integer code,int progress) {
 		super();
+
+		this.code = code;
 		this.progress = progress;
 	}
 

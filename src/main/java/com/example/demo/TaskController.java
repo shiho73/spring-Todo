@@ -3,6 +3,7 @@ package com.example.demo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -165,32 +166,44 @@ public class TaskController {
 	//一括更新ボタン
 	@GetMapping("/task/update")
 	public ModelAndView update(
-			@RequestParam(name = "progress") int progress,
+			@RequestParam(name = "code") int[] code,
+			@RequestParam(name = "progress") int[] progress,
 			ModelAndView mv) {
- System.out.println("progress=" + progress);
-//			Task task = new Task(progress);
-//			taskRepository.saveAndFlush(task);
-//
-//			ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
-//			List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
-//
-//			//ゴミ箱に入れていなければ、表示するリストに追加
-//			for (Task task1 : taskList) {
-//				if (task1.isTrash() == true) {
-//					list.add(task1);
-//				}
-//			}
-//
-//			List<User> userList = userRepository.findAll();
-//			List<Category> categoryList = categoryRepository.findAll();
-//			List<Priority> priorityList = priorityRepository.findAll();
-//			List<Group> groupList = groupRepository.findAll();
-//			mv.addObject("ulist", userList);
-//			mv.addObject("clist", categoryList);
-//			mv.addObject("plist", priorityList);
-//			mv.addObject("glist", groupList);
-//
-//			mv.addObject("list", list); //表示用オブジェクトを設定
+		 System.out.println("progress=" + code[0]);
+		 System.out.println("progress=" + code[1]);
+		 System.out.println("progress=" + code[2]);
+
+		 //コードの数だけプログレスバーを取得する
+for (int i = 0; i < code.length; i++) {
+			Optional<Task> record = taskRepository.findById(code[i]);
+
+			if (record.isEmpty() == false) {
+				Task task = record.get();
+				task.setProgress(progress[i]);
+				taskRepository.saveAndFlush(task);
+			}
+		}
+
+			ArrayList<Task> list = new ArrayList<Task>(); //空の表示用リストを生成
+			List<Task> taskList = taskRepository.findByOrderByCodeAsc(); //全てのタスクを取得
+
+			//ゴミ箱に入れていなければ、表示するリストに追加
+			for (Task task1 : taskList) {
+				if (task1.isTrash() == true) {
+					list.add(task1);
+				}
+			}
+
+			List<User> userList = userRepository.findAll();
+			List<Category> categoryList = categoryRepository.findAll();
+			List<Priority> priorityList = priorityRepository.findAll();
+			List<Group> groupList = groupRepository.findAll();
+			mv.addObject("ulist", userList);
+			mv.addObject("clist", categoryList);
+			mv.addObject("plist", priorityList);
+			mv.addObject("glist", groupList);
+
+			mv.addObject("list", list); //表示用オブジェクトを設定
 
 			mv.setViewName("list");//タスク一覧画面に遷移
 
