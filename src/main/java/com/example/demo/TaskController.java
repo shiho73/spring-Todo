@@ -169,9 +169,9 @@ public class TaskController {
 			@RequestParam(name = "code") int[] code,
 			@RequestParam(name = "progress") int[] progress,
 			ModelAndView mv) {
-		 System.out.println("progress=" + code[0]);
-		 System.out.println("progress=" + code[1]);
-		 System.out.println("progress=" + code[2]);
+//		 System.out.println("progress=" + code[0]);
+//		 System.out.println("progress=" + code[1]);
+//		 System.out.println("progress=" + code[2]);
 
 		 //コードの数だけプログレスバーを取得する
 for (int i = 0; i < code.length; i++) {
