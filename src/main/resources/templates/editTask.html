@@ -77,6 +77,16 @@
 
 </table>
 
+<br>
+<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
+
+		<button class="btnSubmit" value="更新">更新</button>
+	<br>
+<a href="/list">タスク一覧へ</a>
+</form>
+
 <!-- グループ編集ボタン -->
 			<form action="/group/edit" method="POST">
 			<select name="gid">
@@ -90,18 +100,6 @@
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 			</select>
 			<input type="submit" value="カテゴリ編集"></form>
-
-<br>
-<!-- 右下のマーク -->
-		<div class="side-note"><span>ToDo List</span></div>
-		<div id="browserAlert" style="display: none"><span></span></div>
-
-		<button class="btnSubmit" value="更新">更新</button>
-	<br>
-<a href="/list">タスク一覧へ</a>
-</form>
-
-
 
 </body>
 </html>
