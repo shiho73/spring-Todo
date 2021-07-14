@@ -55,6 +55,13 @@ public class CategoryController extends SuperController{
 			@RequestParam("code") int code,
 			ModelAndView mv) {
 
+		// 空の場合にエラーとする
+		if (name == null || name.length() == 0 || code.equals(null) || code.length() == 0) {
+			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
+			mv.setViewName("top");
+			return mv;
+		}
+
 		//カテゴリの重複チェック
 		List<Category> list = categoryRepository.findByCode(code);
 		List<Category> list2 = categoryRepository.findByName(name);
