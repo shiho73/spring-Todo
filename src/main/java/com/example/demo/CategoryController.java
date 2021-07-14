@@ -52,7 +52,7 @@ public class CategoryController extends SuperController{
 			@RequestParam(name="code", defaultValue="-1") int code,
 			ModelAndView mv) {
 
-		// 空の場合にエラーとする
+		// 空の場合にエラーとする(やばい)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
 			mv.setViewName("addCategory");
