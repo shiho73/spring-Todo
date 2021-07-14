@@ -66,17 +66,13 @@ public class EditController extends SuperController {
 			@RequestParam("memo") String memo) {
 
 		//未入力チェック
-		if (name == null || name == "" && dline == null || dline == "") {
-			if (name == null || name == "") {
-				mv.addObject("${message}", "タスク名と期限を入力してください");
-			}
-
-			if (name == null || name == "") {
-				mv.addObject("${message}", "タスク名を設定してください");
-			}
-
-			if (dline == null || dline == "") {
-				mv.addObject("${message}", "期限を設定してください");
+		if (name == null || name == "" || dline == null || dline == "") {
+			if ((name == null || name == "") && (dline == null || dline == "")) {
+				mv.addObject("message", "タスク名と期限を入力してください");
+			}else if (name == null || name == "") {
+				mv.addObject("message", "タスク名を設定してください");
+			}else if (dline == null || dline == "") {
+				mv.addObject("message", "期限を設定してください");
 			}
 			return listnew(mv);//編集ページに戻る
 		}
@@ -129,7 +125,7 @@ public class EditController extends SuperController {
 
 		//未入力チェック
 		if (name == null || name == "") {
-			mv.addObject("${message}", "タスク名を入力してください");
+			mv.addObject("message", "タスク名を入力してください");
 			edit(code, mv);
 			return sessiontest(mv);
 		}
