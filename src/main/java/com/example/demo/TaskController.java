@@ -1,6 +1,10 @@
 package com.example.demo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.deadline.AlmostD;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
@@ -43,6 +48,35 @@ public class TaskController extends SuperController {
 	public ModelAndView lookList(ModelAndView mv) {
 		//リスト一覧を準備
 		mv = listAndTrash(false, mv);
+
+		//期限フラッグを設定
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+		ArrayList<AlmostD> almost = new ArrayList<>();
+		for (Task d : taskList) {
+			Date dline = d.getDline();//sqlDate型
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date2 = sdf.format(dline);//String型に
+			java.util.Date dline3 = Date.valueOf(date2);//java.utilのDate型
+			java.util.Date date = new java.util.Date();
+			// Date型の日時をCalendar型に変換
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(date);
+	        // 日時を加算する
+	        calendar.add(Calendar.DATE, -2);
+	        // Calendar型の日時をDate型に戻す
+	        java.util.Date d1 = calendar.getTime();
+	        //比較
+	        boolean flag = false;
+	        if(dline3.after(d1)) {
+	        	flag = false;
+	        } else {
+	        	flag = true;
+	        }
+			AlmostD a = new AlmostD(d.getCode(), dline, flag);
+			almost.add(a);
+		}
+
+		mv.addObject("almost", almost);
 
 		mv.setViewName("list");//タスク一覧画面に遷移
 		return sessiontest(mv);
