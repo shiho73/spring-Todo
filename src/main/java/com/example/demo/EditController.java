@@ -68,10 +68,10 @@ public class EditController extends SuperController {
 		//未入力チェック
 		if (name == null || name == "" || dline == null || dline == "") {
 			if (name == null || name == "") {
-				mv.addObject("msg1", "タスク名を入力してください");
+				mv.addObject("${message}", "タスク名を入力してください");
 			}
 			if (dline == null || dline == "") {
-				mv.addObject("msg2", "期限を設定してください");
+				mv.addObject("${message}", "期限を設定してください");
 			}
 			return listnew(mv);//編集ページに戻る
 		}
@@ -124,7 +124,7 @@ public class EditController extends SuperController {
 
 		//未入力チェック
 		if (name == null || name == "") {
-			mv.addObject("msg1", "タスク名を入力してください");
+			mv.addObject("${message}", "タスク名を入力してください");
 			edit(code, mv);
 			return sessiontest(mv);
 		}

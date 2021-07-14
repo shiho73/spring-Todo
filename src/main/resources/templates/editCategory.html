@@ -25,8 +25,6 @@
 
 <!-- 入力アラート -->
 		<p th:text="${message}" style="color:red"></p>
-		<p th:text="${msg1}" style="color:red"></p>
-		<p th:text="${msg2}" style="color:red"></p>
 
 		<form action="/category/update"  method="post">
 		<input type="hidden" name="cCode" th:value="${category.code}">
@@ -49,7 +47,7 @@
 		</form>
 
 		<br>
-		<a href="/list">タスク一覧へ</a>
+		<a href="/list/new">タスク一覧へ</a>
 
 <!-- 右下のマーク -->
 		<div class="side-note"><span>ToDo List</span></div>

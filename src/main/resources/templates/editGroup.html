@@ -21,8 +21,8 @@
 	<h1>グループ編集</h1>
 	<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
-		<p th:text="${msg1}" style="color:red"></p>
-		<p th:text="${msg2}" style="color:red"></p>
+<!-- 入力アラート -->
+		<p th:text="${message}" style="color:red"></p>
 
 			<form action="/group/update"  method="post">
 			<input type="hidden" name="gid" th:value="${group.id}">

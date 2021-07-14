@@ -15,8 +15,8 @@
 
 <span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
-	<span th:text="${msg1}" style="color:red"></span>
-	<p th:text="${msg2}" style="color:red"></p>
+<!-- 入力アラート -->
+		<p th:text="${message}" style="color:red"></p>
 
 	<form action="/group/add" method="post">
 
@@ -43,7 +43,7 @@
 
 	</form>
 
-
+		<a href="/list/new">新規作成へ戻る</a>
 
 <!-- 右下のマーク -->
 			<div class="side-note"><span>ToDo List</span></div>

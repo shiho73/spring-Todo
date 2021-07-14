@@ -56,8 +56,20 @@ public class CategoryController extends SuperController{
 			ModelAndView mv) {
 
 		// 空の場合にエラーとする
-		if (name == null || name.length() == 0 || code == -1) {
+		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
+			mv.setViewName("addCategory");
+			return sessiontest(mv);
+		}
+
+		if (name == null || name.length() == 0) {
+			mv.addObject("message", "カテゴリー名を入力してください");
+			mv.setViewName("addCategory");
+			return sessiontest(mv);
+		}
+
+		if (code == -1) {
+			mv.addObject("message", "カテゴリー番号を入力してください");
 			mv.setViewName("addCategory");
 			return sessiontest(mv);
 		}
@@ -67,10 +79,10 @@ public class CategoryController extends SuperController{
 		List<Category> list2 = categoryRepository.findByName(name);
 		if (!list.isEmpty() || !list2.isEmpty()) {
 			if (!list.isEmpty()) {
-				mv.addObject("msg1", "使用済みのカテゴリコードです");
+				mv.addObject("message", "使用済みのカテゴリコードです");
 			}
 			if (!list2.isEmpty()) {
-				mv.addObject("msg2", "使用済みのカテゴリ名です");
+				mv.addObject("message", "使用済みのカテゴリ名です");
 			}
 			mv.setViewName("addCategory");
 			return sessiontest(mv);
@@ -114,7 +126,7 @@ public class CategoryController extends SuperController{
 
 		//未入力チェック
 		if (name == null || name == "" || code == 0) {
-			mv.addObject("msg1", "未入力の項目があります");
+			mv.addObject("message", "未入力の項目があります");
 			return editCategory(cCode, mv);
 		}
 
@@ -124,13 +136,13 @@ public class CategoryController extends SuperController{
 
 		if (!list.isEmpty()) {
 			if (code != cCode) {
-				mv.addObject("msg1", "使用済みのカテゴリ番号です");
+				mv.addObject("message", "使用済みのカテゴリ番号です");
 				return editCategory(cCode, mv);
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(cName)) {
-			mv.addObject("msg2", "使用済みのカテゴリ名です");
+			mv.addObject("message", "使用済みのカテゴリ名です");
 			return editCategory(cCode, mv);
 		}
 

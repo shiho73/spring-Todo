@@ -15,8 +15,8 @@
 
 <span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
-<span th:text="${msg1}" style="color:red"></span>
-<span th:text="${msg2}" style="color:red"></span>
+<!-- 入力アラート -->
+		<p th:text="${message}" style="color:red"></p>
 
 	<form action="/category/add" method="post">
 
@@ -27,7 +27,7 @@
 			</tr>
 
 			<tr>
-				<th>カテゴリー番号：</th><td><input type="number" name="code" min="1"></td>
+				<th>カテゴリー番号：</th><td><input type="number" name="code" min="1" max="99"></td>
 			</tr>
 
 		</table>
@@ -36,6 +36,7 @@
 			<button class="btnSubmit" value="登録">登録</button>
 	</form>
 
+		<a href="/list/new">新規作成へ戻る</a>
 
 <!-- 右下のマーク -->
 		<div class="side-note"><span>ToDo List</span></div>
