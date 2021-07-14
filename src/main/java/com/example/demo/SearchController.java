@@ -24,7 +24,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class SearchController {
+public class SearchController extends SuperController {
 
 	//保持用
 	@Autowired
@@ -72,7 +72,7 @@ public class SearchController {
 		mv.addObject("gmlist", gmList);
 
 		mv.setViewName("list");
-		return mv;
+		return sessiontest(mv);
 	}
 
 }

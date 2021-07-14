@@ -24,7 +24,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class CategoryController {
+public class CategoryController extends SuperController{
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -45,7 +45,7 @@ public class CategoryController {
 	@RequestMapping("/category/new")
 	public ModelAndView newCategory(ModelAndView mv) {
 		mv.setViewName("addCategory");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//新規カテゴリ作成アクション
@@ -66,7 +66,7 @@ public class CategoryController {
 				mv.addObject("msg2", "使用済みのカテゴリ名です");
 			}
 			mv.setViewName("addCategory");
-			return mv;
+			return sessiontest(mv);
 		}
 
 		Category category = new Category(code, name);
@@ -75,7 +75,7 @@ public class CategoryController {
 		mv = prepare02(mv);
 
 		mv.setViewName("addTask");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//カテゴリ編集
@@ -93,7 +93,7 @@ public class CategoryController {
 
 		mv.addObject("category", category);
 		mv.setViewName("editCategory");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//カテゴリ編集アクション
@@ -148,7 +148,7 @@ public class CategoryController {
 		mv = prepare02(mv);
 
 		mv.setViewName("addTask");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//リスト表示の予備動作

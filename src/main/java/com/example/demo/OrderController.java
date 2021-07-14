@@ -24,7 +24,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class OrderController {
+public class OrderController extends SuperController {
 
 	//保持用
 	@Autowired
@@ -123,7 +123,7 @@ public class OrderController {
 		mv.addObject("gmlist", gmList);
 
 		mv.setViewName("list");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//以下、現在未使用

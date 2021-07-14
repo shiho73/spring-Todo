@@ -51,7 +51,7 @@ public class EditController extends SuperController {
 
 		mv = listAndTrash(false, mv);
 		mv.setViewName("addTask");//遷移先(タスク作成ページ)を指定
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//新規作成アクション
@@ -83,7 +83,7 @@ public class EditController extends SuperController {
 				progress, memo);
 
 		mv.setViewName("redirect:/list");
-		return mv;
+		return sessiontest(mv);
 
 	}
 
@@ -105,7 +105,7 @@ public class EditController extends SuperController {
 
 		mv = listAndTrash(false, mv);
 		mv.setViewName("editTask");//遷移先(編集ページ)を指定
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//編集アクション
@@ -126,7 +126,7 @@ public class EditController extends SuperController {
 		if (name == null || name == "") {
 			mv.addObject("msg1", "タスク名を入力してください");
 			edit(code, mv);
-			return mv;
+			return sessiontest(mv);
 		}
 
 		//期限日の型を変換し、タスクを更新
@@ -134,7 +134,7 @@ public class EditController extends SuperController {
 				progress, memo);
 
 		mv.setViewName("redirect:/list");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//道具

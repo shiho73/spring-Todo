@@ -89,4 +89,13 @@ public class SuperController {
 
 			return mv;
 		}
+
+
+	protected ModelAndView sessiontest (ModelAndView mv){
+	        User login = (User) session.getAttribute("userInfo");
+	        if (login == null) {
+	        mv.setViewName("redirect:/logout");
+	        }
+	        return mv;
+	}
 }

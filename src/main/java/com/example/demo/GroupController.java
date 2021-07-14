@@ -47,7 +47,7 @@ public class GroupController extends SuperController{
 	@RequestMapping("/group/new")
 	public ModelAndView newGroup(ModelAndView mv) {
 		mv.setViewName("addGroup");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//新規グループ作成アクション
@@ -62,7 +62,7 @@ public class GroupController extends SuperController{
 		if (name == null || name == "" || id == 0) {
 			mv.addObject("msg1", "未入力の項目があります");
 			mv.setViewName("addGroup");
-			return mv;
+			return sessiontest(mv);
 		}
 
 		//グループの重複チェック/
@@ -77,7 +77,7 @@ public class GroupController extends SuperController{
 				mv.addObject("msg2", "使用済みのグループ名です");
 			}
 			mv.setViewName("addGroup");
-			return mv;
+			return sessiontest(mv);
 		}
 
 		Group group = new Group(id, name);
@@ -88,7 +88,7 @@ public class GroupController extends SuperController{
 
 		mv = listAndTrash(false, mv);
 		mv.setViewName("addTask");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//グループ編集
@@ -115,7 +115,7 @@ public class GroupController extends SuperController{
 		mv.addObject("groupM", groupM);
 
 		mv.setViewName("editGroup");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//グループ編集アクション
@@ -177,7 +177,7 @@ public class GroupController extends SuperController{
 		mv = listAndTrash(false, mv);
 
 		mv.setViewName("addTask");
-		return mv;
+		return sessiontest(mv);
 	}
 
 }

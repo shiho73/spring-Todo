@@ -45,7 +45,7 @@ public class TaskController extends SuperController {
 		mv = listAndTrash(false, mv);
 
 		mv.setViewName("list");//タスク一覧画面に遷移
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//ゴミ箱を見る
@@ -56,7 +56,7 @@ public class TaskController extends SuperController {
 
 		//ゴミ箱画面に遷移
 		mv.setViewName("trash");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//ゴミ箱へ投げる
