@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,8 +41,8 @@ public class SearchController extends SuperController {
 	PriorityRepository priorityRepository;
 
 	//検索
-	@PostMapping("/task/search")
-	public ModelAndView search(
+	@PostMapping("/task/search/name")
+	public ModelAndView searchName(
 			ModelAndView mv,
 			@RequestParam("keyword") String keyword) {
 
@@ -61,5 +63,53 @@ public class SearchController extends SuperController {
 		mv.setViewName("list");
 		return sessiontest(mv);
 	}
+
+	//カテゴリ検索
+		@RequestMapping("/task/search/category")
+		public ModelAndView searchCategory(
+				ModelAndView mv,
+				@RequestParam(name = "category") int code) {
+
+			mv = listAndTrash(false, mv);
+			mv = almostDeadline(mv);
+
+			List<Task> taskList = taskRepository.findAll();
+			ArrayList<Task> taskList2 = new ArrayList<>();
+
+			for (Task t : taskList) {
+				if (t.getCgCode() == code) {
+					taskList2.add(t);
+				}
+			}
+
+			mv.addObject("list", taskList2);
+
+			mv.setViewName("list");
+			return sessiontest(mv);
+		}
+
+		//優先度検索
+		@RequestMapping("/task/search/priority")
+		public ModelAndView searchPriority(
+				ModelAndView mv,
+				@RequestParam(name = "priority") int code) {
+
+			mv = listAndTrash(false, mv);
+			mv = almostDeadline(mv);
+
+			List<Task> taskList = taskRepository.findAll();
+			ArrayList<Task> taskList2 = new ArrayList<>();
+
+			for (Task t : taskList) {
+				if (t.getPrtNum() == code) {
+					taskList2.add(t);
+				}
+			}
+
+			mv.addObject("list", taskList2);
+
+			mv.setViewName("list");
+			return sessiontest(mv);
+		}
 
 }
