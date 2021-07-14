@@ -10,10 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.group_m.GroupM;
+import com.example.demo.group_m.GroupMRepository;
+import com.example.demo.priority.Priority;
+import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -22,29 +29,25 @@ public class searchController {
 	//保持用
 	@Autowired
 	HttpSession session;
-
-	//Taskデータベース
+	//各テーブルのレポジトリを設定
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Categoryデータベース
 	@Autowired
 	CategoryRepository categoryRepository;
-
-	//Groupデータベース
 	@Autowired
 	GroupRepository groupRepository;
-
-	//Userデータベース
+	@Autowired
+	GroupMRepository groupMRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	PriorityRepository priorityRepository;
 
 	//検索
 	@PostMapping("/task/search")
 	public ModelAndView search(
 			ModelAndView mv,
-			@RequestParam("keyword") String keyword
-			) {
+			@RequestParam("keyword") String keyword) {
 
 		List<Task> taskList = null;
 
@@ -56,6 +59,17 @@ public class searchController {
 
 		mv.addObject("list", taskList);
 		mv.addObject("keyword", keyword);
+
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		List<GroupM> gmList = groupMRepository.findAll();
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
+		mv.addObject("gmlist", gmList);
 
 		mv.setViewName("list");
 		return mv;
