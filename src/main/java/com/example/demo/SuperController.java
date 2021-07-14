@@ -26,77 +26,77 @@ import com.example.demo.user.UserRepository;
 public class SuperController {
 
 	//セッションのレポジトリをセット
-		@Autowired
-		HttpSession session;
+	@Autowired
+	HttpSession session;
 
-		//各テーブルのレポジトリをセット
-		@Autowired
-		TaskRepository taskRepository;
-		@Autowired
-		CategoryRepository categoryRepository;
-		@Autowired
-		GroupRepository groupRepository;
-		@Autowired
-		GroupMRepository groupMRepository;
-		@Autowired
-		UserRepository userRepository;
-		@Autowired
-		PriorityRepository priorityRepository;
+	//各テーブルのレポジトリをセット
+	@Autowired
+	TaskRepository taskRepository;
+	@Autowired
+	CategoryRepository categoryRepository;
+	@Autowired
+	GroupRepository groupRepository;
+	@Autowired
+	GroupMRepository groupMRepository;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	PriorityRepository priorityRepository;
 
 	//表示するための道具
-		protected ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
-			//各テーブルから全件検索
-			List<User> userList = userRepository.findAll();
-			List<Category> categoryList = categoryRepository.findAll();
-			List<Priority> priorityList = priorityRepository.findAll();
-			List<Group> groupList = groupRepository.findAll();
-			List<GroupM> gmList = groupMRepository.findAll();
+	protected ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
+		//各テーブルから全件検索
+		List<User> userList = userRepository.findAll();
+		List<Category> categoryList = categoryRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findAll();
+		List<Group> groupList = groupRepository.findAll();
+		List<GroupM> gmList = groupMRepository.findAll();
 
-			//空の表示用リストを生成
-			ArrayList<Task> list = new ArrayList<Task>();
+		//空の表示用リストを生成
+		ArrayList<Task> list = new ArrayList<Task>();
 
-			//全てのタスクを取得
-			List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+		//全てのタスクを取得
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
 
-			//タスク一覧とゴミ箱で分岐
-			if (tflag == true) {
-				//ゴミ箱に入れていれば、表示するリストに追加
-				for (Task task : taskList) {
-					if (task.isTrash() == false) {
-						list.add(task);
-					}
-				}
-				//リストが空であれば、メッセージを表示
-				if (list.isEmpty() == true) {
-					mv.addObject("message", "ゴミ箱は空です");
-				}
-			} else if (tflag == false) {
-				//ゴミ箱に入れていなければ、表示するリストに追加
-				for (Task task1 : taskList) {
-					if (task1.isTrash() == true) {
-						list.add(task1);
-					}
+		//タスク一覧とゴミ箱で分岐
+		if (tflag == true) {
+			//ゴミ箱に入れていれば、表示するリストに追加
+			for (Task task : taskList) {
+				if (task.isTrash() == false) {
+					list.add(task);
 				}
 			}
-
-			//Thymeleafで表示する準備
-			mv.addObject("ulist", userList);
-			mv.addObject("clist", categoryList);
-			mv.addObject("plist", priorityList);
-			mv.addObject("glist", groupList);
-			mv.addObject("gmlist", gmList);
-			mv.addObject("list", list);
-
-			return mv;
+			//リストが空であれば、メッセージを表示
+			if (list.isEmpty() == true) {
+				mv.addObject("message", "ゴミ箱は空です");
+			}
+		} else if (tflag == false) {
+			//ゴミ箱に入れていなければ、表示するリストに追加
+			for (Task task1 : taskList) {
+				if (task1.isTrash() == true) {
+					list.add(task1);
+				}
+			}
 		}
 
+		//Thymeleafで表示する準備
+		mv.addObject("ulist", userList);
+		mv.addObject("clist", categoryList);
+		mv.addObject("plist", priorityList);
+		mv.addObject("glist", groupList);
+		mv.addObject("gmlist", gmList);
+		mv.addObject("list", list);
 
-	protected ModelAndView sessiontest (ModelAndView mv){
-	        User login = (User) session.getAttribute("userInfo");
-	        if (login == null) {
-	        mv.setViewName("redirect:/logout");
-	        mv.addObject("message", "セッションがタイムアウトしました");
-	        }
-	        return mv;
+		return mv;
+	}
+
+	protected ModelAndView sessiontest(ModelAndView mv) {
+		User login = (User) session.getAttribute("userInfo");
+		if (login == null) {
+			session.invalidate();
+			mv.addObject("message", "セッションがタイムアウトしました");
+			mv.setViewName("top");
+		}
+		return mv;
 	}
 }

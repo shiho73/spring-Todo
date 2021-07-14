@@ -62,12 +62,12 @@ public class TaskController extends SuperController {
 	        Calendar calendar = Calendar.getInstance();
 	        calendar.setTime(date);
 	        // 日時を加算する
-	        calendar.add(Calendar.DATE, -3);
+	        calendar.add(Calendar.DATE, 2);
 	        // Calendar型の日時をDate型に戻す
 	        java.util.Date d1 = calendar.getTime();
 	        //比較
 	        boolean flag = false;
-	        if(dline3.after(d1)) {
+	        if(d1.after(dline3)) {
 	        	flag = false;
 	        } else {
 	        	flag = true;
