@@ -124,9 +124,22 @@ public class CategoryController extends SuperController{
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 
-		//未入力チェック
-		if (name == null || name == "" || code == 0) {
-			mv.addObject("message", "未入力の項目があります");
+		// 空の場合にエラーとする
+		if (name == null || name.length() == 0 && code == -1) {
+			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
+			mv.setViewName("addCategory");
+			return editCategory(cCode, mv);
+		}
+
+		if (name == null || name.length() == 0) {
+			mv.addObject("message", "カテゴリー名を入力してください");
+			mv.setViewName("addCategory");
+			return editCategory(cCode, mv);
+		}
+
+		if (code == -1) {
+			mv.addObject("message", "カテゴリー番号を入力してください");
+			mv.setViewName("addCategory");
 			return editCategory(cCode, mv);
 		}
 

@@ -59,8 +59,20 @@ public class GroupController extends SuperController{
 			ModelAndView mv) {
 
 		//未入力チェック
-		if (name == null || name == "" || id == 0) {
-			mv.addObject("msg1", "未入力の項目があります");
+		if (name == null || name == "" && id == 0) {
+			mv.addObject("message", "グループ名とグループ番号を入力してください");
+			mv.setViewName("addGroup");
+			return sessiontest(mv);
+		}
+
+		if (name == null || name == "" ) {
+			mv.addObject("message", "グループ名を入力してください");
+			mv.setViewName("addGroup");
+			return sessiontest(mv);
+		}
+
+		if (id == 0) {
+			mv.addObject("message", "グループ番号を入力してください");
 			mv.setViewName("addGroup");
 			return sessiontest(mv);
 		}
@@ -71,10 +83,10 @@ public class GroupController extends SuperController{
 
 		if (!list.isEmpty() || !list2.isEmpty()) {
 			if (!list.isEmpty()) {
-				mv.addObject("msg1", "使用済みのグループ番号です");
+				mv.addObject("message", "使用済みのグループ番号です");
 			}
 			if (!list2.isEmpty()) {
-				mv.addObject("msg2", "使用済みのグループ名です");
+				mv.addObject("message", "使用済みのグループ名です");
 			}
 			mv.setViewName("addGroup");
 			return sessiontest(mv);
@@ -129,9 +141,22 @@ public class GroupController extends SuperController{
 			ModelAndView mv) {
 
 		//未入力チェック
-		if (name == null || name == "" || id == 0) {
-			mv.addObject("msg1", "未入力の項目があります");
-			return editGroup(gid, mv);
+		if (name == null || name == "" && id == 0) {
+			mv.addObject("message", "グループ名とグループ番号を入力してください");
+			mv.setViewName("addGroup");
+			return sessiontest(mv);
+		}
+
+		if (name == null || name == "" ) {
+			mv.addObject("message", "グループ名を入力してください");
+			mv.setViewName("addGroup");
+			return sessiontest(mv);
+		}
+
+		if (id == 0) {
+			mv.addObject("message", "グループ番号を入力してください");
+			mv.setViewName("addGroup");
+			return sessiontest(mv);
 		}
 
 		//グループの重複チェック/
@@ -140,13 +165,13 @@ public class GroupController extends SuperController{
 
 		if (!list.isEmpty()) {
 			if (id != gid) {
-			mv.addObject("msg1", "使用済みのグループ番号です");
+			mv.addObject("message", "使用済みのグループ番号です");
 			return editGroup(gid, mv);
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(gname)) {
-			mv.addObject("msg2", "使用済みのグループ名です");
+			mv.addObject("message", "使用済みのグループ名です");
 			return editGroup(gid, mv);
 		}
 

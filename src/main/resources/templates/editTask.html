@@ -22,7 +22,7 @@
 <h1>タスク編集</h1>
 	<span th:replace="menu"></span>
 
-	<p th:text="${msg1}" style="color:red"></p>
+	<p th:text="${message}" style="color:red"></p>
 
 		<form action="/update"  method="post">
 		<input type="hidden" name="code" th:value="${task.code}">
