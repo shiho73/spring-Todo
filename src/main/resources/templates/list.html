@@ -113,6 +113,8 @@
 					<br>
 					<span>グループ:</span><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span>
  					<br>
+ 					<span>メンバー:</span><span th:each="gm:${gmlist}" th:if="${list.groupId==gm.groupId}" th:text="${gm.member}"></span>
+ 					<br>
  					<span>メモ:</span><span th:text="${list.memo}"></span>
 				</div>
 		</td>

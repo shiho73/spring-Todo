@@ -13,6 +13,8 @@ import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.group_m.GroupM;
+import com.example.demo.group_m.GroupMRepository;
 import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
@@ -35,6 +37,8 @@ public class SuperController {
 		@Autowired
 		GroupRepository groupRepository;
 		@Autowired
+		GroupMRepository groupMRepository;
+		@Autowired
 		UserRepository userRepository;
 		@Autowired
 		PriorityRepository priorityRepository;
@@ -46,6 +50,7 @@ public class SuperController {
 			List<Category> categoryList = categoryRepository.findAll();
 			List<Priority> priorityList = priorityRepository.findAll();
 			List<Group> groupList = groupRepository.findAll();
+			List<GroupM> gmList = groupMRepository.findAll();
 
 			//空の表示用リストを生成
 			ArrayList<Task> list = new ArrayList<Task>();
@@ -79,6 +84,7 @@ public class SuperController {
 			mv.addObject("clist", categoryList);
 			mv.addObject("plist", priorityList);
 			mv.addObject("glist", groupList);
+			mv.addObject("gmlist", gmList);
 			mv.addObject("list", list);
 
 			return mv;
