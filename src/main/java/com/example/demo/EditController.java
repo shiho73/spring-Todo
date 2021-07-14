@@ -43,7 +43,7 @@ public class EditController extends SuperController {
 	PriorityRepository priorityRepository;
 
 	//新規作成
-	@PostMapping("/list/new")
+	@RequestMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
 		//カテゴリとグループの初期登録
 		categoryZero();
