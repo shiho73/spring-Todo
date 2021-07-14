@@ -24,7 +24,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class searchController {
+public class SearchController {
 
 	//保持用
 	@Autowired
