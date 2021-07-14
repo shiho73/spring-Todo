@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>ユーザー情報</title>
 
-<!-- 入力フォームCSS -->
-		<link rel="stylesheet" href="/newUser.css">
+<!-- 入力フォームjQuery & CSS -->
+		<span th:replace="topJquery"></span>
 <!-- 格子背景CSS -->
 		<link rel="stylesheet" href="/background.css">
 
@@ -18,7 +18,7 @@
 	<h1>登録情報</h1>
 
 	あなたのpassは・・・
-	<p th:text="${pw}"></p>
+	<h2 th:text="${pw}"></h2>
 	です
 	<br>
 	<a href="/">ログイン画面へ</a>

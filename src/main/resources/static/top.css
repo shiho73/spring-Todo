@@ -86,4 +86,6 @@
 		input[type="submit"].login:hover{background-color: #fff; border:1px solid #55b1df; color:#55b1df; cursor:pointer;}
 		input[type="submit"].login:focus{outline: none;}
 
-
+		h2{
+		color:rgb(30, 97, 221);
+		}
