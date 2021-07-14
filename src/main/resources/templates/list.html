@@ -107,13 +107,13 @@
 					<input class="dialog-link" type="submit" th:value="${list.code}">
 					<div th:id="'dialog' + ${list.code}" style="display:none;">
  <!-- ダイアログに表示させる内容記述 -->
- 					タスク名<p th:text="${list.name}"></p>
- 					カテゴリ<p th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></p>
-					グループ<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></p>
-<!--  					<p th:text="${u.name}"></p> -->
-<!--  					<p th:text="${g.name}"></p> -->
-<!--  					<p  th:text="${g.member}"></p> -->
- 					メモ<p th:text="${list.memo}"></p>
+ 					<span>タスク名:</span><span th:text="${list.name}"></span>
+ 					<br>
+ 					<span>カテゴリ:</span><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span>
+					<br>
+					<span>グループ:</span><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span>
+ 					<br>
+ 					<span>メモ:</span><span th:text="${list.memo}"></span>
 				</div>
 		</td>
 		<td th:text="${list.name}"></td>
