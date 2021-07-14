@@ -4,12 +4,18 @@
 <meta charset="UTF-8">
 <title>新規ユーザー登録</title>
 
-<!-- jQuery -->
-		<span th:replace="jquery"></span>
-		<link rel="stylesheet" href="/background.css">
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- 入力フォームCSS -->
 		<link rel="stylesheet" href="/newUser.css">
+<!-- 格子背景CSS -->
+		<link rel="stylesheet" href="/background.css">
+<!-- 右下のやつCSS -->
+		<link rel="stylesheet" href="/corner.css">
+
 </head>
 <body>
+<div id="formWrapper">
 <div id="form">
 
 <h1>新規ユーザー登録</h1>
@@ -43,8 +49,11 @@
 	<br>
 	<a href="/">ログイン画面へ</a>
 	</div>
-		<!-- 右下のマーク -->
+	</div>
+
+<!-- 右下のマーク -->
 		<div class="side-note"><span>ToDo List</span></div>
 		<div id="browserAlert" style="display: none"><span></span></div>
+
 </body>
 </html>
