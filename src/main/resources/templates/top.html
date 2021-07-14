@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <title>タスク管理</title>
 
-<!--  jQuery -->
-		<span th:replace="loginJquery"></span>
-<script src="https://code.jquery.com/jquery-2.1.0.min.js" ></script>
+<!-- jQuery & CSS -->
+		<span th:replace="topJquery"></span>
 
 </head>
 <body>
@@ -14,8 +13,9 @@
 <form action="/login"  method="post">
 
 <div id="formWrapper">
-
 <div id="form">
+
+<!-- 見出しの文字 -->
 <div class="logo">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 458.8 167.5" enable-background="new 0 0 458.8 167.5" xml:space="preserve">
 <g>
@@ -65,6 +65,9 @@
 </svg>
 </div>
 
+<!-- 入力アラート -->
+<p th:text="${message}" style="color:red"></p>
+
 <!-- 名前入力 -->
     <div class="form-item">
       <p class="formLabel">NAME</p>
@@ -75,14 +78,21 @@
     <div class="form-item">
       <p class="formLabel">Password</p>
       <input type="password" name="pw" id="pw" class="form-style" />
-      <!-- <div class="pw-view"><i class="fa fa-eye"></i></div> -->
+<!--       <div class="pw-view"><i class="fa fa-eye"></i></div> -->
+
+<!-- パスワード忘れた方 -->
       <p><a href="/change" ><small>Forgot Password ?</small></a></p>
     </div>
+
+<!-- 新規登録 -->
     <div class="form-item">
     <p class="pull-left"><a href="/user"><small>New Registration</small></a></p>
+
+<!-- ログインボタン -->
     <input type="submit" class="login pull-right" value="Log In">
     <div class="clear-fix"></div>
     </div>
+
 </div>
 </div>
 </form>
