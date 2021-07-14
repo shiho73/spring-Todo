@@ -1,0 +1,8 @@
+
+/* miniボタン */
+
+		@charset "UTF-8";
+
+		a.btn-gradient {
+		  border-radius: 100vh;
+		}

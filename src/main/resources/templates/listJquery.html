@@ -12,7 +12,12 @@
 			    $("#datepicker").datepicker({
  // 日付が選択された時、日付をテキストフィールドへセット
 			        onSelect: function(dateText, inst) {
-			          $("#date_val").val(dateText);
+
+			        	$("#date_val").val(dateText);
+						alert(dateText);
+
+						location.href = "/task/calendar?dateText="+ dateText
+
 			        }
 			    });
 			});

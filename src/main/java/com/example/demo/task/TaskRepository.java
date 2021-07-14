@@ -1,5 +1,6 @@
 package com.example.demo.task;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,5 +41,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
 	//グループ順(これもいらない気がする)
 	List<Task> findByOrderByGroupIdAsc();
+
+	List<Task> findByDline(Date dline);
+
 
 }

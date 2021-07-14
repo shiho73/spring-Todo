@@ -8,6 +8,8 @@
 		<span th:replace="topJquery"></span>
 <!-- 格子背景CSS -->
 		<link rel="stylesheet" href="/background.css">
+<!-- miniボタンCSS -->
+		<link rel="stylesheet" href="/miniButton.css">
 
 </head>
 <body>
@@ -26,20 +28,22 @@
 
 	<form action="/himitu/get" method="POST">
 		NAME:<input type="text" name="name" th:value="${userName}">
-		<span th:if="${flag==false}"><input type="submit" value="送信"></span>
+		<span th:if="${flag==false}"><input type="submit" value="送信" class="btn btn-gradient"></span>
 	</form>
 
 	<form action="/change/pw" method="post">
 		<span th:text="${quiz}"></span><br>
 		答え：<input type="text" name="himitu">
 		<input type="hidden" th:value="${userName}" name="userName">
-		<span th:if="${flag==true}"><input type="submit" value="送信"></span>
+		<span th:if="${flag==true}"><input type="submit" value="送信" class="btn btn-gradient"></span>
 	</form>
 	<br>
 	<a href="/">ログイン画面へ</a>
 
 </div>
 </div>
+
+
 
 </body>
 </html>
