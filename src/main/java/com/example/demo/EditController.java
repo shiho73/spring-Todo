@@ -190,6 +190,11 @@ public class EditController extends SuperController {
 			Category category = new Category(0, "なし");
 			categoryRepository.saveAndFlush(category);
 		}
+		List<Category> list1 = categoryRepository.findByCode(100);
+		if (list1.isEmpty()) {
+			Category category = new Category(100, "退避用");
+			categoryRepository.saveAndFlush(category);
+		}
 	}
 
 	//グループのデフォルト設定・なぜかコードからの検索がうまくいかない
