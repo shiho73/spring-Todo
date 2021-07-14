@@ -2,6 +2,7 @@
 	<form action="/task/search"  method="post">
 	検索：<input type="search" name="keyword" th:value="${keyword}">
 	<input type="submit"  value="検索">
-<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 </form>
+<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+
 <hr>

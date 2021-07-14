@@ -3,19 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>カテゴリ登録</title>
+
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- 右下のやつCSS -->
+		<link rel="stylesheet" href="/corner.css">
+
 </head>
 <body>
-<form action="/category/add" method="post">
+<h1>カテゴリ登録</h1>
 
-カテゴリー名:<input type="text" name="name"><br>
-カテゴリー番号：<input type="number" name="code" min="1"><br>
-<input type="submit" value="登録">
-	<span th:text="${message}" style="color:red"></span>
-	<br>
-</form>
+<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
-<span th:text="${msg1}"></span>
-<span th:text="${msg2}"></span>
+<span th:text="${msg1}" style="color:red"></span>
+<span th:text="${msg2}" style="color:red"></span>
+
+	<form action="/category/add" method="post">
+
+		<table border="1">
+
+			<tr>
+				<th>カテゴリー名:</th><td><input type="text" name="name"></td>
+			</tr>
+
+			<tr>
+				<th>カテゴリー番号：</th><td><input type="number" name="code" min="1"></td>
+			</tr>
+
+		</table>
+		<br>
+
+			<button class="btnSubmit" value="登録">登録</button>
+	</form>
+
+
+<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
 
 </body>
 </html>

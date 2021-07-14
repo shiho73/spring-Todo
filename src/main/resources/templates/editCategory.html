@@ -3,15 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>タスク管理</title>
+
+<!-- カレンダーjQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- 右下のやつCSS -->
+		<link rel="stylesheet" href="/corner.css">
+
 </head>
 <body>
 
 <h1>カテゴリ編集</h1>
-	<span th:replace="menu"></span>
+	<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+
 
 	<p th:text="${msg1}" style="color:red"></p>
 	<p th:text="${msg2}" style="color:red"></p>
@@ -20,23 +29,28 @@
 		<input type="hidden" name="cCode" th:value="${category.code}">
 		<input type="hidden" name="cName" th:value="${category.name}">
 
-<table border="1">
-	<tr>
-		<th>カテゴリ番号</th><td><input type="number" name="code" min="1" th:value="${category.code}"></td>
-	</tr>
+		<table border="1">
+			<tr>
+				<th>カテゴリ番号</th><td><input type="number" name="code" min="1" th:value="${category.code}"></td>
+			</tr>
 
-	<tr>
-		<th>カテゴリ名</th><td><input type="text" name="name" th:value="${category.name}"></td>
-	</tr>
-</table>
+			<tr>
+				<th>カテゴリ名</th><td><input type="text" name="name" th:value="${category.name}"></td>
+			</tr>
+		</table>
 
-<br>
-	<input type="submit"  value="更新"></form>
-	<br>
-<a href="/list">タスク一覧へ</a>
+		<br>
 
+		<button class="btnSubmit" value="更新">更新</button>
 
+		</form>
 
+		<br>
+		<a href="/list">タスク一覧へ</a>
+
+<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
 
 </body>
 </html>
