@@ -51,10 +51,10 @@ public class SuperController {
 	protected ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
 		//各テーブルから全件検索
 		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
+		List<Category> categoryList = categoryRepository.findByOrderByCodeAsc();
 		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-		List<GroupM> gmList = groupMRepository.findAll();
+		List<Group> groupList = groupRepository.findByOrderByIdAsc();
+		List<GroupM> gmList = groupMRepository.findByOrderByGroupIdAsc();
 
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();

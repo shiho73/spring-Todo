@@ -14,13 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
-import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
-import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
-import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -91,7 +88,7 @@ public class CategoryController extends SuperController{
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
-		mv = prepare02(mv);
+		mv = listAndTrash(false, mv);
 
 		mv.setViewName("addTask");
 		return sessiontest(mv);
@@ -177,27 +174,10 @@ public class CategoryController extends SuperController{
 			taskRepository.saveAndFlush(a);
 		}
 
-		mv = prepare02(mv);
+		mv = listAndTrash(false, mv);
 
 		mv.setViewName("addTask");
 		return sessiontest(mv);
-	}
-
-	//リスト表示の予備動作
-	private ModelAndView prepare02(ModelAndView mv) {
-		//各テーブルから全件検索
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-
-		//Thymeleafで表示する準備
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
-		return mv;
 	}
 
 }
