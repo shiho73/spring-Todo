@@ -52,14 +52,14 @@ public class CategoryController extends SuperController{
 	@PostMapping("/category/add")
 	public ModelAndView addCategory(
 			@RequestParam("name") String name,
-			@RequestParam("code") int code,
+			@RequestParam(name="code", defaultValue="-1") int code,
 			ModelAndView mv) {
 
 		// 空の場合にエラーとする
-		if (name == null || name.length() == 0 || code.equals(null) || code.length() == 0) {
+		if (name == null || name.length() == 0 || code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			mv.setViewName("top");
-			return mv;
+			mv.setViewName("addCategory");
+			return sessiontest(mv);
 		}
 
 		//カテゴリの重複チェック
