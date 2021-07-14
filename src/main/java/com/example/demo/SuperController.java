@@ -95,6 +95,7 @@ public class SuperController {
 	        User login = (User) session.getAttribute("userInfo");
 	        if (login == null) {
 	        mv.setViewName("redirect:/logout");
+	        mv.addObject("message", "セッションがタイムアウトしました");
 	        }
 	        return mv;
 	}

@@ -123,8 +123,8 @@
 		<td th:text="${list.name}"></td>
 		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
 		<td>
-			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==true}" style="color:red" th:text="${list.dline}"></span>
-			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==false}" th:text="${list.dline}"></span>
+			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==false}" style="color:red" th:text="${list.dline}"></span>
+			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==true}" th:text="${list.dline}"></span>
 		</td>
 		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
 		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
