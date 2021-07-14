@@ -4,16 +4,27 @@
 <meta charset="UTF-8">
 <title>ユーザー情報</title>
 
+<!-- 入力フォームCSS -->
+		<link rel="stylesheet" href="/newUser.css">
+<!-- 格子背景CSS -->
+		<link rel="stylesheet" href="/background.css">
+
 </head>
 <body>
-<h1>登録情報</h1>
 
-あなたのpassは・・・
-<p th:text="${pw}"></p>
-です
-<br>
-<a href="/">ログイン画面へ</a>
+	<div id="formWrapper">
+	<div id="form">
 
+	<h1>登録情報</h1>
+
+	あなたのpassは・・・
+	<p th:text="${pw}"></p>
+	です
+	<br>
+	<a href="/">ログイン画面へ</a>
+
+	</div>
+	</div>
 
 </body>
 </html>

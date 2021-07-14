@@ -4,11 +4,20 @@
 <meta charset="UTF-8">
 <title>ユーザー情報</title>
 
+<!-- 入力フォームjQuery & CSS -->
+		<span th:replace="topJquery"></span>
+<!-- 格子背景CSS -->
+		<link rel="stylesheet" href="/background.css">
+
 </head>
 <body>
+
+<div id="formWrapper">
+<div id="form">
+
 	<h1>登録情報変更</h1>
 
-	<p th:text="${message}"></p>
+	<p th:text="${message}" style="color:red"></p>
 
 	登録情報の確認を行います
 	<br>
@@ -26,7 +35,11 @@
 		<input type="hidden" th:value="${userName}" name="userName">
 		<span th:if="${flag==true}"><input type="submit" value="送信"></span>
 	</form>
+	<br>
+	<a href="/">ログイン画面へ</a>
 
+</div>
+</div>
 
 </body>
 </html>

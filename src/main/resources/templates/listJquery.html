@@ -3,40 +3,6 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
-<!-- ロード時間についてjQuery -->
-	<link rel="stylesheet" href="/Loading.css">
-		<script type="text/javascript">
-			$(function() {
-			  var h = $(window).height();
-
-			  $('#wrap').css('display','none');
-			  $('#try ,#triangles').height(h).css('display','block');
-			});
-
-			$(window).load(function () { //全ての読み込みが完了したら実行
-			  $('#try').delay(900).fadeOut(800);
-			  $('#triangles').delay(600).fadeOut(300);
-			  $('#wrap').css('display', 'block');
-			});
-
-//10秒たったら強制的にロード画面を非表示
-			$(function(){
-			  setTimeout('stopload()',10000);
-			});
-
-			function stopload(){
-			  $('#wrap').css('display','block');
-			  $('#try').delay(900).fadeOut(800);
-			  $('#triangles').delay(600).fadeOut(300);
-			}
-
-//ローディング画面の消え方
-			$("submit").click(function() {
-				$("#try").fadeOut(400, function(){ $(this).remove(); });
-			});
-
-		</script>
-
 <!-- jQueryカレンダーのテンプレート取得 -->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 
