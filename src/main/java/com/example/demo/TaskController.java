@@ -1,6 +1,10 @@
 package com.example.demo;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -133,17 +137,50 @@ public class TaskController extends SuperController {
 
 		return lookList(mv);
 	}
+
 	//カレンダーボタン
 	@GetMapping("/task/calendar")
 	public ModelAndView calendar(
 			@RequestParam(name = "dateText") String dateText,
 			ModelAndView mv) {
 
-System.out.println(dateText);
+		//リスト一覧を準備
+		mv = listAndTrash(false, mv);
 
+		//期限の文字色を変更
+		mv = almostDeadline(mv);
 
-//よろしくお願いしますTT
-		return lookList(mv);
+//		System.out.println(dateText);
+
+		//期限日の型変換
+		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+		java.util.Date date = null;
+		try {
+			date = sdFormat.parse(dateText);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//String型に戻す
+		String date2 = sdf.format(date);
+
+		//String型をData型(SQL)dateText2に変換
+		Date dateText2 = Date.valueOf(date2);
+
+		//検索
+		ArrayList<Task> list = new ArrayList<Task>();
+		List<Task> taskList = taskRepository.findAll();
+		for (Task t : taskList) {
+			if (t.getDline().equals(dateText2)) {
+				list.add(t);
+			}
+		}
+		mv.addObject("list", list);
+
+		mv.setViewName("list");//タスク一覧画面に遷移
+		return sessiontest(mv);
 	}
 
 }
