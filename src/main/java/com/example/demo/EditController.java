@@ -3,7 +3,6 @@ package com.example.demo;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +19,13 @@ import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
-import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
-import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class EditController {
+public class EditController extends SuperController {
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -52,8 +49,7 @@ public class EditController {
 		categoryZero();
 		groupZero();
 
-		mv = prepareList(mv);//リストを準備
-
+		mv = listAndTrash(false, mv);
 		mv.setViewName("addTask");//遷移先(タスク作成ページ)を指定
 		return mv;
 	}
@@ -86,8 +82,7 @@ public class EditController {
 		dateExchange(code, name, userId, dline, prtNum, cgCode, groupId,
 				progress, memo);
 
-		mv = prepareList(mv);//リストを準備
-		mv.setViewName("list");//遷移先(リスト一覧)を指定
+		mv.setViewName("redirect:/list");
 		return mv;
 
 	}
@@ -108,7 +103,7 @@ public class EditController {
 
 		mv.addObject("task", task);
 
-		mv = prepareList(mv);//リストを準備
+		mv = listAndTrash(false, mv);
 		mv.setViewName("editTask");//遷移先(編集ページ)を指定
 		return mv;
 	}
@@ -138,8 +133,7 @@ public class EditController {
 		dateExchange(code, name, userId, dline, prtNum, cgCode, groupId,
 				progress, memo);
 
-		mv = prepareList(mv);//リストを準備
-		mv.setViewName("list");//遷移先(リスト一覧)を指定
+		mv.setViewName("redirect:/list");
 		return mv;
 	}
 
@@ -186,37 +180,6 @@ public class EditController {
 			taskRepository.saveAndFlush(task);
 		}
 
-	}
-
-	//リスト表示の予備動作
-	private ModelAndView prepareList(ModelAndView mv) {
-		//各テーブルから全件検索
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-
-		//空の表示用リストを生成
-		ArrayList<Task> list = new ArrayList<Task>();
-
-		//全てのタスクを取得
-		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-
-		//ゴミ箱に入れていなければ、表示するリストに追加
-		for (Task task1 : taskList) {
-			if (task1.isTrash() == true) {
-				list.add(task1);
-			}
-		}
-
-		//Thymeleafで表示する準備
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-		mv.addObject("list", list);
-
-		return mv;
 	}
 
 	//カテゴリコードのデフォルト設定

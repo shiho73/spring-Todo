@@ -12,21 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.group_m.GroupM;
 import com.example.demo.group_m.GroupMRepository;
-import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
-import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class GroupController {
+public class GroupController extends SuperController{
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -89,7 +86,7 @@ public class GroupController {
 		GroupM groupM = new GroupM(id, member);
 		groupMRepository.saveAndFlush(groupM);
 
-		mv = prepare01(mv);
+		mv = listAndTrash(false, mv);
 		mv.setViewName("addTask");
 		return mv;
 	}
@@ -177,26 +174,9 @@ public class GroupController {
 		GroupM groupM = new GroupM(id, member);
 		groupMRepository.saveAndFlush(groupM);
 
-		mv = prepare01(mv);
+		mv = listAndTrash(false, mv);
 
 		mv.setViewName("addTask");
-		return mv;
-	}
-
-	//リスト表示の予備動作
-	private ModelAndView prepare01(ModelAndView mv) {
-		//各テーブルから全件検索
-		List<User> userList = userRepository.findAll();
-		List<Category> categoryList = categoryRepository.findAll();
-		List<Priority> priorityList = priorityRepository.findAll();
-		List<Group> groupList = groupRepository.findAll();
-
-		//Thymeleafで表示する準備
-		mv.addObject("ulist", userList);
-		mv.addObject("clist", categoryList);
-		mv.addObject("plist", priorityList);
-		mv.addObject("glist", groupList);
-
 		return mv;
 	}
 
