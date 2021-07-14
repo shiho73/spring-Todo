@@ -7,9 +7,10 @@
 <!-- jQuery -->
 		<span th:replace="jquery"></span>
 		<link rel="stylesheet" href="/background.css">
-
+<link rel="stylesheet" href="/newUser.css">
 </head>
 <body>
+<div id="form">
 
 <h1>新規ユーザー登録</h1>
 
@@ -35,16 +36,15 @@
 
 		<br>
 
-		<!-- 右下のマーク -->
-		<div class="side-note"><span>ToDo List</span></div>
-		<div id="browserAlert" style="display: none"><span></span></div>
-
 			<button class="btnSubmit" value="登録">登録</button>
 			<button class="btnSubmit" type="reset" value="リセット">リセット</button>
-
 
 	</form>
 	<br>
 	<a href="/">ログイン画面へ</a>
-</body>
+	</div>
+		<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
+/body>
 </html>

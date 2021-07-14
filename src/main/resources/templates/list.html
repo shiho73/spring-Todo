@@ -105,14 +105,13 @@
 <!-- ダイアログ作成、コード取得 -->
 		<td >
 					<input class="dialog-link" type="submit" th:value="${list.code}">
-					<div id="dialog" style="display:none;">
+					<div th:id="'dialog' + ${list.code}" style="display:none;">
  <!-- ダイアログに表示させる内容記述 -->
-  					<p>tanaka</p>
-<!--  					<p th:text="${list}"></p> -->
-<!--  					<p th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></p> -->
-<!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></p> -->
-<!--  					<p th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.member}"></p> -->
-<!--  					<p th:text="${list.memo}"></p> -->
+ 					<p th:text="${list.name}"></p>
+<!--  					<p th:text="${u.name}"></p> -->
+<!--  					<p th:text="${g.name}"></p> -->
+<!--  					<p  th:text="${g.member}"></p> -->
+ 					<p th:text="${list.memo}"></p>
 				</div>
 		</td>
 		<td th:text="${list.name}"></td>

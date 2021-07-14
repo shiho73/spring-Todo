@@ -58,7 +58,7 @@
 			$(function() {
 			  $(".dialog-link").click(function() {
 			  	var selectNo = $(this).val();
-			    $("#dialog").dialog({
+			    $("#dialog" + selectNo).dialog({
 			      modal:true,
 			      title:"タスク詳細",
 			      buttons: {
