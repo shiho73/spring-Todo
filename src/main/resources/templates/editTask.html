@@ -6,6 +6,8 @@
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
+<!-- 右下のやつCSS -->
+		<link rel="stylesheet" href="/corner.css">
 <!-- カレンダーjQuery -->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 	<script>
@@ -28,7 +30,7 @@
 
 		<table border="1">
 	<tr>
-		<th>タスク名</th><td><input type="text" name="name" th:value="${task.name}"></td>
+		<th>タスク名</th><td><input type="text" name="name" th:value="${task.name}" size="43"></td>
 	</tr>
 
 	<tr>
@@ -36,7 +38,7 @@
  	</tr>
 
  	<tr>
-		<th>期限</th><td><input type="text" name="dline" th:value="${task.dline}" id="datepicker"></td>
+		<th>期限</th><td><input type="text" name="dline" th:value="${task.dline}" id="datepicker" size="43"></td>
 	</tr>
 
 	<tr>
@@ -47,44 +49,41 @@
 	</td>
 	</tr>
 
-	<tr>
+		<tr>
 		<th>カテゴリ番号</th>
-	<td><select name="cgCode">
-				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
-			</select>
-		<a href="/category/new" onclick="openPopup();">新規カテゴリ登録</a>
-	</td>
-	</tr>
+			<td><select name="cgCode">
+						<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+					</select>
+				<a href="/category/new" onclick="openPopup();">新規カテゴリ登録</a>
+			</td>
+		</tr>
 
 	<tr>
 		<th>グループ番号</th>
 				<td><select name="groupId">
-<!-- 		<option value="0">グループを選択してください</option> あ-->
-		<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
-			<!-- <option onclick="openPopup();">新規登録</option> -->
-			</select>
-		</td>
-	</tr>
+		<!-- 		<option value="0">グループを選択してください</option> -->
+				<option th:each="g:${glist}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
+					<!-- <option onclick="openPopup();">新規登録</option> -->
+					</select>
+				</td>
+			</tr>
 
-	<tr>
-		<th>進捗度</th>
-		<td><input th:value="${task.progress}" type="number" name="progress"></td>
-	</tr>
-	<tr>
-		<th>備考</th>
-		<td><textarea name="memo" cols="40" rows="5" th:text="${task.memo}"></textarea></td>
-	</tr>
+			<tr>
+				<th>進捗度</th>
+				<td><input th:value="${task.progress}" type="number" name="progress"></td>
+			</tr>
+			<tr>
+				<th>備考</th>
+				<td><textarea name="memo" cols="40" rows="5" th:text="${task.memo}"></textarea></td>
+			</tr>
 
-</table>
+	</table>
 
-<br>
-<!-- 右下のマーク -->
-		<div class="side-note"><span>ToDo List</span></div>
-		<div id="browserAlert" style="display: none"><span></span></div>
+			<br>
 
-		<button class="btnSubmit" value="更新">更新</button>
-	<br>
-<a href="/list">タスク一覧へ</a>
+			<button class="btnSubmit" value="更新">更新</button>
+			<br>
+			<a href="/list">タスク一覧へ</a>
 </form>
 
 <!-- グループ編集ボタン -->
@@ -100,6 +99,10 @@
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 			</select>
 			<input type="submit" value="カテゴリ編集"></form>
+
+<!-- 右下のマーク -->
+			<div class="side-note"><span>ToDo List</span></div>
+			<div id="browserAlert" style="display: none"><span></span></div>
 
 </body>
 </html>

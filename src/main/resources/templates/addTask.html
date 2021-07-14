@@ -6,7 +6,8 @@
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
-
+<!-- 右下のやつCSS -->
+		<link rel="stylesheet" href="/corner.css">
 <!-- カレンダーjQuery -->
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 
@@ -29,7 +30,7 @@
 
 		<table border="1">
 	<tr>
-		<th>タスク名</th><td><input type="text" name="name"></td>
+		<th>タスク名</th><td><input type="text" name="name" size="43"></td>
 	</tr>
 
 	<tr>
@@ -37,7 +38,7 @@
  	</tr>
 
  	<tr>
-		<th>期限</th><td><input type="text" name="dline" id="datepicker"></td>
+		<th>期限</th><td><input type="text" name="dline" id="datepicker" size="43"></td>
 	</tr>
 
 	<tr>
@@ -75,9 +76,6 @@
 </table>
 
 		<br>
-		<!-- 右下のマーク -->
-		<div class="side-note"><span>ToDo List</span></div>
-		<div id="browserAlert" style="display: none"><span></span></div>
 
 		<button class="btnSubmit" value="新規作成">新規作成</button>
 		<button class="btnSubmit" type="reset" value="リセット">リセット</button>
@@ -101,6 +99,9 @@
 
 			<a href="/list">タスク一覧へ</a>
 
+<!-- 右下のマーク -->
+		<div class="side-note"><span>ToDo List</span></div>
+		<div id="browserAlert" style="display: none"><span></span></div>
 
 
 </body>
