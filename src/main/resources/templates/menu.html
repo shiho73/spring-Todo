@@ -15,7 +15,7 @@
 		<select name="priority">
 			<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
 		</select>
-		<input type="submit" value="カテゴリ検索">
+		<input type="submit" value="優先度検索">
 	</form>
 
 <span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
