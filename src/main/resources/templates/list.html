@@ -9,6 +9,14 @@
 <!-- カレンダー＆ダイアログjQuery -->
 		<span th:replace="listJquery"></span>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#taskTable").tablesorter();
+	});
+</script>
+
+
 </head>
 <body>
 
@@ -59,8 +67,8 @@
 		</form>
 
 <!-- 並べ方変更 -->
-	<table border="1">
-		<tr>
+	<table border="1" class="tablesorter" id="taskTable">
+		<!-- <tr>
 			<td><a href="/order/code">昇順</a></td>
 			<td></td>
 			<td></td>
@@ -83,9 +91,10 @@
 			<td><a href="/order/progress">低い順</a></td>
 			<td></td>
 			<td></td>
-		</tr>
+		</tr> -->
 
 <!-- 表示バー -->
+	<thead>
 	<tr>
 		<th>タスク番号</th>
 		<th>タスク名</th>
@@ -97,8 +106,10 @@
 		<th>削除</th>
 		<th>編集</th>
 	</tr>
+	</thead>
 
 <!-- タスク一覧表示 -->
+	<tbody>
 	<tr th:each="list:${list}">
 
 <!-- ダイアログ作成、コード取得 -->
@@ -149,7 +160,7 @@
 			</form>
 		</td>
 	</tr>
-
+</tbody>
 </table>
 
 <!-- ログアウト -->

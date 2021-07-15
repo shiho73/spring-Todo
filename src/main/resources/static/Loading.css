@@ -3,6 +3,16 @@
 
 		@charset "UTF-8";
 
+		#taskTable .tablesorter-header {
+	cursor: pointer;
+	outline: none;
+}
+#taskTable .tablesorter-header-inner::after {
+	content: '▼';
+	font-size: 12px;
+	margin-left: 5px;
+}
+
 		@-webkit-keyframes pulse {
 		  0% {
 		    opacity: 1;
