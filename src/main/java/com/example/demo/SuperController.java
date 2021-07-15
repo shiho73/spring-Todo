@@ -56,6 +56,20 @@ public class SuperController {
 		List<Group> groupList = groupRepository.findByOrderByIdAsc();
 		List<GroupM> gmList = groupMRepository.findByOrderByGroupIdAsc();
 
+		//退避用のグループ100を非表示に
+		int x = -1;
+		for (Group y : groupList) {
+			x++;
+		}
+		groupList.remove(x);
+
+		//退避用のグループ100を非表示に
+		int a = -1;
+		for (Category b : categoryList) {
+			a++;
+		}
+		categoryList.remove(a);
+
 		//空の表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
 
@@ -104,37 +118,36 @@ public class SuperController {
 		return mv;
 	}
 
-
 	protected ModelAndView almostDeadline(ModelAndView mv) {
-	//期限フラッグを設定
-			List<Task> taskList = taskRepository.findByOrderByCodeAsc();
-			ArrayList<AlmostD> almost = new ArrayList<>();
-			for (Task d : taskList) {
-				Date dline = d.getDline();//sqlDate型
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String date2 = sdf.format(dline);//String型に
-				java.util.Date dline3 = Date.valueOf(date2);//java.utilのDate型
-				java.util.Date date = new java.util.Date();
-				// Date型の日時をCalendar型に変換
-		        Calendar calendar = Calendar.getInstance();
-		        calendar.setTime(date);
-		        // 日時を加算する
-		        calendar.add(Calendar.DATE, 2);
-		        // Calendar型の日時をDate型に戻す
-		        java.util.Date d1 = calendar.getTime();
-		        //比較
-		        boolean flag = false;
-		        if(d1.after(dline3)) {
-		        	flag = false;
-		        } else {
-		        	flag = true;
-		        }
-				AlmostD a = new AlmostD(d.getCode(), dline, flag);
-				almost.add(a);
+		//期限フラッグを設定
+		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+		ArrayList<AlmostD> almost = new ArrayList<>();
+		for (Task d : taskList) {
+			Date dline = d.getDline();//sqlDate型
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date2 = sdf.format(dline);//String型に
+			java.util.Date dline3 = Date.valueOf(date2);//java.utilのDate型
+			java.util.Date date = new java.util.Date();
+			// Date型の日時をCalendar型に変換
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			// 日時を加算する
+			calendar.add(Calendar.DATE, 2);
+			// Calendar型の日時をDate型に戻す
+			java.util.Date d1 = calendar.getTime();
+			//比較
+			boolean flag = false;
+			if (d1.after(dline3)) {
+				flag = false;
+			} else {
+				flag = true;
 			}
+			AlmostD a = new AlmostD(d.getCode(), dline, flag);
+			almost.add(a);
+		}
 
-			mv.addObject("almost", almost);
-			return mv;
+		mv.addObject("almost", almost);
+		return mv;
 	}
 
 }

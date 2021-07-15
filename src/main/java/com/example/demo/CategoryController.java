@@ -41,6 +41,7 @@ public class CategoryController extends SuperController{
 	//新規カテゴリー作成
 	@RequestMapping("/category/new")
 	public ModelAndView newCategory(ModelAndView mv) {
+		mv = listAndTrash(false, mv);
 		mv.setViewName("addCategory");
 		return sessiontest(mv);
 	}
@@ -99,6 +100,7 @@ public class CategoryController extends SuperController{
 	public ModelAndView editCategory(
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
+		mv = listAndTrash(false, mv);
 
 		//編集するカテゴリの取得
 		Category category = null;

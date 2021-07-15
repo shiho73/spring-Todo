@@ -46,6 +46,7 @@ public class GroupController extends SuperController{
 	//新規グループ作成
 	@RequestMapping("/group/new")
 	public ModelAndView newGroup(ModelAndView mv) {
+		mv = listAndTrash(false, mv);
 		mv.setViewName("addGroup");
 		return sessiontest(mv);
 	}
@@ -108,6 +109,7 @@ public class GroupController extends SuperController{
 	public ModelAndView editGroup(
 			@RequestParam(name = "gid") int gid,
 			ModelAndView mv) {
+		mv = listAndTrash(false, mv);
 
 		//編集するグループの取得
 		Group group = null;

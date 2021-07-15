@@ -35,6 +35,18 @@
 	</form>
 		<br>
 
+		<table border="1" style="border-collapse: collapse">
+            <tr>
+            	<th>カテゴリ番号</th>
+                <th>カテゴリ名</th>
+            </tr>
+            <tr th:each="c:${clist}">
+            	<td><span th:text="${c.code}"></span></td>
+                <td><span th:text="${c.name}"></span></td>
+            </tr>
+        </table>
+		<br>
+
 		<a href="/list/new">新規作成へ戻る</a>
 
 </body>

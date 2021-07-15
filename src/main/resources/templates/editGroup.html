@@ -48,6 +48,20 @@
 
 		</form>
 		<br>
+		<table border="1" style="border-collapse: collapse">
+            <tr>
+            	<th>グループコード</th>
+                <th>グループ名</th>
+                <th>メンバー</th>
+            </tr>
+            <tr th:each="g2:${glist}">
+            	<td><span th:text="${g2.id}"></span></td>
+                <td><span th:text="${g2.name}"></span></td>
+                <td><span th:each="gm:${gmlist}" th:if="${g2.id==gm.groupId}" th:text="${gm.member}"></span></td>
+            </tr>
+        </table>
+
+		<br>
 
 		<a href="/list/new">新規作成へ戻る</a>
 
