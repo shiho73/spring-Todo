@@ -1,0 +1,96 @@
+
+/* リスト内ボタン */
+
+@charset "UTF-8";
+/* ミニボタン */
+		.btn-gradient-radius {
+		  margin-right: 5px;
+		  display: inline-block;
+		  padding: 5px 15px;
+		  border-radius: 10px;
+		  text-decoration: none;
+		  color: #FFF;
+		  background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
+		  transition: .4s;
+
+		}
+
+		.btn-gradient-radius:hover {
+		  background-image: linear-gradient(45deg, #FFC107 0%, #f76a35 100%);
+
+		}
+
+/* タスクテーブル用CSS */
+		#taskTable .tablesorter-header {
+		cursor: pointer;
+		outline: none;
+		}
+
+		#taskTable .tablesorter-header-inner::after {
+			content: '▼';
+			font-size: 12px;
+			margin-left: 5px;
+		}
+
+/* カレンダー用CSS */
+		#datepicker {
+			display: flex;
+			justify-content: center;
+		}
+
+/*新規作成、 更新ボタン */
+		.btn {
+		  /*ボタンの下地*/
+		  color: #FFF;/*文字・アイコン色*/
+		  border-radius: 7px;/*角丸に*/
+		  position: relative;
+		  display: inline-block;
+		  height: 30px;/*高さ*/
+		  width: 100px;/*幅*/
+		  text-align: center;/*中身を中央寄せ*/
+		  font-size: 15px;/*文字のサイズ*/
+		  line-height: 30px;/*高さと合わせる*/
+		  background: linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;/*グラデーション①*/
+		  overflow: hidden;/*はみ出た部分を隠す*/
+		  text-decoration:none;/*下線は消す*/
+		  margin: 10px;
+		}
+
+		.btn:before {
+		  /*グラデーション②*/
+		  content: '';
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;/*全体を覆う*/
+		  height: 100%;/*全体を覆う*/
+		  background: linear-gradient(15deg, #ffdb2c, rgb(249, 118, 76) 25%, rgba(255, 77, 64, 0) 50%) no-repeat;
+		}
+/*ゴミ箱ボタン */
+		.btn {
+		  /*ボタンの下地*/
+		  color: #FFF;/*文字・アイコン色*/
+		  border-radius: 7px;/*角丸に*/
+		  position: relative;
+		  display: inline-block;
+		  height: 30px;/*高さ*/
+		  width: 100px;/*幅*/
+		  text-align: center;/*中身を中央寄せ*/
+		  font-size: 15px;/*文字のサイズ*/
+		  line-height: 30px;/*高さと合わせる*/
+		  background: linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;/*グラデーション①*/
+		  overflow: hidden;/*はみ出た部分を隠す*/
+		  text-decoration:none;/*下線は消す*/
+		  margin: 10px;
+		}
+
+		.btn:before {
+		  /*グラデーション②*/
+		  content: '';
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;/*全体を覆う*/
+		  height: 100%;/*全体を覆う*/
+		  background: linear-gradient(15deg, #ffdb2c, rgb(249, 118, 76) 25%, rgba(255, 77, 64, 0) 50%) no-repeat;
+		}

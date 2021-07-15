@@ -13,7 +13,7 @@
 		  justify-content: center;
 		  flex-direction: column;
 		  height: 100vh;
-		  widht: 100vw;
+		  width: auto;
 		  /* overflow: hidden; */
 		  background: #fafafa;
 		  font-family: "Roboto", sans-serif;
