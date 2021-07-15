@@ -6,6 +6,9 @@
 
 <!-- ゴミ箱ローディングjQuery & CSS -->
 		<span th:replace="trashLoadingJquery"></span>
+<!-- 格子背景CSS -->
+		<link rel="stylesheet" href="/back.css">
+
 
 </head>
 <body>
@@ -27,7 +30,8 @@
 		<div id="wrap">
 
 	<h1>ゴミ箱</h1>
-		<span th:replace="menu"></span>
+		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+		<hr>
 
 		<a href="/list">タスク一覧へ戻る</a><br>
 
