@@ -10,12 +10,20 @@
 		<span th:replace="listJquery"></span>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#taskTable").tablesorter();
 	});
+	$(document).ready(function(){
+		$("#taskTable").tablesorter({
+			headers: {
+				7: { sorter: false },
+				8: { sorter: false }
+			}
+		});
+	});
 </script>
-
 
 </head>
 <body>
@@ -96,13 +104,13 @@
 <!-- 表示バー -->
 	<thead>
 	<tr>
-		<th>タスク番号</th>
+		<th class="{sorter: 'metadata'}">タスク番号</th>
 		<th>タスク名</th>
 		<th>作成者</th>
 		<th>期限</th>
 		<th>優先順位</th>
 		<th>カテゴリ番号</th>
-		<th>進捗度</th>
+		<th class="{sorter: 'metadata'}">進捗度</th>
 		<th>削除</th>
 		<th>編集</th>
 	</tr>
@@ -113,7 +121,7 @@
 	<tr th:each="list:${list}">
 
 <!-- ダイアログ作成、コード取得 -->
-		<td >
+		<td th:class="'{sortValue: '+${list.code}+'}'">
 					<input class="dialog-link" type="submit" th:value="${list.code}">
 					<div th:id="'dialog' + ${list.code}" style="display:none;">
  <!-- ダイアログに表示させる内容記述 -->
@@ -136,7 +144,7 @@
 		</td>
 		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
 		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
-		<td><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
+		<td th:class="'{sortValue: '+${list.progress}+'}'"><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 
 <!-- 消去ボタン -->
 		<td><form action="/list/trash" method="post">
