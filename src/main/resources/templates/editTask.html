@@ -6,8 +6,6 @@
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
-<!-- 右下のやつCSS -->
-		<link rel="stylesheet" href="/corner.css">
 <!-- カレンダーjQuery -->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
 	<script>
@@ -112,10 +110,6 @@
                 <td><span th:each="gm:${gmlist}" th:if="${g2.id==gm.groupId}" th:text="${gm.member}"></span></td>
             </tr>
         </table>
-
-<!-- 右下のマーク -->
-			<div class="side-note"><span>ToDo List</span></div>
-			<div id="browserAlert" style="display: none"><span></span></div>
 
 </body>
 </html>
