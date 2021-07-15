@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.priority.PriorityRepository;
+import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -44,8 +45,8 @@ public class UserManageController extends SuperController {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	@RequestMapping("/user/list")
-	public ModelAndView userList(
+	@RequestMapping("/users/list")
+	public ModelAndView usersList(
 			ModelAndView mv,
 			@RequestParam("password") String pw) {
 
@@ -73,13 +74,9 @@ public class UserManageController extends SuperController {
 
 		List<User> userList = userRepository.findByOrderByIdAsc();
 		//管理者と削除済ユーザを非表示に
-		for (int i=0; i<=1; i++) {
-			int x = -1;
-			for (User y : userList) {
-				x++;
-			}
-			userList.remove(x);
-		}
+		userList.remove(0);
+		userList.remove(0);
+
 		mv.addObject("ulist", userList);
 
 		mv.setViewName("userManage");
@@ -90,12 +87,13 @@ public class UserManageController extends SuperController {
 	@RequestMapping("/user/delete/check")
 	public ModelAndView userDeleteCheck01(
 			ModelAndView mv,
-			@RequestParam("id") String id) {
+			@RequestParam("id") int id) {
 
-		mv.addObject("check", "本当に削除しますか？");
-		mv.addObject("flag1", true);
+		List<Task> tlist = taskRepository.findByUserId(id);
 
-		return userList(mv, "himitu");
+		mv.addObject("tlist", tlist);
+		mv.setViewName("userDelete");
+		return mv;
 	}
 
 	@RequestMapping("/user/delete/cancel")
@@ -103,10 +101,7 @@ public class UserManageController extends SuperController {
 			ModelAndView mv) {
 
 		String pw = "himituToDo";
-		mv = userList(mv, pw);
-
-		mv.addObject("flag1", false);
-		mv.addObject("flag2", false);
+		mv = usersList(mv, pw);
 
 		return mv;
 	}

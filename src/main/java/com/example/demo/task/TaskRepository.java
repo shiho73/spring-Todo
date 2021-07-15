@@ -13,6 +13,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
 	List<Task> findByGroupId(int id);
 	List<Task> findByCgCode(int cgCode);
+	List<Task> findByUserId(int userId);
 
 	//コード順
 	List<Task> findByOrderByCodeAsc();
@@ -29,18 +30,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	//優先度順
 	List<Task> findByOrderByProgressAsc();
 	List<Task> findByOrderByProgressDesc();
-
-	//作成者順(いらなくね？)
-	List<Task> findByOrderByUserIdAsc();
-
-	//コード順(いらなくなるはず)
-	List<Task> findByOrderByCgCodeAsc();
-
-	//名前順(いらなくね？)
-	List<Task> findByOrderByNameAsc();
-
-	//グループ順(これもいらない気がする)
-	List<Task> findByOrderByGroupIdAsc();
 
 	List<Task> findByDline(Date dline);
 

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
+import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.TaskRepository;
 import com.example.demo.user.User;
@@ -48,6 +52,12 @@ public class UserController {
 	//ログイン画面
 	@RequestMapping("/")
 	public ModelAndView task(ModelAndView mv) {
+		//諸々のデフォルト設定
+		categoryZero();
+		groupZero();
+		userZero();
+		priorityZero();
+
 		session.invalidate();
 		mv.setViewName("top");
 		return mv;
@@ -87,7 +97,7 @@ public class UserController {
 
 		} else {
 			//見つからなかった場合ログインNG
-			mv.addObject("message", "入力された情報は登録されていません");
+			mv.addObject("message", "入力された名前は登録されていません");
 			mv.setViewName("top");
 		}
 		return mv;
@@ -212,7 +222,7 @@ public class UserController {
 
 			User userInfo = user.get(0); //一致した名前を含むリスト取得
 
-			if(himitu.equals(userInfo.getHimitu())) {
+			if (himitu.equals(userInfo.getHimitu())) {
 				mv.addObject("pw", userInfo.getPw());
 				mv.setViewName("change");
 			} else if (!himitu.equals(userInfo.getHimitu())) {
@@ -237,4 +247,62 @@ public class UserController {
 		return mv;
 	}
 
+	//諸々のデフォルト設定
+	//カテゴリコードのデフォルト設定
+	private void categoryZero() {
+		List<Category> list = categoryRepository.findByCode(0);
+		if (list.isEmpty()) {
+			Category category = new Category(0, "なし");
+			categoryRepository.saveAndFlush(category);
+		}
+		List<Category> list1 = categoryRepository.findByCode(100);
+		if (list1.isEmpty()) {
+			Category category = new Category(100, "退避用");
+			categoryRepository.saveAndFlush(category);
+		}
+	}
+
+	//グループのデフォルト設定・なぜかコードからの検索がうまくいかない
+	private void groupZero() {
+		List<Group> list2 = groupRepository.findAll();
+		if (list2.isEmpty()) {
+			Group group = new Group(0, "なし");
+			groupRepository.saveAndFlush(group);
+			Group group2 = new Group(100, "退避用");
+			groupRepository.saveAndFlush(group2);
+		} else {
+
+		}
+	}
+
+	private void userZero() {
+		Optional<User> kanri = userRepository.findById(0);
+		if (kanri.isEmpty()) {
+			User user = new User("管理者", "himitu", "東京", 1);
+			userRepository.saveAndFlush(user);
+		}
+		Optional<User> taihi = userRepository.findById(1);
+		if (taihi.isEmpty()) {
+			User user = new User("削除済のユーザです", "himitu", "東京", 1);
+			userRepository.saveAndFlush(user);
+		}
+	}
+
+	private void priorityZero() {
+		List<Priority> kou = priorityRepository.findByNum(1);
+		if (kou.isEmpty()) {
+			Priority high = new Priority(1, "高");
+			priorityRepository.saveAndFlush(high);
+		}
+		List<Priority> chuu = priorityRepository.findByNum(2);
+		if (chuu.isEmpty()) {
+			Priority mid = new Priority(2, "中");
+			priorityRepository.saveAndFlush(mid);
+		}
+		List<Priority> hiku = priorityRepository.findByNum(3);
+		if (hiku.isEmpty()) {
+			Priority low = new Priority(3, "低");
+			priorityRepository.saveAndFlush(low);
+		}
+	}
 }

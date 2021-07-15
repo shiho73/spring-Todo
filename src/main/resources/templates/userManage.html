@@ -31,62 +31,16 @@
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
 
-		<h1>ユーザ一覧</h1>
+		<h1>ユーザ管理</h1>
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
 
 <!-- ログアウト -->
 		<a href="/logout">ログアウト</a>
 		</div>
 
-<div th:if="${flag1==true}">
-<span th:text="${check}"></span>
-	<div style="display:inline-flex">
-		<form action="/user/delete/check02" method="post">
-			<input type="hidden">
-			<input type="submit" value="はい">
-		</form>
-		<form action="/user/delete/cancel" method="post">
-			<input type="submit" value="いいえ">
-		</form>
-	</div>
-</div>
-
-<div th:if="${flag2==true}">
-	そのユーザが作成したタスクを全て削除→
-	<form action="/user/delete/all" method="post">
-		<input type="hidden">
-		<input type="submit" value="全削除">
-	</form>
-	「削除済のユーザ」が作成したタスクとして残す→
-	<form action="/user/delete/taihi" method="post">
-		<input type="hidden">
-		<input type="submit" value="残す">
-	</form>
-	そのユーザが作成したタスク一覧
-	<table border="1">
-		<tr>
-			<th>タスク名</th>
-			<th>進捗度</th>
-			<th>状態</th>
-		</tr>
-		<tr th:each="t:${tlist}">
-			<th th:text="${t.name}"></th>
-			<th th:text="${t.progress}+'%'"></th>
-			<th>
-				<span th:if="${t.trash==true}" th:text="未完"></span>
-				<span th:if="${t.trash==false}" th:text="ゴミ箱"></span>
-			</th>
-		</tr>
-	</table>
-	<br>
-	キャンセル
-	<form action="/user/delete/cancel" method="post">
-			<input type="submit" value="キャンセル">
-	</form>
-</div>
-
 <div>ユーザ登録用コード：todoLets</div>
 
+<h2>ユーザ一覧</h2>
 <table>
 	<thead>
 	<tr>

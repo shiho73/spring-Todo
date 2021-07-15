@@ -3,7 +3,6 @@ package com.example.demo;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
-import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
@@ -45,10 +42,6 @@ public class EditController extends SuperController {
 	//新規作成
 	@RequestMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
-		//カテゴリとグループの初期登録
-		categoryZero();
-		groupZero();
-
 		mv = listAndTrash(false, mv);
 		mv.setViewName("addTask");//遷移先(タスク作成ページ)を指定
 		return sessiontest(mv);
@@ -181,33 +174,6 @@ public class EditController extends SuperController {
 			taskRepository.saveAndFlush(task);
 		}
 
-	}
-
-	//カテゴリコードのデフォルト設定
-	private void categoryZero() {
-		List<Category> list = categoryRepository.findByCode(0);
-		if (list.isEmpty()) {
-			Category category = new Category(0, "なし");
-			categoryRepository.saveAndFlush(category);
-		}
-		List<Category> list1 = categoryRepository.findByCode(100);
-		if (list1.isEmpty()) {
-			Category category = new Category(100, "退避用");
-			categoryRepository.saveAndFlush(category);
-		}
-	}
-
-	//グループのデフォルト設定・なぜかコードからの検索がうまくいかない
-	private void groupZero() {
-		List<Group> list2 = groupRepository.findAll();
-		if (list2.isEmpty()) {
-			Group group = new Group(0, "なし");
-			groupRepository.saveAndFlush(group);
-			Group group2 = new Group(100, "退避用");
-			groupRepository.saveAndFlush(group2);
-		} else {
-
-		}
 	}
 
 }
