@@ -6,9 +6,15 @@
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
 
 </head>
 <body>
+
+<!-- ロゴ -->
+    <img src="/logo.png" class="img">
+
 <h1>グループ登録</h1>
 
 <span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
