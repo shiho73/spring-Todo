@@ -22,7 +22,7 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class UserManageController extends SuperController {
 
-	//保持用/
+	//保持用
 	@Autowired
 	HttpSession session;
 
