@@ -223,7 +223,7 @@ public class GroupController extends SuperController {
 	//グループ削除アクション
 	@PostMapping("/group/delete")
 	public ModelAndView deleteGroup(
-			@RequestParam(name = "gid", defaultValue = "0") int id,
+			@RequestParam(name = "gid") int id,
 			ModelAndView mv) {
 
 		//外部キー参照制約解消 グループ100に一時退避
