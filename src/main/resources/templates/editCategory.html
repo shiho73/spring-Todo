@@ -39,10 +39,31 @@
 
 		<br>
 
+		<div style="display:inline-flex">
 		<button class="btnSubmit" value="更新">更新</button>
+	</form>
+	<form action="/category/delete/check" method="post">
+		<input type="hidden" name="cCode" th:value="${category.code}">
+		<button class="btnSubmit" value="削除">削除</button>
+	</form>
+	</div>
 
-		</form>
-		<br>
+<br>
+<div th:if="${flag==true}">
+	<span th:text="${check}" style="color:red"></span>
+	<div style="display:inline-flex">
+	<form action="/category/delete" method="post">
+	<input type="hidden" name="cCode" th:value="${category.code}">
+	<input type="submit" value="はい">
+	</form>
+	<form action="/category/edit" method="post">
+	<input type="hidden" name="cCode" th:value="${category.code}">
+	<input type="submit" value="いいえ">
+	</form>
+	</div>
+	<br>
+	<span th:text="${check2}"></span>
+</div>
 
 		<table border="1" style="border-collapse: collapse">
             <tr>

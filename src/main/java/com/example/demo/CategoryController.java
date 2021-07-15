@@ -21,7 +21,7 @@ import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class CategoryController extends SuperController{
+public class CategoryController extends SuperController {
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -50,7 +50,7 @@ public class CategoryController extends SuperController{
 	@PostMapping("/category/add")
 	public ModelAndView addCategory(
 			@RequestParam("name") String name,
-			@RequestParam(name="code", defaultValue="-1") int code,
+			@RequestParam(name = "code", defaultValue = "-1") int code,
 			ModelAndView mv) {
 
 		// 空の場合にエラーとする(やばい)
@@ -175,6 +175,40 @@ public class CategoryController extends SuperController{
 			a.setCgCode(code);
 			taskRepository.saveAndFlush(a);
 		}
+
+		mv = listAndTrash(false, mv);
+
+		mv.setViewName("addTask");
+		return sessiontest(mv);
+	}
+
+	//カテゴリ削除確認
+	@PostMapping("/category/delete/check")
+	public ModelAndView deleteCategoryCheck(
+			@RequestParam(name = "cCode") int id,
+			ModelAndView mv) {
+		mv.addObject("check", "本当に削除しますか？");
+		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
+		mv.addObject("flag", true);
+
+		return editCategory(id, mv);
+	}
+
+	//カテゴリ削除アクション
+	@PostMapping("/category/delete")
+	public ModelAndView deleteGroup(
+			@RequestParam(name = "cCode") int id,
+			ModelAndView mv) {
+
+		//外部キー参照制約解消 カテゴリ0に移動
+		List<Task> taskList = taskRepository.findByCgCode(id);
+		for (Task a : taskList) {
+			a.setCgCode(0);
+			taskRepository.saveAndFlush(a);
+		}
+
+		//消去
+		categoryRepository.deleteById(id);
 
 		mv = listAndTrash(false, mv);
 
