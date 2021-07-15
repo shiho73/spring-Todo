@@ -20,7 +20,7 @@
 <body>
 
 <h1>タスク編集</h1>
-	<span th:replace="menu"></span>
+<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
 	<p th:text="${message}" style="color:red"></p>
 

@@ -28,22 +28,20 @@
 
 	<form action="/himitu/get" method="POST">
 		NAME:<input type="text" name="name" th:value="${userName}">
-		<span th:if="${flag==false}"><button value="送信" class="btn">送信</button></span>
+		<span th:if="${flag==false}"class="container"><button value="送信" class="btn-open">送信</button></span>
 	</form>
 
 	<form action="/change/pw" method="post">
 		<span th:text="${quiz}"></span><br>
 		答え：<input type="text" name="himitu">
 		<input type="hidden" th:value="${userName}" name="userName">
-		<span th:if="${flag==true}"><button value="送信" class="btn">送信</button></span>
+		<span th:if="${flag==true}" lass="container"><button value="送信" class="btn-open">送信</button</span>
 	</form>
 	<br>
 	<a href="/">ログイン画面へ</a>
 
 </div>
 </div>
-
-
 
 </body>
 </html>
