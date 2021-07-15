@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PriorityRepository extends JpaRepository<Priority, Integer>{
 	List<Priority> findByNum(int num);
+	List<Priority> findByOrderByNumAsc();
 }

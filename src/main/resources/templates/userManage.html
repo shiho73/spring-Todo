@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク管理</title>
+
+<!-- ローディングjQuery & CSS -->
+		<span th:replace="loadingJquery"></span>
+</head>
+<body>
+
+<!-- ローディング画面表示 -->
+		  <div id="try">
+		  <div class='triangles'>
+		  <div class='tri invert'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <div class='tri'></div>
+		  <div class='tri invert'></div>
+		  <br>
+		  <br>
+		  <br>
+		  <p> Loading...</p>
+		</div>
+		</div>
+
+<!-- ローディング後に表示させるもの -->
+		<div id="wrap">
+
+		<h1>ユーザ一覧</h1>
+		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
+
+<!-- ログアウト -->
+		<a href="/logout">ログアウト</a>
+		</div>
+
+<div th:if="${flag1==true}">
+<span th:text="${check}"></span>
+	<div style="display:inline-flex">
+		<form action="/user/delete/check02" method="post">
+			<input type="hidden">
+			<input type="submit" value="はい">
+		</form>
+		<form action="/user/delete/cancel" method="post">
+			<input type="submit" value="いいえ">
+		</form>
+	</div>
+</div>
+
+<div th:if="${flag2==true}">
+	そのユーザが作成したタスクを全て削除→
+	<form action="/user/delete/all" method="post">
+		<input type="hidden">
+		<input type="submit" value="全削除">
+	</form>
+	「削除済のユーザ」が作成したタスクとして残す→
+	<form action="/user/delete/taihi" method="post">
+		<input type="hidden">
+		<input type="submit" value="残す">
+	</form>
+	そのユーザが作成したタスク一覧
+	<table border="1">
+		<tr>
+			<th>タスク名</th>
+			<th>進捗度</th>
+			<th>状態</th>
+		</tr>
+		<tr th:each="t:${tlist}">
+			<th th:text="${t.name}"></th>
+			<th th:text="${t.progress}+'%'"></th>
+			<th>
+				<span th:if="${t.trash==true}" th:text="未完"></span>
+				<span th:if="${t.trash==false}" th:text="ゴミ箱"></span>
+			</th>
+		</tr>
+	</table>
+	<br>
+	キャンセル
+	<form action="/user/delete/cancel" method="post">
+			<input type="submit" value="キャンセル">
+	</form>
+</div>
+
+<div>ユーザ登録用コード：todoLets</div>
+
+<table>
+	<thead>
+	<tr>
+		<th>ユーザ番号</th>
+		<th>ユーザ名</th>
+		<th>パスワード</th>
+		<th>秘密の質問</th>
+		<th>秘密の言葉</th>
+		<th>削除</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<tr th:each="list:${ulist}">
+		<td th:text="${list.name}"></td>
+		<td th:text="${list.pw}"></td>
+		<td><span th:each="h:${hlist}" th:if="${list.himituCode==h.num}" th:text="${h.name}"></span></td>
+		<td th:text="${list.himitu}"></td>
+
+<!-- 消去ボタン -->
+		<td><form action="/user/delete/check" method="post">
+				<input type="hidden" th:value="${list.id}" name="id">
+				<input type="submit" value="削除">
+			</form>
+		</td>
+	</tr>
+</tbody>
+</table>
+
+</body>
+</html>
