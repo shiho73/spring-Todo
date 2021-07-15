@@ -5,10 +5,10 @@
 <title>タスク管理</title>
 
 <!-- カレンダーjQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/pepper-grinder/jquery-ui.css" >
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
@@ -16,10 +16,9 @@
 </head>
 <body>
 
-<h1>カテゴリ編集</h1>
+	<h1>カテゴリ編集</h1>
 
 	<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
-
 
 <!-- 入力アラート -->
 		<p th:text="${message}" style="color:red"></p>
@@ -55,6 +54,7 @@
                 <td><span th:text="${c.name}"></span></td>
             </tr>
         </table>
+
 		<br>
 
 		<a href="/list/new">新規作成へ戻る</a>

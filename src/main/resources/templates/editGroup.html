@@ -5,10 +5,10 @@
 <title>タスク管理</title>
 
 <!-- カレンダーjQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/pepper-grinder/jquery-ui.css" >
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
@@ -17,17 +17,17 @@
 <body>
 
 	<h1>グループ編集</h1>
+
 	<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 
 <!-- 入力アラート -->
 	<p th:text="${message}" style="color:red"></p>
 
-	<form action="/group/update"  method="post">
+		<form action="/group/update"  method="post">
 		<input type="hidden" name="gid" th:value="${group.id}">
 		<input type="hidden" name="gname" th:value="${group.name}">
 
 		<table border="1">
-
 			<tr>
 				<th>グループ番号</th><td><input type="number" name="id" min="1" max="99" th:value="${group.id}"></td>
 			</tr>
@@ -40,34 +40,39 @@
 				<th>グループメンバー</th><td><input type="text" name="member" th:value="${groupM.member}"></td>
 			</tr>
 		</table>
-		<br>
-	<div style="display:inline-flex">
-		<button class="btnSubmit" value="更新">更新</button>
-	</form>
-	<form action="/group/delete/check" method="post">
-		<input type="hidden" name="gid" th:value="${group.id}">
-		<button class="btnSubmit" value="削除">削除</button>
-	</form>
-	</div>
-
-<br>
-<div th:if="${flag==true}">
-	<span th:text="${check}" style="color:red"></span>
-	<div style="display:inline-flex">
-	<form action="/group/delete" method="post">
-	<input type="hidden" name="gid" th:value="${group.id}">
-	<input type="submit" value="はい">
-	</form>
-	<form action="/group/edit" method="post">
-	<input type="hidden" name="gid" th:value="${group.id}">
-	<input type="submit" value="いいえ">
-	</form>
-	</div>
-	<br>
-	<span th:text="${check2}"></span>
-</div>
 
 		<br>
+
+		<div style="display:inline-flex">
+			<button class="btnSubmit" value="更新">更新</button>
+		</form>
+
+		<form action="/group/delete/check" method="post">
+			<input type="hidden" name="gid" th:value="${group.id}">
+			<button class="btnSubmit" value="削除">削除</button>
+		</form>
+		</div>
+
+		<br>
+
+		<div th:if="${flag==true}">
+			<span th:text="${check}" style="color:red"></span>
+			<div style="display:inline-flex">
+			<form action="/group/delete" method="post">
+			<input type="hidden" name="gid" th:value="${group.id}">
+			<input type="submit" value="はい">
+			</form>
+			<form action="/group/edit" method="post">
+			<input type="hidden" name="gid" th:value="${group.id}">
+			<input type="submit" value="いいえ">
+			</form>
+			</div>
+			<br>
+			<span th:text="${check2}"></span>
+		</div>
+
+		<br>
+
 		<table border="1" style="border-collapse: collapse">
             <tr>
             	<th>グループコード</th>

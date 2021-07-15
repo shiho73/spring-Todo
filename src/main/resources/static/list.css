@@ -10,14 +10,13 @@
 		  border-radius: 10px;
 		  text-decoration: none;
 		  color: #FFF;
-		  background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
+		  background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 70%);
 		  transition: .4s;
 
 		}
 
 		.btn-gradient-radius:hover {
-		  background-image: linear-gradient(45deg, #FFC107 0%, #f76a35 100%);
-
+		  background-image: linear-gradient(45deg,#ffb894 0%, #ff8484 70%);
 		}
 
 /* タスクテーブル用CSS */
@@ -38,59 +37,51 @@
 			justify-content: center;
 		}
 
-/*新規作成、 更新ボタン */
-		.btn {
+/*新規作成ボタン */
+		.btn1 {
 		  /*ボタンの下地*/
-		  color: #FFF;/*文字・アイコン色*/
-		  border-radius: 7px;/*角丸に*/
+		  color: #000080;/*文字・アイコン色*/
+		  border-radius: 10px;/*角丸に*/
 		  position: relative;
 		  display: inline-block;
-		  height: 30px;/*高さ*/
+		  height: 40px;/*高さ*/
 		  width: 100px;/*幅*/
 		  text-align: center;/*中身を中央寄せ*/
 		  font-size: 15px;/*文字のサイズ*/
-		  line-height: 30px;/*高さと合わせる*/
-		  background: linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;/*グラデーション①*/
+		  font-weight: bold;
+		  line-height: 40px;/*高さと合わせる*/
+		  background: linear-gradient(135deg, #7fff7f 0%, #ffff7f 70%) no-repeat;/*グラデーション①*/
 		  overflow: hidden;/*はみ出た部分を隠す*/
 		  text-decoration:none;/*下線は消す*/
 		  margin: 10px;
 		}
-
-		.btn:before {
-		  /*グラデーション②*/
-		  content: '';
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  width: 100%;/*全体を覆う*/
-		  height: 100%;/*全体を覆う*/
-		  background: linear-gradient(15deg, #ffdb2c, rgb(249, 118, 76) 25%, rgba(255, 77, 64, 0) 50%) no-repeat;
+		.btn1:hover {
+		  background-image: linear-gradient(135deg, #ff7f50 0%, #ff7fff 70%);
 		}
+
+/* 更新ボタン */
+		.btn2 {
+		  /*ボタンの下地*/
+		  color: #000080;/*文字・アイコン色*/
+		  border-radius: 10px;/*角丸に*/
+		  position: relative;
+		  display: inline-block;
+		  height: 40px;/*高さ*/
+		  width: 100px;/*幅*/
+		  text-align: center;/*中身を中央寄せ*/
+		  font-size: 15px;/*文字のサイズ*/
+		  font-weight: bold;
+		  line-height: 40px;/*高さと合わせる*/
+		  background: linear-gradient(135deg, #7fff7f 0%, #ffff7f 70%) no-repeat;/*グラデーション①*/
+		  overflow: hidden;/*はみ出た部分を隠す*/
+		  text-decoration:none;/*下線は消す*/
+		  margin: 10px;
+		}
+		.btn2:hover {
+		  background-image: linear-gradient(135deg, #7f7fff 0%, #89ffff 70%);
+		}
+
+
 /*ゴミ箱ボタン */
-		.btn {
-		  /*ボタンの下地*/
-		  color: #FFF;/*文字・アイコン色*/
-		  border-radius: 7px;/*角丸に*/
-		  position: relative;
-		  display: inline-block;
-		  height: 30px;/*高さ*/
-		  width: 100px;/*幅*/
-		  text-align: center;/*中身を中央寄せ*/
-		  font-size: 15px;/*文字のサイズ*/
-		  line-height: 30px;/*高さと合わせる*/
-		  background: linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;/*グラデーション①*/
-		  overflow: hidden;/*はみ出た部分を隠す*/
-		  text-decoration:none;/*下線は消す*/
-		  margin: 10px;
-		}
 
-		.btn:before {
-		  /*グラデーション②*/
-		  content: '';
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  width: 100%;/*全体を覆う*/
-		  height: 100%;/*全体を覆う*/
-		  background: linear-gradient(15deg, #ffdb2c, rgb(249, 118, 76) 25%, rgba(255, 77, 64, 0) 50%) no-repeat;
-		}
+

@@ -7,7 +7,7 @@
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
 <!-- カレンダーjQuery -->
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/humanity/jquery-ui.css" >
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/pepper-grinder/jquery-ui.css" >
 
 		<script>
 			  $(function() {
@@ -94,9 +94,10 @@
 			<select name="cCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 			</select>
-			<input type="submit" value="カテゴリ編集"></form>
+			<input type="submit" value="カテゴリ編集">
+			</form>
 
-			<a href="/list">タスク一覧へ</a>
+			<br>
 
 <!-- グループメンバー表示 -->
 	<table border="1" style="border-collapse: collapse">
@@ -111,6 +112,10 @@
                 <td><span th:each="gm:${gmlist}" th:if="${g2.id==gm.groupId}" th:text="${gm.member}"></span></td>
             </tr>
         </table>
+
+        <br>
+
+			<a href="/list">タスク一覧へ</a>
 
 </body>
 </html>

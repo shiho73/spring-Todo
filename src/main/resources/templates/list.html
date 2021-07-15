@@ -8,28 +8,30 @@
 		<span th:replace="loadingJquery"></span>
 <!-- カレンダー＆ダイアログjQuery -->
 		<span th:replace="listJquery"></span>
-<!-- タスク配置CSS -->
+<!-- テーブル配置CSS -->
 		<link rel="stylesheet" href="/back.css">
 <!-- List用CSS -->
 		<link rel="stylesheet" href="/list.css">
+<!-- テーブル用CSS -->
+		<link rel="stylesheet" href="/table.css">
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$("#taskTable").tablesorter();
-	});
-	$(document).ready(function(){
-		$("#taskTable").tablesorter({
-			headers: {
-				7: { sorter: false },
-				8: { sorter: false }
-			}
-		});
-	});
-</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#taskTable").tablesorter();
+			});
+			$(document).ready(function(){
+				$("#taskTable").tablesorter({
+					headers: {
+						7: { sorter: false },
+						8: { sorter: false }
+					}
+				});
+			});
+		</script>
 
 </head>
 <body>
@@ -57,6 +59,7 @@
 		<div id="wrap">
 
 		<h1>タスク一覧</h1>
+
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
 
 <!-- ログアウト -->
@@ -91,29 +94,28 @@
 		</form>
 
 		<form action="/look/trash"  method="post">
-			<input type="submit"  value="ゴミ箱を見る"  class="btn1">
+			<input type="submit"  value="ゴミ箱を見る"  class="btn">
 		</form>
 
-
-</div>
-<hr>
+		</div>
+		<hr>
 
 <!-- 操作ボタン -->
 
 		<div style="display:inline-flex">
 		<form action="/list/new"  method="post">
-			<input type="submit"  value="タスク作成"  class="btn">
+			<input type="submit"  value="タスク作成"  class="btn1">
 		</form>
 
 		<form action="/task/update"  method="post">
-			<input type="button"  value="更新" onclick="f();" class="btn">
+			<input type="button"  value="更新" onclick="f();" class="btn2">
 		</form>
 
 
 		</div>
 
 <!-- 並べ方変更 -->
-	<table border="1" class="tablesorter" id="taskTable">
+	<table class="tablesorter" id="taskTable">
 
 <!-- 表示バー -->
 	<thead>

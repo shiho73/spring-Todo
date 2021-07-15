@@ -6,9 +6,10 @@
 
 <!-- ゴミ箱ローディングjQuery & CSS -->
 		<span th:replace="trashLoadingJquery"></span>
-<!-- タスク配置CSS -->
+<!-- テーブル配置CSS -->
 		<link rel="stylesheet" href="/back.css">
-
+<!-- テーブル用CSS -->
+		<link rel="stylesheet" href="/table.css">
 
 </head>
 <body>
@@ -30,6 +31,7 @@
 		<div id="wrap">
 
 	<h1>ゴミ箱</h1>
+
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 		<hr>
 
@@ -37,7 +39,8 @@
 
 		<span th:text="${message}"></span>
 
-	<table border="1">
+	<table class="tablesorter">
+	<thead>
 		<tr>
 			<th>タスク番号</th>
 			<th>タスク名</th>
@@ -51,6 +54,7 @@
 			<th>復元</th>
 			<th>完全削除</th>
 		</tr>
+		</thead>
 
 		<tr th:each="list:${list}">
 			<td th:text="${list.code}"></td>

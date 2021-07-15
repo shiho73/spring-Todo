@@ -1,0 +1,44 @@
+
+/* テーブルCSS */
+
+		@charset "UTF-8";
+
+		.tablesorter {
+		 width:100%;
+		 border-collapse: separate;
+		 border: none;
+		 border-spacing: 0px 10px ;
+		}
+
+		.tablesorter tbody td,
+		.tablesorter tfoot td {
+		 text-align: center;
+		}
+
+/* 上部ヘッダー（背景：パステルカラー） */
+		.tablesorter thead th {
+		 color: #1d81ab;
+		 font-weight: bold;
+		 background:#33ff99;
+		 height: 40px;/*高さ*/
+
+		}
+
+/* 上部ヘッダーの丸み */
+		.tablesorter thead th:nth-child(1) {
+		 border-radius: 10px 0 0 0;
+		}
+		.tablesorter thead th:last-child  {
+		 border-radius: 0 10px  0 0;
+		}
+
+
+/* １行ずつ色変更　不要なら削除 even:奇数行　odd:偶数行 */
+		.tablesorter tr:nth-child(even) td {
+		 background: #f0fcff;
+		}
+		.tablesorter tr:nth-child(odd) td {
+		 background: #f0fcff;
+		}
+
+
