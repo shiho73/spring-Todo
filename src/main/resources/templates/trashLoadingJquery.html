@@ -7,19 +7,19 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
-	<link rel="stylesheet" href="/Loading.css">
+	<link rel="stylesheet" href="/trashLoading.css">
 
 		<script type="text/javascript">
 			$(function() {
 			  var h = $(window).height();
 
 			  $('#wrap').css('display','none');
-			  $('#try ,#triangles').height(h).css('display','block');
+			  $('#loading ,#loader').height(h).css('display','block');
 			});
 
 			$(window).load(function () { //全ての読み込みが完了したら実行
-			  $('#try').delay(900).fadeOut(800);
-			  $('#triangles').delay(600).fadeOut(300);
+			  $('#loading').delay(900).fadeOut(800);
+			  $('#loader').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
 			});
 
@@ -30,13 +30,13 @@
 
 			function stopload(){
 			  $('#wrap').css('display','block');
-			  $('#try').delay(900).fadeOut(800);
-			  $('#triangles').delay(600).fadeOut(300);
+			  $('#loading').delay(900).fadeOut(800);
+			  $('#loader').delay(600).fadeOut(300);
 			}
 
 //ローディング画面の消え方
 			$("submit").click(function() {
-				$("#try").fadeOut(400, function(){ $(this).remove(); });
+				$("#loading").fadeOut(400, function(){ $(this).remove(); });
 			});
 
 		</script>
