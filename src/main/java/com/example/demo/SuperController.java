@@ -50,9 +50,9 @@ public class SuperController {
 	//表示するための道具
 	protected ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
 		//各テーブルから全件検索
-		List<User> userList = userRepository.findAll();
+		List<User> userList = userRepository.findByOrderByIdAsc();
 		List<Category> categoryList = categoryRepository.findByOrderByCodeAsc();
-		List<Priority> priorityList = priorityRepository.findAll();
+		List<Priority> priorityList = priorityRepository.findByOrderByNumAsc();
 		List<Group> groupList = groupRepository.findByOrderByIdAsc();
 		List<GroupM> gmList = groupMRepository.findByOrderByGroupIdAsc();
 
