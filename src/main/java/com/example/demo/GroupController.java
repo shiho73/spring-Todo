@@ -23,7 +23,7 @@ import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class GroupController extends SuperController{
+public class GroupController extends SuperController {
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -66,7 +66,7 @@ public class GroupController extends SuperController{
 			return sessiontest(mv);
 		}
 
-		if (name == null || name == "" ) {
+		if (name == null || name == "") {
 			mv.addObject("message", "グループ名を入力してください");
 			mv.setViewName("addGroup");
 			return sessiontest(mv);
@@ -149,7 +149,7 @@ public class GroupController extends SuperController{
 			return sessiontest(mv);
 		}
 
-		if (name == null || name == "" ) {
+		if (name == null || name == "") {
 			mv.addObject("message", "グループ名を入力してください");
 			mv.setViewName("addGroup");
 			return sessiontest(mv);
@@ -167,8 +167,8 @@ public class GroupController extends SuperController{
 
 		if (!list.isEmpty()) {
 			if (id != gid) {
-			mv.addObject("message", "使用済みのグループ番号です");
-			return editGroup(gid, mv);
+				mv.addObject("message", "使用済みのグループ番号です");
+				return editGroup(gid, mv);
 			}
 		}
 
@@ -178,8 +178,8 @@ public class GroupController extends SuperController{
 		}
 
 		//外部キー参照制約解消 グループ100に一時退避
-		List<Task> taskList =  taskRepository.findByGroupId(gid);
-		for(Task a : taskList) {
+		List<Task> taskList = taskRepository.findByGroupId(gid);
+		for (Task a : taskList) {
 			a.setGroupId(100);
 			taskRepository.saveAndFlush(a);
 		}
@@ -192,14 +192,50 @@ public class GroupController extends SuperController{
 		groupRepository.saveAndFlush(group);
 
 		//退避したタスクを新しいグループに再登録
-		List<Task> taskList2 =  taskRepository.findByGroupId(100);
-		for(Task a : taskList2) {
+		List<Task> taskList2 = taskRepository.findByGroupId(100);
+		for (Task a : taskList2) {
 			a.setGroupId(id);
 			taskRepository.saveAndFlush(a);
 		}
 
 		GroupM groupM = new GroupM(id, member);
 		groupMRepository.saveAndFlush(groupM);
+
+		mv = listAndTrash(false, mv);
+
+		mv.setViewName("addTask");
+		return sessiontest(mv);
+	}
+
+	//グループ削除確認
+	@PostMapping("/group/delete/check")
+	public ModelAndView deleteGroupCheck(
+			@RequestParam(name = "gid", defaultValue = "0") int id,
+			ModelAndView mv
+			) {
+		mv.addObject("check", "本当に削除しますか？");
+		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
+		mv.addObject("flag", true);
+
+		return editGroup(id, mv);
+	}
+
+	//グループ削除アクション
+	@PostMapping("/group/delete")
+	public ModelAndView deleteGroup(
+			@RequestParam(name = "gid", defaultValue = "0") int id,
+			ModelAndView mv) {
+
+		//外部キー参照制約解消 グループ100に一時退避
+		List<Task> taskList = taskRepository.findByGroupId(id);
+		for (Task a : taskList) {
+			a.setGroupId(0);
+			taskRepository.saveAndFlush(a);
+		}
+
+		//消去
+		groupMRepository.deleteById(id);
+		groupRepository.deleteById(id);
 
 		mv = listAndTrash(false, mv);
 
