@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,29 +48,23 @@ public class UserManageController extends SuperController {
 	@RequestMapping("/users/list")
 	public ModelAndView usersList(
 			ModelAndView mv,
-			@RequestParam("password") String pw) {
+			@RequestParam("pw") String pw) {
 
 		if (pw == "" || pw == null) {
+			mv = lookList02(mv);
 			mv.addObject("msg00", "パスワードが入力されていません");
-			mv = listAndTrash(false, mv);
-			mv = almostDeadline(mv);
-			mv.setViewName("/list");
 			return mv;
 		}
 
-		if (pw != "himituToDo") {
+		if (!pw.equals("himituToDo")) {
+			mv = lookList02(mv);
 			mv.addObject("msg00", "パスワードが違います");
-			mv = listAndTrash(false, mv);
-			mv = almostDeadline(mv);
-			mv.setViewName("/list");
 			return mv;
 		}
 
-		HashMap<Integer, String> hlist = new HashMap<Integer, String>();
-		hlist.put(1, "出身地は？");
-		hlist.put(2, "ペットの名前は？");
-		hlist.put(3, "親の旧姓");
-		mv.addObject("hlist", hlist);
+		mv.addObject("h1", "出身地は？");
+		mv.addObject("h2", "ペットの名前は？");
+		mv.addObject("h3", "親の旧姓は？");
 
 		List<User> userList = userRepository.findByOrderByIdAsc();
 		//管理者と削除済ユーザを非表示に
@@ -90,9 +84,77 @@ public class UserManageController extends SuperController {
 			@RequestParam("id") int id) {
 
 		List<Task> tlist = taskRepository.findByUserId(id);
+		Optional<User> record = userRepository.findById(id);
+
+		User user = new User();
+		if (record.isEmpty() == false) {
+			user = record.get();
+		}
 
 		mv.addObject("tlist", tlist);
+		mv.addObject("user", user);
+		mv.addObject("flag0", true);
 		mv.setViewName("userDelete");
+		return mv;
+	}
+
+	@RequestMapping("/user/delete/check02")
+	public ModelAndView userDeleteCheck02(
+			ModelAndView mv,
+			@RequestParam("id") int id) {
+
+		List<Task> tlist = taskRepository.findByUserId(id);
+		Optional<User> record = userRepository.findById(id);
+
+		User user = new User();
+		if (record.isEmpty() == false) {
+			user = record.get();
+		}
+
+		mv.addObject("tlist", tlist);
+		mv.addObject("user", user);
+		mv.addObject("flag0", false);
+		mv.addObject("flag", true);
+		mv.setViewName("userDelete");
+		return mv;
+	}
+
+	@RequestMapping("/user/delete/all")
+	public ModelAndView userDeleteAll(
+			ModelAndView mv,
+			@RequestParam("id") int id) {
+
+		List<Task> tlist = taskRepository.findByUserId(id);
+		for (Task t : tlist) {
+			taskRepository.deleteById(t.getCode());
+		}
+
+		userRepository.deleteById(id);
+
+		String pw = "himituToDo";
+		mv = usersList(mv, pw);
+		mv.addObject("finish", "正常に削除されました");
+
+		return mv;
+	}
+
+	@RequestMapping("/user/delete/taihi")
+	public ModelAndView userDeleteTaihi(
+			ModelAndView mv,
+			@RequestParam("id") int id) {
+
+		List<Task> tlist = taskRepository.findByUserId(id);
+		for (Task t : tlist) {
+			t.setUserId(2);
+			taskRepository.saveAndFlush(t);
+		}
+
+		userRepository.deleteById(id);
+
+		String pw = "himituToDo";
+		mv = usersList(mv, pw);
+		mv.addObject("finish", "正常に削除されました");
+
 		return mv;
 	}
 
@@ -104,6 +166,28 @@ public class UserManageController extends SuperController {
 		mv = usersList(mv, pw);
 
 		return mv;
+	}
+
+	//タスク一覧を表示
+	@RequestMapping("/list02")
+	public ModelAndView lookList02(ModelAndView mv) {
+		//リスト一覧を準備
+		mv = listAndTrash(false, mv);
+
+		//期限の文字色を変更
+		mv = almostDeadline(mv);
+
+		User login = (User) session.getAttribute("userInfo");
+		if (login == null) {
+			session.invalidate();
+			mv.addObject("message", "セッションがタイムアウトしました");
+			mv.setViewName("top");
+		} else if (login.getId() == 1) {
+			mv.addObject("flag", true);
+		}
+
+		mv.setViewName("list");//タスク一覧画面に遷移
+		return sessiontest(mv);
 	}
 
 }

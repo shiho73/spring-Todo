@@ -40,11 +40,12 @@
 
 <div>ユーザ登録用コード：todoLets</div>
 
+<span th:text="${finish}" style="color:red"></span>
+
 <h2>ユーザ一覧</h2>
 <table>
 	<thead>
 	<tr>
-		<th>ユーザ番号</th>
 		<th>ユーザ名</th>
 		<th>パスワード</th>
 		<th>秘密の質問</th>
@@ -57,7 +58,11 @@
 	<tr th:each="list:${ulist}">
 		<td th:text="${list.name}"></td>
 		<td th:text="${list.pw}"></td>
-		<td><span th:each="h:${hlist}" th:if="${list.himituCode==h.num}" th:text="${h.name}"></span></td>
+		<td>
+			<span th:if="${list.himituCode==1}" th:text="${h1}"></span>
+			<span th:if="${list.himituCode==2}" th:text="${h2}"></span>
+			<span th:if="${list.himituCode==3}" th:text="${h3}"></span>
+		</td>
 		<td th:text="${list.himitu}"></td>
 
 <!-- 消去ボタン -->

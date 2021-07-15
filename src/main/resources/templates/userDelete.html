@@ -40,26 +40,28 @@
 
 対象のユーザ：<span th:text="${user.name}"></span><br>
 
+<div th:if="${flag0==true}">
 <span>本当に削除しますか？</span><br>
 	<div style="display:inline-flex">
 		<form action="/user/delete/check02" method="post">
-			<input type="hidden">
+			<input type="hidden" name="id" th:value="${user.id}">
 			<input type="submit" value="はい">
 		</form>
 		<form action="/user/delete/cancel" method="post">
 			<input type="submit" value="いいえ">
 		</form>
 	</div>
+</div>
 
 <div th:if="${flag==true}">
 	対象のユーザが作成したタスクを全て削除→
 	<form action="/user/delete/all" method="post">
-		<input type="hidden" th:value="${user.id}">
+		<input type="hidden" name="id" th:value="${user.id}">
 		<input type="submit" value="全削除">
 	</form>
 	「削除済のユーザ」が作成したタスクとして残す→
 	<form action="/user/delete/taihi" method="post">
-		<input type="hidden" th:value="${user.id}">
+		<input type="hidden" name="id" th:value="${user.id}">
 		<input type="submit" value="残す">
 	</form>
 

@@ -276,12 +276,12 @@ public class UserController {
 	}
 
 	private void userZero() {
-		Optional<User> kanri = userRepository.findById(0);
+		Optional<User> kanri = userRepository.findById(1);
 		if (kanri.isEmpty()) {
 			User user = new User("管理者", "himitu", "東京", 1);
 			userRepository.saveAndFlush(user);
 		}
-		Optional<User> taihi = userRepository.findById(1);
+		Optional<User> taihi = userRepository.findById(2);
 		if (taihi.isEmpty()) {
 			User user = new User("削除済のユーザです", "himitu", "東京", 1);
 			userRepository.saveAndFlush(user);

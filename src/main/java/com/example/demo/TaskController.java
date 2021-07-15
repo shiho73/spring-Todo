@@ -21,6 +21,7 @@ import com.example.demo.group.GroupRepository;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.Task;
 import com.example.demo.task.TaskRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
@@ -50,6 +51,15 @@ public class TaskController extends SuperController {
 
 		//期限の文字色を変更
 		mv = almostDeadline(mv);
+
+		User login = (User) session.getAttribute("userInfo");
+		if (login == null) {
+			session.invalidate();
+			mv.addObject("message", "セッションがタイムアウトしました");
+			mv.setViewName("top");
+		} else if (login.getId() == 1) {
+			mv.addObject("flag", true);
+		}
 
 		mv.setViewName("list");//タスク一覧画面に遷移
 		return sessiontest(mv);
@@ -150,7 +160,7 @@ public class TaskController extends SuperController {
 		//期限の文字色を変更
 		mv = almostDeadline(mv);
 
-//		System.out.println(dateText);
+		//		System.out.println(dateText);
 
 		//期限日の型変換
 		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
