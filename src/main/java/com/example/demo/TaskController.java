@@ -80,18 +80,15 @@ public class TaskController extends SuperController {
 	@RequestMapping("/list/trash")
 	public ModelAndView goTrash(
 			@RequestParam(name = "code") int code,
-			@RequestParam(name = "name") String name,
-			@RequestParam(name = "userId") int userId,
-			@RequestParam(name = "dline") Date dline,
-			@RequestParam(name = "prtNum") int prtNum,
-			@RequestParam(name = "cgCode") int cgCode,
-			@RequestParam(name = "groupId") int groupId,
-			@RequestParam(name = "progress") int progress,
-			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
-		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, false);
-		taskRepository.saveAndFlush(task);
+		Optional<Task> record = taskRepository.findById(code);
+
+		if (record.isEmpty() == false) {
+			Task task = record.get();
+			task.setTrash(false);
+			taskRepository.saveAndFlush(task);
+		}
 
 		return lookList(mv);
 	}
@@ -100,18 +97,15 @@ public class TaskController extends SuperController {
 	@RequestMapping("/trash/recovery")
 	public ModelAndView trash(
 			@RequestParam(name = "code") int code,
-			@RequestParam(name = "name") String name,
-			@RequestParam(name = "userId") int userId,
-			@RequestParam(name = "dline") Date dline,
-			@RequestParam(name = "prtNum") int prtNum,
-			@RequestParam(name = "cgCode") int cgCode,
-			@RequestParam(name = "groupId") int groupId,
-			@RequestParam(name = "progress") int progress,
-			@RequestParam(name = "memo") String memo,
 			ModelAndView mv) {
 
-		Task task = new Task(code, name, userId, dline, prtNum, cgCode, groupId, progress, memo, true);
-		taskRepository.saveAndFlush(task);
+		Optional<Task> record = taskRepository.findById(code);
+
+		if (record.isEmpty() == false) {
+			Task task = record.get();
+			task.setTrash(true);
+			taskRepository.saveAndFlush(task);
+		}
 
 		return lookTrash(mv);
 	}
@@ -159,8 +153,6 @@ public class TaskController extends SuperController {
 
 		//期限の文字色を変更
 		mv = almostDeadline(mv);
-
-		//		System.out.println(dateText);
 
 		//期限日の型変換
 		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換

@@ -73,14 +73,6 @@
 			<td th:text="${list.memo}"></td>
 			<td><form action="/trash/recovery" method="post">
 					<input type="hidden" th:value="${list.code}" name="code">
-					<input type="hidden" th:value="${list.name}" name="name">
-					<input type="hidden" th:value="${list.userId}" name="userId">
-					<input type="hidden" th:value="${list.dline}" name="dline">
-					<input type="hidden" th:value="${list.prtNum}" name="prtNum">
-					<input type="hidden" th:value="${list.cgCode}" name="cgCode">
-					<input type="hidden" th:value="${list.groupId}" name="groupId">
-					<input type="hidden" th:value="${list.progress}" name="progress">
-					<input type="hidden" th:value="${list.memo}" name="memo">
 					<input type="submit" value="復元">
 				</form>
 			</td>
