@@ -66,7 +66,7 @@
 				<td><select name="groupId">
 				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
 					</select>
-					<a href="/group/new" onclick="openPopup();">新規グループ登録</a>
+					<a th:href="'/editTask'+${task.code}+'/group/new'" onclick="openPopup();">新規グループ登録</a>
 				</td>
 			</tr>
 

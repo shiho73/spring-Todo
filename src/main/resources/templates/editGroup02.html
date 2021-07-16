@@ -27,9 +27,10 @@
 <!-- 入力アラート -->
 	<p th:text="${message}" style="color:red"></p>
 
-		<form action="/addTask/group/update"  method="post">
+		<form action="/editTask/group/update"  method="post">
 		<input type="hidden" name="gid" th:value="${group.id}">
 		<input type="hidden" name="gname" th:value="${group.name}">
+		<input type="hidden" name="code" th:value="${code}">
 
 		<table border="1">
 			<tr>
@@ -51,8 +52,9 @@
 			<button class="btnSubmit" value="更新">更新</button>
 		</form>
 
-		<form action="/addTask/group/delete/check" method="post">
+		<form action="/editTask/group/delete/check" method="post">
 			<input type="hidden" name="gid" th:value="${group.id}">
+			<input type="hidden" name="code" th:value="${code}">
 			<button class="btnSubmit" value="削除">削除</button>
 		</form>
 		</div>
@@ -64,10 +66,12 @@
 			<div style="display:inline-flex">
 			<form action="/group/delete" method="post">
 			<input type="hidden" name="gid" th:value="${group.id}">
+			<input type="hidden" name="code" th:value="${code}">
 			<input type="submit" value="はい">
 			</form>
 			<form action="/group/edit" method="post">
 			<input type="hidden" name="gid" th:value="${group.id}">
+			<input type="hidden" name="code" th:value="${code}">
 			<input type="submit" value="いいえ">
 			</form>
 			</div>

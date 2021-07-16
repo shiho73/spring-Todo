@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>タスク管理</title>
+
+<!-- カレンダーjQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/pepper-grinder/jquery-ui.css" >
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
+
+</head>
+<body>
+
+<!-- ロゴ -->
+    <img src="/logo.png" class="img">
+
+	<h1>カテゴリ編集</h1>
+
+	<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+
+<!-- 入力アラート -->
+		<p th:text="${message}" style="color:red"></p>
+
+		<form action="/category/update"  method="post">
+		<input type="hidden" name="cCode" th:value="${category.code}">
+		<input type="hidden" name="cName" th:value="${category.name}">
+
+		<table border="1">
+			<tr>
+				<th>カテゴリ番号</th><td><input type="number" name="code" min="1" th:value="${category.code}"></td>
+			</tr>
+
+			<tr>
+				<th>カテゴリ名</th><td><input type="text" name="name" th:value="${category.name}"></td>
+			</tr>
+		</table>
+
+		<br>
+
+		<div style="display:inline-flex">
+		<button class="btnSubmit" value="更新">更新</button>
+	</form>
+	<form action="/category/delete/check" method="post">
+		<input type="hidden" name="cCode" th:value="${category.code}">
+		<button class="btnSubmit" value="削除">削除</button>
+	</form>
+	</div>
+
+<br>
+<div th:if="${flag==true}">
+	<span th:text="${check}" style="color:red"></span>
+	<div style="display:inline-flex">
+	<form action="/category/delete" method="post">
+	<input type="hidden" name="cCode" th:value="${category.code}">
+	<input type="submit" value="はい">
+	</form>
+	<form action="/category/edit" method="post">
+	<input type="hidden" name="cCode" th:value="${category.code}">
+	<input type="submit" value="いいえ">
+	</form>
+	</div>
+	<br>
+	<span th:text="${check2}"></span>
+</div>
+
+		<table border="1" style="border-collapse: collapse">
+            <tr>
+            	<th>カテゴリ番号</th>
+                <th>カテゴリ名</th>
+            </tr>
+            <tr th:each="c:${clist}">
+            	<td><span th:text="${c.code}"></span></td>
+                <td><span th:text="${c.name}"></span></td>
+            </tr>
+        </table>
+
+		<br>
+
+		<a href="/list/new">新規作成へ戻る</a>
+
+</body>
+</html>

@@ -42,7 +42,7 @@ public class EditController extends SuperController {
 	//新規作成
 	@RequestMapping("/list/new")
 	public ModelAndView listnew(ModelAndView mv) {
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//表示の準備
 		mv.setViewName("addTask");//遷移先(タスク作成ページ)を指定
 		return sessiontest(mv);
 	}
@@ -86,18 +86,18 @@ public class EditController extends SuperController {
 	public ModelAndView edit(
 			@RequestParam(name = "code") int code,
 			ModelAndView mv) {
-
-		Task task = null;
-
+		//タスクのレコードを取得
 		Optional<Task> recode = taskRepository.findById(code);
 
+		//変数taskの初期化
+		Task task = null;
+		//レコードが存在すれば、レコードからタスクを取得
 		if (recode.isEmpty() == false) {
 			task = recode.get();
 		}
+		mv.addObject("task", task);//表示の準備
 
-		mv.addObject("task", task);
-
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//編集ページ表示の準備
 		mv.setViewName("editTask");//遷移先(編集ページ)を指定
 		return sessiontest(mv);
 	}
@@ -119,7 +119,7 @@ public class EditController extends SuperController {
 		//未入力チェック
 		if (name == null || name == "") {
 			mv.addObject("message", "タスク名を入力してください");
-			edit(code, mv);
+			edit(code, mv);//編集画面を再表示
 			return sessiontest(mv);
 		}
 
@@ -131,7 +131,7 @@ public class EditController extends SuperController {
 		return sessiontest(mv);
 	}
 
-	//道具
+
 
 	//期限日型変換
 	private void dateExchange(int code, String name, int userId, String dline, int prtNum, int cgCode, int groupId,
@@ -147,7 +147,7 @@ public class EditController extends SuperController {
 			e.printStackTrace();
 		}
 
-		//文字列が元々sqlの書式だった場合
+		//文字列が元々sqlの書式だった場合(編集時のみ存在)
 		if (date == null) {
 			//String型からsqlのDate型に変換
 			Date dline3 = Date.valueOf(dline);

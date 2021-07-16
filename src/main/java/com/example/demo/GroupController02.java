@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +24,9 @@ import com.example.demo.task.TaskRepository;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class GroupController extends SuperController {
+public class GroupController02 extends SuperController {
 
-	//タスク登録画面からグループを登録・編集・削除するコントローラー
+	//タスク編集画面からグループを登録・編集・削除するコントローラー
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -46,17 +47,20 @@ public class GroupController extends SuperController {
 	GroupMRepository groupMRepository;
 
 	//タスク登録から新規グループ作成
-	@RequestMapping("/addTask/group/new")
-	public ModelAndView newGroup01(ModelAndView mv) {
-		mv.addObject("add", 1);
+	@RequestMapping("/editTask{code}/group/new")
+	public ModelAndView newGroup02(
+			@PathVariable(name = "code") int code,
+			ModelAndView mv) {
+		mv.addObject("code", code);
 		mv = listAndTrash(false, mv);
-		mv.setViewName("addGroup");
+		mv.setViewName("addGroup02");
 		return sessiontest(mv);
 	}
 
 	//新規グループ作成アクション
-	@PostMapping("/addTask/group/add")
-	public ModelAndView addGroup01(
+	@PostMapping("/editTask/group/add")
+	public ModelAndView addGroup02(
+			@RequestParam(name = "code") int code,
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "id", defaultValue = "0") Integer id,
 			@RequestParam(name = "member", defaultValue = "") String member,
@@ -65,22 +69,19 @@ public class GroupController extends SuperController {
 		//未入力チェック(グループ名、グループ番号)
 		if (name == null || name == "" && id == 0) {
 			mv.addObject("message", "グループ名とグループ番号を入力してください");
-			mv.setViewName("addGroup");
-			return sessiontest(mv);
+			return newGroup02(code, mv);
 		}
 
 		//未入力チェック(グループ名のみ)
 		if (name == null || name == "") {
 			mv.addObject("message", "グループ名を入力してください");
-			mv.setViewName("addGroup");
-			return sessiontest(mv);
+			return newGroup02(code, mv);
 		}
 
 		//未入力チェック(グループ番号のみ)
 		if (id == 0) {
 			mv.addObject("message", "グループ番号を入力してください");
-			mv.setViewName("addGroup");
-			return sessiontest(mv);
+			return newGroup02(code, mv);
 		}
 
 		//グループの重複チェック/
@@ -94,8 +95,7 @@ public class GroupController extends SuperController {
 			if (!list2.isEmpty()) {
 				mv.addObject("message", "使用済みのグループ名です");
 			}
-			mv.setViewName("addGroup");
-			return sessiontest(mv);
+			return newGroup02(code, mv);
 		}
 
 		//上記をクリアしていれば、グループを作成しテーブルに登録
@@ -107,13 +107,26 @@ public class GroupController extends SuperController {
 		groupMRepository.saveAndFlush(groupM);
 
 		mv = listAndTrash(false, mv);//タスク編集・登録ページの表示準備
-		mv.setViewName("addTask");//タスク登録ページへ遷移
+
+		//タスクのレコードを取得
+		Optional<Task> recode = taskRepository.findById(code);
+
+		//変数taskの初期化
+		Task task = null;
+		//レコードが存在すれば、レコードからタスクを取得
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+		mv.addObject("task", task);//表示の準備
+
+		mv = listAndTrash(false, mv);//編集ページ表示の準備
+		mv.setViewName("editTask");//遷移先(編集ページ)を指定
 		return sessiontest(mv);
 	}
 
 	//グループ編集
-	@PostMapping("/addTask/group/edit")
-	public ModelAndView editGroup01(
+	@PostMapping("/editTask/group/edit")
+	public ModelAndView editGroup02(
 			@RequestParam(name = "gid") int gid,
 			ModelAndView mv) {
 		mv = listAndTrash(false, mv);//グループ編集ページの表示準備
@@ -141,8 +154,8 @@ public class GroupController extends SuperController {
 	}
 
 	//グループ編集アクション
-	@PostMapping("/addTask/group/update")
-	public ModelAndView updateGroup01(
+	@PostMapping("/editTask/group/update")
+	public ModelAndView updateGroup02(
 			@RequestParam(name = "id", defaultValue = "0") int id,
 			@RequestParam("name") String name,
 			@RequestParam("gname") String gname,
@@ -178,13 +191,13 @@ public class GroupController extends SuperController {
 		if (!list.isEmpty()) {
 			if (id != gid) {
 				mv.addObject("message", "使用済みのグループ番号です");
-				return editGroup01(gid, mv);
+				return editGroup02(gid, mv);
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(gname)) {
 			mv.addObject("message", "使用済みのグループ名です");
-			return editGroup01(gid, mv);
+			return editGroup02(gid, mv);
 		}
 
 		//外部キー参照制約解消 グループ100に一時退避
@@ -221,20 +234,20 @@ public class GroupController extends SuperController {
 	}
 
 	//グループ削除確認
-	@PostMapping("/addTask/group/delete/check")
-	public ModelAndView deleteGroupCheck01(
+	@PostMapping("/editTask/group/delete/check")
+	public ModelAndView deleteGroupCheck02(
 			@RequestParam(name = "gid", defaultValue = "0") int id,
 			ModelAndView mv) {
 		mv.addObject("check", "本当に削除しますか？");
 		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
 		mv.addObject("flag", true);
 
-		return editGroup01(id, mv);
+		return editGroup02(id, mv);
 	}
 
 	//グループ削除アクション
-	@PostMapping("/addTask/group/delete")
-	public ModelAndView deleteGroup01(
+	@PostMapping("/editTask/group/delete")
+	public ModelAndView deleteGroup02(
 			@RequestParam(name = "gid") int id,
 			ModelAndView mv) {
 
