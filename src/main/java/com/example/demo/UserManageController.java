@@ -53,13 +53,13 @@ public class UserManageController extends SuperController {
 		if (pw == "" || pw == null) {
 			mv = lookList02(mv);
 			mv.addObject("msg00", "パスワードが入力されていません");
-			return mv;
+			return sessiontest(mv);
 		}
 
 		if (!pw.equals("himituToDo")) {
 			mv = lookList02(mv);
 			mv.addObject("msg00", "パスワードが違います");
-			return mv;
+			return sessiontest(mv);
 		}
 
 		mv.addObject("h1", "出身地は？");
@@ -75,7 +75,7 @@ public class UserManageController extends SuperController {
 
 		mv.setViewName("userManage");
 
-		return mv;
+		return sessiontest(mv);
 	}
 
 	@RequestMapping("/user/delete/check")
@@ -95,7 +95,7 @@ public class UserManageController extends SuperController {
 		mv.addObject("user", user);
 		mv.addObject("flag0", true);
 		mv.setViewName("userDelete");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	@RequestMapping("/user/delete/check02")
@@ -116,7 +116,7 @@ public class UserManageController extends SuperController {
 		mv.addObject("flag0", false);
 		mv.addObject("flag", true);
 		mv.setViewName("userDelete");
-		return mv;
+		return sessiontest(mv);
 	}
 
 	@RequestMapping("/user/delete/all")
@@ -135,7 +135,7 @@ public class UserManageController extends SuperController {
 		mv = usersList(mv, pw);
 		mv.addObject("finish", "正常に削除されました");
 
-		return mv;
+		return sessiontest(mv);
 	}
 
 	@RequestMapping("/user/delete/taihi")
@@ -155,7 +155,7 @@ public class UserManageController extends SuperController {
 		mv = usersList(mv, pw);
 		mv.addObject("finish", "正常に削除されました");
 
-		return mv;
+		return sessiontest(mv);
 	}
 
 	@RequestMapping("/user/delete/cancel")
@@ -165,7 +165,7 @@ public class UserManageController extends SuperController {
 		String pw = "himituToDo";
 		mv = usersList(mv, pw);
 
-		return mv;
+		return sessiontest(mv);
 	}
 
 	//タスク一覧を表示
