@@ -7,7 +7,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
-	<link rel="stylesheet" href="/trashLoading.css">
+	<link rel="stylesheet" href="/trashLoading.css" id="css">
 
 		<script type="text/javascript">
 			$(function() {
@@ -27,6 +27,9 @@
  			  setTimeout(function(){
 			  	$('body').css('overflow', 'visible');
  			  }, 2000);
+ 			  setTimeout(function chengeCss(){
+  				 document.getElementById("css").href = "sbackDesigncss";
+  	 			  }, 1700);
 			});
 
 		</script>
