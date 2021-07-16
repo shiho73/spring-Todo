@@ -14,29 +14,20 @@
 			  var h = $(window).height();
 
 			  $('#wrap').css('display','none');
-			  $('#loading ,#loader').height(h).css('display','block');
+			  $('#try ,#triangles').height(h).css('display','block');
+
+			  // bodyのスクロールバーを非表示
+			  $('body').css('overflow', 'hidden');
 			});
 
 			$(window).load(function () { //全ての読み込みが完了したら実行
-			  $('#loading').delay(900).fadeOut(800);
-			  $('#loader').delay(600).fadeOut(300);
+			  $('#try').delay(900).fadeOut(800);
+			  $('#triangles').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
-			});
+ 			  setTimeout(function(){
+			  	$('body').css('overflow', 'visible');
+ 			  }, 2000);
 
-//10秒たったら強制的にロード画面を非表示
-			$(function(){
-			  setTimeout('stopload()',10000);
-			});
-
-			function stopload(){
-			  $('#wrap').css('display','block');
-			  $('#loading').delay(900).fadeOut(800);
-			  $('#loader').delay(600).fadeOut(300);
-			}
-
-//ローディング画面の消え方
-			$("submit").click(function() {
-				$("#loading").fadeOut(400, function(){ $(this).remove(); });
 			});
 
 		</script>

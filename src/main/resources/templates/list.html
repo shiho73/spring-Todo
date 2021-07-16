@@ -97,9 +97,6 @@
 			<input type="submit" value="優先度検索" class="btn-gradient-radius">
 		</form>
 
-		<form action="/look/trash"  method="post">
-			<input type="submit"  value="ゴミ箱を見る"  class="btn">
-		</form>
 
 		</div>
 		<hr>
@@ -190,6 +187,10 @@
 	</tr>
 </tbody>
 </table>
+
+		<form action="/look/trash"  method="post">
+			<input type="submit"  value="ゴミ箱を見る"  class="btn">
+		</form>
 </div>
 
 <div th:if="${flag==true}">
