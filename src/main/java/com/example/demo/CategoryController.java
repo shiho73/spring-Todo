@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +39,21 @@ public class CategoryController extends SuperController {
 	@Autowired
 	PriorityRepository priorityRepository;
 
-	//新規カテゴリー作成
+	//タスク登録から新規カテゴリー作成
 	@RequestMapping("/category/new")
 	public ModelAndView newCategory(ModelAndView mv) {
+		mv.addObject("tcode", 0);
+		mv = listAndTrash(false, mv);
+		mv.setViewName("addCategory");
+		return sessiontest(mv);
+	}
+
+	//タスク編集から新規カテゴリー作成
+	@RequestMapping("/editTask{tcode}/category/new")
+	public ModelAndView newCategory02(
+			@PathVariable(name = "tcode") int tcode,
+			ModelAndView mv) {
+		mv.addObject("tcode", tcode);
 		mv = listAndTrash(false, mv);
 		mv.setViewName("addCategory");
 		return sessiontest(mv);
@@ -49,6 +62,7 @@ public class CategoryController extends SuperController {
 	//新規カテゴリ作成アクション
 	@PostMapping("/category/add")
 	public ModelAndView addCategory(
+			@RequestParam("tcode") int tcode,
 			@RequestParam("name") String name,
 			@RequestParam(name = "code", defaultValue = "-1") int code,
 			ModelAndView mv) {
@@ -56,20 +70,29 @@ public class CategoryController extends SuperController {
 		// 空の場合にエラーとする(やばい)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			mv = newCategory(mv);
-			return sessiontest(mv);
+			if (tcode == 0) {
+				return newCategory(mv);
+			} else {
+				return newCategory02(tcode, mv);
+			}
 		}
 
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
-			mv = newCategory(mv);
-			return sessiontest(mv);
+			if (tcode == 0) {
+				return newCategory(mv);
+			} else {
+				return newCategory02(tcode, mv);
+			}
 		}
 
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
-			mv = newCategory(mv);
-			return sessiontest(mv);
+			if (tcode == 0) {
+				return newCategory(mv);
+			} else {
+				return newCategory02(tcode, mv);
+			}
 		}
 
 		//カテゴリの重複チェック
@@ -82,8 +105,11 @@ public class CategoryController extends SuperController {
 			if (!list2.isEmpty()) {
 				mv.addObject("message", "使用済みのカテゴリ名です");
 			}
-			mv = newCategory(mv);
-			return sessiontest(mv);
+			if (tcode == 0) {
+				return newCategory(mv);
+			} else {
+				return newCategory02(tcode, mv);
+			}
 		}
 
 		Category category = new Category(code, name);
@@ -91,8 +117,25 @@ public class CategoryController extends SuperController {
 
 		mv = listAndTrash(false, mv);
 
-		mv.setViewName("addTask");
-		return sessiontest(mv);
+		if (tcode == 0) {
+			mv = listAndTrash(false, mv);
+			mv.setViewName("addTask");
+			return sessiontest(mv);
+		} else {
+			//タスクのレコードを取得
+			Optional<Task> recode = taskRepository.findById(tcode);
+			//変数taskの初期化
+			Task task = null;
+			//レコードが存在すれば、レコードからタスクを取得
+			if (recode.isEmpty() == false) {
+				task = recode.get();
+			}
+			mv.addObject("task", task);//表示の準備
+			mv = listAndTrash(false, mv);//編集ページ表示の準備
+			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			return sessiontest(mv);
+		}
+
 	}
 
 	//カテゴリ編集

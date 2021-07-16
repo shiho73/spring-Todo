@@ -57,7 +57,7 @@
 			<td><select name="cgCode">
 						<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 					</select>
-				<a href="/category/new" onclick="openPopup();">新規カテゴリ登録</a>
+				<a th:href="'/editTask'+${task.code}+'/category/new'" onclick="openPopup();">新規カテゴリ登録</a>
 			</td>
 		</tr>
 
