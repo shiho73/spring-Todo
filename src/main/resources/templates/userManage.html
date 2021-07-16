@@ -10,6 +10,8 @@
 		<link rel="stylesheet" href="/back.css">
 <!-- アカウント箱ロゴ -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
 
 
 </head>
@@ -36,6 +38,10 @@
 
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
+
+<!-- ロゴ -->
+	    <img src="/logo.png" class="img">
+
 
 		<h1><i class="fa fa-address-card-o"></i><span>ユーザ管理</span><i class="fa fa-address-card-o"></i></h1>
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>

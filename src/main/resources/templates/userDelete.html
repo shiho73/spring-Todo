@@ -8,6 +8,9 @@
 		<span th:replace="loadingJquery"></span>
 <!-- テーブル配置CSS -->
 		<link rel="stylesheet" href="/back.css">
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
+
 
 </head>
 <body>
@@ -33,6 +36,9 @@
 
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
+
+<!-- ロゴ -->
+	    <img src="/logo.png" class="img">
 
 		<h1>ユーザ削除</h1>
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
