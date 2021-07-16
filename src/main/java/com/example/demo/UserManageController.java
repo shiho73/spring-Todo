@@ -41,7 +41,7 @@ public class UserManageController extends SuperController {
 	@Autowired
 	PriorityRepository priorityRepository;
 
-	//Categoryデータベース
+	//Categoryデータベース/
 	@Autowired
 	CategoryRepository categoryRepository;
 
