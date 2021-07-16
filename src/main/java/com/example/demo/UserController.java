@@ -16,6 +16,7 @@ import com.example.demo.category.Category;
 import com.example.demo.category.CategoryRepository;
 import com.example.demo.group.Group;
 import com.example.demo.group.GroupRepository;
+import com.example.demo.group_m.GroupMRepository;
 import com.example.demo.priority.Priority;
 import com.example.demo.priority.PriorityRepository;
 import com.example.demo.task.TaskRepository;
@@ -25,28 +26,23 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class UserController {
 
-	//保持用/
+	//セッションのレポジトリをセット
 	@Autowired
 	HttpSession session;
 
-	//Taskデータベース
+	//各テーブルのレポジトリをセット
 	@Autowired
 	TaskRepository taskRepository;
-
-	//Userデータベース
-	@Autowired
-	UserRepository userRepository;
-
-	//Groupデータベース
-	@Autowired
-	GroupRepository groupRepository;
-
-	@Autowired
-	PriorityRepository priorityRepository;
-
-	//Categoryデータベース
 	@Autowired
 	CategoryRepository categoryRepository;
+	@Autowired
+	GroupRepository groupRepository;
+	@Autowired
+	GroupMRepository groupMRepository;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	PriorityRepository priorityRepository;
 
 	//http://localhost:8080/
 	//ログイン画面
@@ -58,53 +54,53 @@ public class UserController {
 		userZero();
 		priorityZero();
 
-		session.invalidate();
-		mv.setViewName("top");
+		session.invalidate();//セッションを消去
+
+		mv.setViewName("top");//ログイン画面を表示
 		return mv;
 	}
 
-	//ログイン
+	//ログイン処理
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
 			@RequestParam("name") String name,
-			@RequestParam("pw") String pw
-			) {
+			@RequestParam("pw") String pw) {
 
-		// 名前とパスワードが空の場合にエラーとする
+		//未入力チェック
 		if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
 			mv.addObject("message", "名前とパスワードを入力してください");
 			mv.setViewName("top");
 			return mv;
 		}
 
+		//ユーザ名からユーザを検索
 		List<User> user = userRepository.findByName(name);
 
-		//ヒットしたら
-		if (!user.isEmpty()) {
-
-			User userInfo = user.get(0); //一致した名前を含むリスト取得
-
-			if (!pw.equals(userInfo.getPw())) {
-				mv.addObject("message", "パスワードが違います");
-				mv.setViewName("top");
-				return mv;
-			}
-
-			// セッションスコープにカテゴリ情報を格納する
-			session.setAttribute("name", name);
-			session.setAttribute("userInfo", userInfo);
-
-			mv.setViewName("redirect:/list");
-
-		} else {
-			//見つからなかった場合ログインNG
+		//ヒットしなかったら、エラー
+		if (user.isEmpty()) {
 			mv.addObject("message", "入力された名前は登録されていません");
 			mv.setViewName("top");
+			return mv;
 		}
+
+		//ヒットしたら、パスワードと照合
+		//ユーザ情報を取得
+		User userInfo = user.get(0);
+		//パスワードが一致しなかったら、エラー
+		if (!pw.equals(userInfo.getPw())) {
+			mv.addObject("message", "パスワードが違います");
+			mv.setViewName("top");
+			return mv;
+		}
+		// セッションスコープにユーザ情報を格納する
+		session.setAttribute("name", name);
+		session.setAttribute("userInfo", userInfo);
+		mv.setViewName("redirect:/list");
 		return mv;
+
 	}
 
-	//新規ユーザー登録
+	//新規ユーザー登録画面へ遷移
 	@RequestMapping("/user")
 	public ModelAndView user(ModelAndView mv) {
 		session.invalidate();
@@ -122,63 +118,66 @@ public class UserController {
 			@RequestParam("himituCode") int himituCode,
 			@RequestParam("touroku") String touroku) {
 
-		// 名前とパスワードが空の場合にエラーとする
+		//未入力チェック(名前、パスワード)
 		if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
 			mv.addObject("message", "名前とパスワードを入力してください");
 			mv.setViewName("newUser");
 			return mv;
 		}
 
-		//秘密の質問の答えが空の場合にエラーとする
+		//未入力チェック(秘密の質問の答え)
 		if (himitu == null || himitu.length() == 0) {
 			mv.addObject("message", "秘密の質問の答えを入力してください");
 			mv.setViewName("newUser");
 			return mv;
 		}
 
+		//未入力チェック(登録用コード)
 		if (touroku == null || touroku.length() == 0) {
 			mv.addObject("message", "登録用コードを入力してください");
 			mv.setViewName("top");
 			return mv;
 		}
 
+		//入力された登録用コードがtodoLetsと一致しなければ、エラー
+		if (!touroku.equals("todoLets")) {
+			mv.addObject("message", "登録用コードが違います。管理者に問い合わせてください");
+			mv.setViewName("newUser");
+			return mv;
+		}
+
+		//ユーザ名からユーザを検索
 		List<User> user = userRepository.findByName(name);
 
-		//同じ名前がヒットしたら
+		//同じ名前がヒットしたら、エラー
 		if (!user.isEmpty()) {
 			mv.addObject("message", "既にその名前は登録されています");
 			mv.setViewName("newUser");
 			return mv;
-		} else if (!touroku.equals("todoLets")) {
-			mv.addObject("message", "登録用コードが違います。管理者に問い合わせてください");
+		}
+
+		//パスワードと確認用が一致していなければ、エラー
+		if (!pw.equals(pw1)) {
+			mv.addObject("message", "パスワードが一致していません");
 			mv.setViewName("newUser");
 			return mv;
-		} else {
-
-			if (pw.equals(pw1)) {
-				//t_user新しく追加
-				User user1 = new User(name, pw, himitu, himituCode);
-				userRepository.saveAndFlush(user1);
-
-				List<User> userList = userRepository.findAll();
-				mv.addObject("user", userList);
-
-				mv.setViewName("finished");
-				return mv;
-
-			} else {
-
-				mv.addObject("message", "パスワードが一致していません");
-				mv.setViewName("newUser");
-			}
 		}
+
+		//上記全てをクリアしていれば、登録処理を実行
+		User user1 = new User(name, pw, himitu, himituCode);
+		userRepository.saveAndFlush(user1);
+
+		//登録完了画を表示
+		mv.setViewName("finished");
 		return mv;
 	}
 
-	//パスワード忘れた人
+	//パスワード忘れた人向けの画面へ遷移
 	@RequestMapping("/change")
 	public ModelAndView change(ModelAndView mv) {
+		//名前入力ボタン表示用フラッグ
 		mv.addObject("flag", false);
+		//表示画面を設定
 		mv.setViewName("changePw");
 		return mv;
 	}

@@ -29,56 +29,66 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class SuperController {
 
-	//セッションのレポジトリをセット
+	//セッション情報保持用
 	@Autowired
 	HttpSession session;
 
-	//各テーブルのレポジトリをセット
+	//m_taskテーブル
 	@Autowired
 	TaskRepository taskRepository;
-	@Autowired
-	CategoryRepository categoryRepository;
-	@Autowired
-	GroupRepository groupRepository;
-	@Autowired
-	GroupMRepository groupMRepository;
+
+	//t_userテーブル
 	@Autowired
 	UserRepository userRepository;
+
+	//t_group_mテーブル
+	@Autowired
+	GroupMRepository groupMRepository;
+
+	//t_groupテーブル
+	@Autowired
+	GroupRepository groupRepository;
+
+	//t_priorityテーブル
 	@Autowired
 	PriorityRepository priorityRepository;
 
-	//表示するための道具
+	//t_categoryテーブル
+	@Autowired
+	CategoryRepository categoryRepository;
+
+	//各テーブルのリストを表示するための準備
 	protected ModelAndView listAndTrash(boolean tflag, ModelAndView mv) {
-		//各テーブルから全件検索
+		//各テーブルから全件検索し、主キーの順に並べる
 		List<User> userList = userRepository.findByOrderByIdAsc();
 		List<Category> categoryList = categoryRepository.findByOrderByCodeAsc();
 		List<Priority> priorityList = priorityRepository.findByOrderByNumAsc();
 		List<Group> groupList = groupRepository.findByOrderByIdAsc();
 		List<GroupM> gmList = groupMRepository.findByOrderByGroupIdAsc();
 
-		//退避用のグループ100を非表示に
+		//退避用のグループ100(id順で最後尾)を非表示に
 		int x = -1;
 		for (Group y : groupList) {
 			x++;
 		}
 		groupList.remove(x);
 
-		//退避用のグループ100を非表示に
+		//退避用のカテゴリ100(コード順で最後尾)を非表示に
 		int a = -1;
 		for (Category b : categoryList) {
 			a++;
 		}
 		categoryList.remove(a);
 
-		//空の表示用リストを生成
+		//空のタスク表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
 
 		//全てのタスクを取得
 		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
 
-		//タスク一覧とゴミ箱で分岐
+		//「タスク一覧」(tflag==false)と「ゴミ箱」(tflag==true)で分岐
 		if (tflag == true) {
-			//ゴミ箱に入れていれば、表示するリストに追加
+			//ゴミ箱に入れていれば、表示用リストに追加
 			for (Task task : taskList) {
 				if (task.isTrash() == false) {
 					list.add(task);
@@ -89,7 +99,7 @@ public class SuperController {
 				mv.addObject("message", "ゴミ箱は空です");
 			}
 		} else if (tflag == false) {
-			//ゴミ箱に入れていなければ、表示するリストに追加
+			//ゴミ箱に入れていなければ、表示用リストに追加
 			for (Task task1 : taskList) {
 				if (task1.isTrash() == true) {
 					list.add(task1);
@@ -108,8 +118,11 @@ public class SuperController {
 		return mv;
 	}
 
+	//ページ遷移時、セッションが切れていたらログイン画面に遷移
 	protected ModelAndView sessiontest(ModelAndView mv) {
+		//ログイン情報をセッションから取得
 		User login = (User) session.getAttribute("userInfo");
+		//ログイン情報が空であれば、ログイン画面へ
 		if (login == null) {
 			session.invalidate();
 			mv.addObject("message", "セッションがタイムアウトしました");
@@ -118,34 +131,46 @@ public class SuperController {
 		return mv;
 	}
 
+	//期限が近付いたら文字色を変更する
+	//「タスク一覧」の表示に使用
 	protected ModelAndView almostDeadline(ModelAndView mv) {
-		//期限フラッグを設定
+		//全てのタスクを取得
 		List<Task> taskList = taskRepository.findByOrderByCodeAsc();
+		//空の表示用リストを用意
 		ArrayList<AlmostD> almost = new ArrayList<>();
+
+		//全てのタスクに対して処理を実行
 		for (Task d : taskList) {
-			Date dline = d.getDline();//sqlDate型
+			//sqlDate型のdlineを取得
+			Date dline = d.getDline();
+			//dlineをsqlDate型の書式のままString型のdline2に変換
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String date2 = sdf.format(dline);//String型に
-			java.util.Date dline3 = Date.valueOf(date2);//java.utilのDate型
+			String dline2 = sdf.format(dline);
+			//dline2をjava.utilのDate型dline3に変換
+			java.util.Date dline3 = Date.valueOf(dline2);
+
+			//現在の日付dateをjava.utilのDate型で取得
 			java.util.Date date = new java.util.Date();
-			// Date型の日時をCalendar型に変換
+			//dateをCalendar型に変換
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			// 日時を加算する
+			//現在日時から2日後の日付を計算
 			calendar.add(Calendar.DATE, 2);
-			// Calendar型の日時をDate型に戻す
-			java.util.Date d1 = calendar.getTime();
-			//比較
+			//dateをDate型date2に変換
+			java.util.Date date2 = calendar.getTime();
+
+			//dline3とdate2と比較
 			boolean flag = false;
-			if (d1.after(dline3)) {
-				flag = false;
+			if (date2.after(dline3)) {
+				flag = false;//期限が3日以内なら、flagをfalseに
 			} else {
-				flag = true;
+				flag = true;//期限がまだであれば、flagをtrueに
 			}
 			AlmostD a = new AlmostD(d.getCode(), dline, flag);
 			almost.add(a);
 		}
 
+		//Thymeleafで表示する準備
 		mv.addObject("almost", almost);
 		return mv;
 	}
