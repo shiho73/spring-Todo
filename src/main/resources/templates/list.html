@@ -16,6 +16,8 @@
 		<link rel="stylesheet" href="/table.css">
 <!-- ロゴCSS -->
 		<link rel="stylesheet" href="/logo.css">
+<!-- ノートロゴ -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
@@ -59,10 +61,11 @@
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
 
+
 <!-- ロゴ -->
 	    <img src="/logo.png" class="img">
 
-		<h1>タスク一覧</h1>
+		<h1><i class="fa fa-file-text-o" id="i"></i><span>タスク一覧</span><i class="fa fa-file-text-o" id="i"></i></h1>
 
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
 

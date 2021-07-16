@@ -9,10 +9,6 @@
 		.pull-left{float: left;}
 		.clear-fix{clear:both;}
 		div.logo{text-align: center; margin: 20px 20px 30px 20px; fill: #566375;}
-		div.logo svg{
-		  width:180px;
-		  height:100px;
-		}
 		.logo-active{fill: #44aacc !important;}
 		#formWrapper{
 		  background: rgba(0,0,0,.2);
