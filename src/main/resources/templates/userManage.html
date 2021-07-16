@@ -42,19 +42,20 @@
 <!-- ロゴ -->
 	    <img src="/logo.png" class="img">
 
-
-		<h1><i class="fa fa-address-card-o"></i><span>ユーザ管理</span><i class="fa fa-address-card-o"></i></h1>
+		<h1><i class="fa fa-address-card-o" id="i"></i><span>ユーザ管理</span><i class="fa fa-address-card-o" id="i"></i></h1>
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
-
 <!-- ログアウト -->
 		<a href="/logout">ログアウト</a>
-		</div>
-		<a href="/list">タスク一覧へ</a>
 
-<div>ユーザ登録用コード：todoLets</div>
+<hr>
+
+		<br>
+
+<div>ユーザ登録用コード<h4 style="color:red">todoLets</h4></div>
 
 <span th:text="${finish}" style="color:red"></span>
 
+<br>
 <h2>ユーザ一覧</h2>
 <table>
 	<thead>
@@ -87,6 +88,8 @@
 	</tr>
 </tbody>
 </table>
-
+<br>
+		<a href="/list">タスク一覧へ</a>
+</div>
 </body>
 </html>
