@@ -115,4 +115,5 @@
 /* ダイアログ文字そろえ */
 		.nameAll{
 		text-align: left;
+		float:left;
 		}

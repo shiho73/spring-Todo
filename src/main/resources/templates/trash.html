@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href="/table.css">
 <!-- ロゴCSS -->
 		<link rel="stylesheet" href="/logo.css">
+<!-- ゴミ箱ロゴ -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 </head>
 <body>
@@ -35,12 +37,14 @@
 <!-- ロゴ -->
     <img src="/logo.png" class="img">
 
-	<h1>ゴミ箱</h1>
+	<h1><i class="fa fa-trash" id="i"></i><span>ゴミ箱</span><i class="fa fa-trash" id="i"></i></h1>
 
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
 		<hr>
 
-		<a href="/list">タスク一覧へ戻る</a><br>
+		<a href="/list">タスク一覧へ戻る</a>
+		<br>
+		<br>
 
 		<span th:text="${message}"></span>
 
