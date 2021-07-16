@@ -115,10 +115,9 @@ public class CategoryController extends SuperController {
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//遷移先の表示準備
 
 		if (tcode == 0) {
-			mv = listAndTrash(false, mv);
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
@@ -131,7 +130,6 @@ public class CategoryController extends SuperController {
 				task = recode.get();
 			}
 			mv.addObject("task", task);//表示の準備
-			mv = listAndTrash(false, mv);//編集ページ表示の準備
 			mv.setViewName("editTask");//遷移先(編集ページ)を指定
 			return sessiontest(mv);
 		}
@@ -160,9 +158,9 @@ public class CategoryController extends SuperController {
 	}
 
 	//タスク編集からカテゴリ編集
-	@PostMapping("/editTask{tcode}/category/edit")
+	@PostMapping("/editTask/category/edit")
 	public ModelAndView editCategory02(
-			@PathVariable(name = "tcode") int tcode,
+			@RequestParam(name = "tcode") int tcode,
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 		mv = listAndTrash(false, mv);
@@ -183,45 +181,63 @@ public class CategoryController extends SuperController {
 	//カテゴリ編集アクション
 	@PostMapping("/category/update")
 	public ModelAndView updateCategory(
-			@RequestParam(name = "code", defaultValue = "0") int code,
+			@RequestParam("tcode") int tcode,
+			@RequestParam(name = "code", defaultValue = "-1") int code,
 			@RequestParam("name") String name,
 			@RequestParam("cName") String cName,
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 
-		// 空の場合にエラーとする
+		//未入力チェック
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			mv.setViewName("addCategory");
-			return editCategory(cCode, mv);
+			if (tcode == 0) {
+				return editCategory(cCode, mv);
+			} else {
+				return editCategory02(tcode, cCode, mv);
+			}
 		}
 
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
-			mv.setViewName("addCategory");
-			return editCategory(cCode, mv);
+			if (tcode == 0) {
+				return editCategory(cCode, mv);
+			} else {
+				return editCategory02(tcode, cCode, mv);
+			}
 		}
 
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
-			mv.setViewName("addCategory");
-			return editCategory(cCode, mv);
+			if (tcode == 0) {
+				return editCategory(cCode, mv);
+			} else {
+				return editCategory02(tcode, cCode, mv);
+			}
 		}
 
-		//グループの重複チェック/
+		//カテゴリの重複チェック/
 		Optional<Category> list = categoryRepository.findById(code);
 		List<Category> list2 = categoryRepository.findByName(name);
 
 		if (!list.isEmpty()) {
 			if (code != cCode) {
 				mv.addObject("message", "使用済みのカテゴリ番号です");
-				return editCategory(cCode, mv);
+				if (tcode == 0) {
+					return editCategory(cCode, mv);
+				} else {
+					return editCategory02(tcode, cCode, mv);
+				}
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(cName)) {
 			mv.addObject("message", "使用済みのカテゴリ名です");
-			return editCategory(cCode, mv);
+			if (tcode == 0) {
+				return editCategory(cCode, mv);
+			} else {
+				return editCategory02(tcode, cCode, mv);
+			}
 		}
 
 		//外部キー参照制約解消 グループ100に一時退避
@@ -242,27 +258,47 @@ public class CategoryController extends SuperController {
 			taskRepository.saveAndFlush(a);
 		}
 
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//遷移先の表示準備
 
-		mv.setViewName("addTask");
-		return sessiontest(mv);
+		if (tcode == 0) {
+			mv.setViewName("addTask");
+			return sessiontest(mv);
+		} else {
+			//タスクのレコードを取得
+			Optional<Task> recode = taskRepository.findById(tcode);
+			//変数taskの初期化
+			Task task = null;
+			//レコードが存在すれば、レコードからタスクを取得
+			if (recode.isEmpty() == false) {
+				task = recode.get();
+			}
+			mv.addObject("task", task);//表示の準備
+			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			return sessiontest(mv);
+		}
 	}
 
 	//カテゴリ削除確認
 	@PostMapping("/category/delete/check")
 	public ModelAndView deleteCategoryCheck(
-			@RequestParam(name = "cCode") int id,
+			@RequestParam(name="tcode") int tcode,
+			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 		mv.addObject("check", "本当に削除しますか？");
 		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
 		mv.addObject("flag", true);
 
-		return editCategory(id, mv);
+		if (tcode == 0) {
+			return editCategory(cCode, mv);
+		} else {
+			return editCategory02(tcode, cCode, mv);
+		}
 	}
 
 	//カテゴリ削除アクション
 	@PostMapping("/category/delete")
 	public ModelAndView deleteGroup(
+			@RequestParam(name="tcode") int tcode,
 			@RequestParam(name = "cCode") int id,
 			ModelAndView mv) {
 
@@ -276,10 +312,24 @@ public class CategoryController extends SuperController {
 		//消去
 		categoryRepository.deleteById(id);
 
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//遷移先の表示準備
 
-		mv.setViewName("addTask");
-		return sessiontest(mv);
+		if (tcode == 0) {
+			mv.setViewName("addTask");
+			return sessiontest(mv);
+		} else {
+			//タスクのレコードを取得
+			Optional<Task> recode = taskRepository.findById(tcode);
+			//変数taskの初期化
+			Task task = null;
+			//レコードが存在すれば、レコードからタスクを取得
+			if (recode.isEmpty() == false) {
+				task = recode.get();
+			}
+			mv.addObject("task", task);//表示の準備
+			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			return sessiontest(mv);
+		}
 	}
 
 }

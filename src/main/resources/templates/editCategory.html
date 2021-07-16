@@ -28,6 +28,7 @@
 		<p th:text="${message}" style="color:red"></p>
 
 		<form action="/category/update"  method="post">
+		<input type="hidden" th:value="${tcode}" name="tcode">
 		<input type="hidden" name="cCode" th:value="${category.code}">
 		<input type="hidden" name="cName" th:value="${category.name}">
 
@@ -47,6 +48,7 @@
 		<button class="btnSubmit" value="更新">更新</button>
 	</form>
 	<form action="/category/delete/check" method="post">
+		<input type="hidden" th:value="${tcode}" name="tcode">
 		<input type="hidden" name="cCode" th:value="${category.code}">
 		<button class="btnSubmit" value="削除">削除</button>
 	</form>
@@ -57,13 +59,24 @@
 	<span th:text="${check}" style="color:red"></span>
 	<div style="display:inline-flex">
 	<form action="/category/delete" method="post">
-	<input type="hidden" name="cCode" th:value="${category.code}">
-	<input type="submit" value="はい">
+		<input type="hidden" th:value="${tcode}" name="tcode">
+		<input type="hidden" name="cCode" th:value="${category.code}">
+		<input type="submit" value="はい">
 	</form>
-	<form action="/category/edit" method="post">
-	<input type="hidden" name="cCode" th:value="${category.code}">
-	<input type="submit" value="いいえ">
-	</form>
+	<span th:if="${tcode==0}">
+		<form action="/category/edit" method="post">
+		<input type="hidden" th:value="${tcode}" name="tcode">
+		<input type="hidden" name="cCode" th:value="${category.code}">
+		<input type="submit" value="いいえ">
+		</form>
+	</span>
+	<span th:if="${tcode!=0}">
+		<form action="/editTask/category/edit" method="POST">
+			<input type="hidden" th:value="${tcode}" name="tcode">
+			<input type="hidden" name="cCode" th:value="${category.code}">
+			<input type="submit" value="いいえ">
+		</form>
+	</span>
 	</div>
 	<br>
 	<span th:text="${check2}"></span>

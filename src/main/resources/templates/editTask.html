@@ -91,13 +91,15 @@
 
 <!-- グループ編集ボタン -->
 			<form action="/group/edit" method="POST">
+			<input type="hidden" th:value="${task.code}" name="tcode">
 			<select name="gid">
 				<option th:each="g:${glist}" th:if="${g.id!=100 && g.id!=0}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
 			</select>
 			<input type="submit" value="グループ編集"></form>
 
 <!-- カテゴリ編集ボタン -->
-			<form action="/category/edit" method="POST">
+			<form action="/editTask/category/edit" method="POST">
+			<input type="hidden" th:value="${task.code}" name="tcode">
 			<select name="cCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 			</select>
