@@ -67,7 +67,8 @@ public class UserController {
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
 			@RequestParam("name") String name,
-			@RequestParam("pw") String pw) {
+			@RequestParam("pw") String pw
+			) {
 
 		// 名前とパスワードが空の場合にエラーとする
 		if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
@@ -118,7 +119,8 @@ public class UserController {
 			@RequestParam("pw") String pw,
 			@RequestParam("pw1") String pw1,
 			@RequestParam("himitu") String himitu,
-			@RequestParam("himituCode") int himituCode) {
+			@RequestParam("himituCode") int himituCode,
+			@RequestParam("touroku") String touroku) {
 
 		// 名前とパスワードが空の場合にエラーとする
 		if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
@@ -134,11 +136,21 @@ public class UserController {
 			return mv;
 		}
 
+		if (touroku == null || touroku.length() == 0) {
+			mv.addObject("message", "登録用コードを入力してください");
+			mv.setViewName("top");
+			return mv;
+		}
+
 		List<User> user = userRepository.findByName(name);
 
 		//同じ名前がヒットしたら
 		if (!user.isEmpty()) {
 			mv.addObject("message", "既にその名前は登録されています");
+			mv.setViewName("newUser");
+			return mv;
+		} else if (!touroku.equals("todoLets")) {
+			mv.addObject("message", "登録用コードが違います。管理者に問い合わせてください");
 			mv.setViewName("newUser");
 			return mv;
 		} else {
@@ -283,7 +295,7 @@ public class UserController {
 		}
 		Optional<User> taihi = userRepository.findById(2);
 		if (taihi.isEmpty()) {
-			User user = new User("削除済のユーザです", "himitu", "東京", 1);
+			User user = new User("削除済のユーザ", "himitu", "東京", 1);
 			userRepository.saveAndFlush(user);
 		}
 	}

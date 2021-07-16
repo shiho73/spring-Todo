@@ -56,19 +56,19 @@ public class CategoryController extends SuperController {
 		// 空の場合にエラーとする(やばい)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			mv.setViewName("addCategory");
+			mv = newCategory(mv);
 			return sessiontest(mv);
 		}
 
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
-			mv.setViewName("addCategory");
+			mv = newCategory(mv);
 			return sessiontest(mv);
 		}
 
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
-			mv.setViewName("addCategory");
+			mv = newCategory(mv);
 			return sessiontest(mv);
 		}
 
@@ -82,7 +82,7 @@ public class CategoryController extends SuperController {
 			if (!list2.isEmpty()) {
 				mv.addObject("message", "使用済みのカテゴリ名です");
 			}
-			mv.setViewName("addCategory");
+			mv = newCategory(mv);
 			return sessiontest(mv);
 		}
 
