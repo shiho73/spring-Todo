@@ -46,7 +46,7 @@ public class GroupController02 extends SuperController {
 	@Autowired
 	GroupMRepository groupMRepository;
 
-	//タスク登録から新規グループ作成
+	//タスク編集から新規グループ作成
 	@RequestMapping("/editTask{code}/group/new")
 	public ModelAndView newGroup02(
 			@PathVariable(name = "code") int code,
