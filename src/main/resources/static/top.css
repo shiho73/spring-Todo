@@ -89,3 +89,11 @@
 		h2{
 		color:rgb(30, 97, 221);
 		}
+
+		label{
+		    display: inline-block;
+		    text-align: right;
+		    width: 150px;
+			width: 165px;
+			float:left;
+			}
