@@ -7,7 +7,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
-	<link rel="stylesheet" href="/Loading.css" id="css">
+	<link rel="stylesheet" href="/Loading.css" class="css">
 
 		<script type="text/javascript">
 			$(function() {
@@ -24,11 +24,17 @@
 			  $('#try').delay(900).fadeOut(800);
 			  $('#triangles').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
- 			  setTimeout(function(){
-			  	$('body').css('overflow', 'visible');
- 			  }, 1700);
+
  			  setTimeout(function chengeCss(){
- 				 document.getElementById("css").href = "sbackDesigncss";
+   				 document.getElementById("css").href = "";
+   	 			  }, 1700);
+
+ 			  setTimeout(function(){
+ 				  	$('body').css('overflow', 'visible');
+ 	 			  }, 1700);
+
+ 			  setTimeout(function(){
+ 				  	$('body').css('background','#fffff9');
  	 			  }, 1700);
  			});
 

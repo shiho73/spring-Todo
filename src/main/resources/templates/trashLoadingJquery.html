@@ -24,12 +24,18 @@
 			  $('#loading').delay(900).fadeOut(800);
 			  $('#loader').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
- 			  setTimeout(function(){
-			  	$('body').css('overflow', 'visible');
- 			  }, 2000);
+
  			  setTimeout(function chengeCss(){
-  				 document.getElementById("css").href = "sbackDesigncss";
+  				 document.getElementById("css").href = "";
   	 			  }, 1700);
+
+ 			  setTimeout(function(){
+ 				  	$('body').css('overflow', 'visible');
+ 	 			  }, 1700);
+
+ 			  setTimeout(function(){
+				  	$('body').css('background','#d6e9ca');
+ 	 			  }, 1700);
 			});
 
 		</script>
