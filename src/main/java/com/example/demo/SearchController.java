@@ -49,6 +49,7 @@ public class SearchController extends SuperController {
 		mv = listAndTrash(false, mv);
 		mv = almostDeadline(mv);
 
+		ArrayList<Task> list = new ArrayList<Task>();
 		List<Task> taskList = null;
 
 		if (keyword.equals("")) {
@@ -57,7 +58,13 @@ public class SearchController extends SuperController {
 			taskList = taskRepository.findByNameLike("%" + keyword + "%");
 		}
 
-		mv.addObject("list", taskList);
+		for (Task task1 : taskList) {
+			if (task1.isTrash() == true) {
+				list.add(task1);
+			}
+		}
+
+		mv.addObject("list", list);
 		mv.addObject("keyword", keyword);
 
 		mv.setViewName("list");
@@ -82,7 +89,14 @@ public class SearchController extends SuperController {
 				}
 			}
 
-			mv.addObject("list", taskList2);
+			ArrayList<Task> list = new ArrayList<Task>();
+			for (Task task1 : taskList2) {
+				if (task1.isTrash() == true) {
+					list.add(task1);
+				}
+			}
+
+			mv.addObject("list", list);
 
 			mv.setViewName("list");
 			return sessiontest(mv);
@@ -106,7 +120,14 @@ public class SearchController extends SuperController {
 				}
 			}
 
-			mv.addObject("list", taskList2);
+			ArrayList<Task> list = new ArrayList<Task>();
+			for (Task task1 : taskList2) {
+				if (task1.isTrash() == true) {
+					list.add(task1);
+				}
+			}
+
+			mv.addObject("list", list);
 
 			mv.setViewName("list");
 			return sessiontest(mv);
