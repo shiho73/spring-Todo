@@ -188,7 +188,7 @@ public class CategoryController extends SuperController {
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 
-		//未入力チェック
+		//未入力チェック(番号と名前どちらも)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
 			if (tcode == 0) {
