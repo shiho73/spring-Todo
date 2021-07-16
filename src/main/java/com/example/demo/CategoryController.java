@@ -138,7 +138,7 @@ public class CategoryController extends SuperController {
 
 	}
 
-	//カテゴリ編集
+	//タスク登録からカテゴリ編集
 	@PostMapping("/category/edit")
 	public ModelAndView editCategory(
 			@RequestParam(name = "cCode") int cCode,
@@ -153,6 +153,29 @@ public class CategoryController extends SuperController {
 		}
 
 		mv.addObject("category", category);
+
+		mv.addObject("tcode", 0);
+		mv.setViewName("editCategory");
+		return sessiontest(mv);
+	}
+
+	//タスク編集からカテゴリ編集
+	@PostMapping("/editTask{tcode}/category/edit")
+	public ModelAndView editCategory02(
+			@PathVariable(name = "tcode") int tcode,
+			@RequestParam(name = "cCode") int cCode,
+			ModelAndView mv) {
+		mv = listAndTrash(false, mv);
+
+		//編集するカテゴリの取得
+		Category category = null;
+		Optional<Category> recode = categoryRepository.findById(cCode);
+		if (recode.isEmpty() == false) {
+			category = recode.get();
+		}
+		mv.addObject("category", category);
+
+		mv.addObject("tcode", tcode);
 		mv.setViewName("editCategory");
 		return sessiontest(mv);
 	}
