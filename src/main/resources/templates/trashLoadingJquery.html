@@ -14,20 +14,19 @@
 			  var h = $(window).height();
 
 			  $('#wrap').css('display','none');
-			  $('#try ,#triangles').height(h).css('display','block');
+			  $('#loading ,#loader').height(h).css('display','block');
 
 			  // bodyのスクロールバーを非表示
 			  $('body').css('overflow', 'hidden');
 			});
 
 			$(window).load(function () { //全ての読み込みが完了したら実行
-			  $('#try').delay(900).fadeOut(800);
-			  $('#triangles').delay(600).fadeOut(300);
+			  $('#loading').delay(900).fadeOut(800);
+			  $('#loader').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
  			  setTimeout(function(){
 			  	$('body').css('overflow', 'visible');
  			  }, 2000);
-
 			});
 
 		</script>
