@@ -60,7 +60,7 @@
 		<div id="wrap">
 
 <!-- ロゴ -->
-    <img src="/logo.png" class="img">
+	    <img src="/logo.png" class="img">
 
 		<h1>タスク一覧</h1>
 
@@ -78,25 +78,25 @@
 <br>
 <!-- 検索ボタン -->
 		<div style="display:inline-flex" class="allbutton">
-		<form action="/task/search/name"  method="post">
-			検索：<input type="search" name="keyword" th:value="${keyword}" >
-			<input type="submit"  value="検索" class="btn-gradient-radius">｜
-		</form>
 
-		<form action="/task/search/category" method="post">
-			<select name="category">
-				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
-			</select>
-			<input type="submit" value="カテゴリ検索" class="btn-gradient-radius">｜
-		</form>
+			<form action="/task/search/name"  method="post">
+				検索：<input type="search" name="keyword" th:value="${keyword}" >
+				<input type="submit"  value="検索" class="btn-gradient-radius">｜
+			</form>
 
-		<form action="/task/search/priority" method="post">
-			<select name="priority">
-				<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
-			</select>
-			<input type="submit" value="優先度検索" class="btn-gradient-radius">
-		</form>
+			<form action="/task/search/category" method="post">
+				<select name="category">
+					<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+				</select>
+				<input type="submit" value="カテゴリ検索" class="btn-gradient-radius">｜
+			</form>
 
+			<form action="/task/search/priority" method="post">
+				<select name="priority">
+					<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
+				</select>
+				<input type="submit" value="優先度検索" class="btn-gradient-radius">
+			</form>
 
 		</div>
 		<hr>
@@ -104,14 +104,14 @@
 <!-- 操作ボタン -->
 
 		<div style="display:inline-flex">
-		<form action="/list/new"  method="post">
-			<input type="submit"  value="タスク作成"  class="btn1">
-		</form>
 
-		<form action="/task/update"  method="post">
-			<input type="button"  value="更新" onclick="f();" class="btn2">
-		</form>
+			<form action="/list/new"  method="post">
+				<input type="submit"  value="タスク作成"  class="btn1">
+			</form>
 
+			<form action="/task/update"  method="post">
+				<input type="button"  value="更新" onclick="f();" class="btn2">
+			</form>
 
 		</div>
 
@@ -140,7 +140,7 @@
 <!-- ダイアログ作成、コード取得 -->
 		<td th:class="'{sortValue: '+${list.code}+'}'">
 					<input class="dialog-link" type="submit" th:value="${list.code}">
-					<div th:id="'dialog' + ${list.code}" style="display:none;">
+					<div th:id="'dialog' + ${list.code}" style="display:none;" class="nameAll">
  <!-- ダイアログに表示させる内容記述 -->
  					<span>タスク名:</span><span th:text="${list.name}"></span>
  					<br>

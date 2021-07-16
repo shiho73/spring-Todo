@@ -106,10 +106,13 @@
 		  background: linear-gradient(135deg, #00008b 0%, #708090 70%) no-repeat;/*グラデーション①*/
 		  overflow: hidden;/*はみ出た部分を隠す*/
 		  text-decoration:none;/*下線は消す*/
-
+		  margin-left: auto;
 		}
 		.btn:hover {
 		  background-image: linear-gradient(135deg, #006400 0%, #6a5acd 70%);
 		}
 
-
+/* ダイアログ文字そろえ */
+		.nameAll{
+		text-align: left;
+		}
