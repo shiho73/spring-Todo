@@ -1,11 +1,19 @@
 @charset "UTF-8";
 
-/* body{ */
-/* background: url(/trash.png) no-repeat center; */
-/* background-size: cover; */
+
+/* body { */
+/* 	background-image: url("/list.svg"); */
 /* } */
 
+.ALL{
+	position: absolute;
+	top: 20px;
 
+  width: 99%;
+
+
+
+}
 #home {
   clip-path: url(#cache);
 }
