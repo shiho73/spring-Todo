@@ -66,7 +66,7 @@
 				<td><select name="groupId">
 				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
 					</select>
-					<a th:href="'/editTask'+${task.code}+'/group/new'">新規グループ登録</a>
+					<a th:href="'/group/new/'+${task.code}">新規グループ登録</a>
 				</td>
 			</tr>
 
@@ -99,7 +99,7 @@
 			</form>
 
 <!-- グループ編集ボタン -->
-			<form action="/editTask/group/edit" method="POST">
+			<form action="/group/edit" method="POST">
 			<input type="hidden" th:value="${task.code}" name="tcode">
 			<select name="gid">
 				<option th:each="g:${glist}" th:if="${g.id!=100 && g.id!=0}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">

@@ -69,19 +69,11 @@
 				<input type="hidden" name="gid" th:value="${group.id}">
 				<input type="submit" value="はい">
 			</form>
-			<span th:if="${tcode==0}">
-				<form action="/addTask/group/edit" method="post">
-					<input type="hidden" name="gid" th:value="${group.id}">
-					<input type="submit" value="いいえ">
-				</form>
-			</span>
-			<span th:if="${tcode!=0}">
-				<form action="/editTask/group/edit" method="post">
-					<input type="hidden" th:value="${tcode}" name="tcode">
-					<input type="hidden" name="gid" th:value="${group.id}">
-					<input type="submit" value="いいえ">
-				</form>
-			</span>
+			<form action="/group/edit" method="post">
+				<input type="hidden" th:value="${tcode}" name="tcode">
+				<input type="hidden" name="gid" th:value="${group.id}">
+				<input type="submit" value="いいえ">
+			</form>
 			</div>
 			<br>
 			<span th:text="${check2}"></span>

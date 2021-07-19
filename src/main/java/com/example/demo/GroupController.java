@@ -46,18 +46,9 @@ public class GroupController extends SuperController {
 	@Autowired
 	GroupMRepository groupMRepository;
 
-	//タスク登録から新規グループ作成
-	@RequestMapping("/addTask/group/new")
-	public ModelAndView newGroup01(ModelAndView mv) {
-		mv.addObject("tcode", 0);
-		mv = listAndTrash(false, mv);
-		mv.setViewName("addGroup");
-		return sessiontest(mv);
-	}
-
-	//タスク編集から新規グループ作成
-	@RequestMapping("/editTask{tcode}/group/new")
-	public ModelAndView newGroup02(
+	//新規グループ作成画面へ
+	@RequestMapping("/group/new/{tcode}")
+	public ModelAndView newGroup(
 			@PathVariable(name = "tcode") int tcode,
 			ModelAndView mv) {
 		mv.addObject("tcode", tcode);
@@ -68,7 +59,7 @@ public class GroupController extends SuperController {
 
 	//新規グループ作成アクション
 	@PostMapping("/group/add")
-	public ModelAndView addGroup01(
+	public ModelAndView addGroup(
 			@RequestParam("tcode") int tcode,
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "id", defaultValue = "-1") Integer id,
@@ -78,31 +69,19 @@ public class GroupController extends SuperController {
 		//未入力チェック(グループ名、グループ番号)
 		if ((name == null || name == "") && id == -1) {
 			mv.addObject("message", "グループ名とグループ番号を入力してください");
-			if (tcode == 0) {
-				return newGroup01(mv);
-			} else {
-				return newGroup02(tcode, mv);
-			}
+			return newGroup(tcode, mv);
 		}
 
 		//未入力チェック(グループ名のみ)
 		if (name == null || name == "") {
 			mv.addObject("message", "グループ名を入力してください");
-			if (tcode == 0) {
-				return newGroup01(mv);
-			} else {
-				return newGroup02(tcode, mv);
-			}
+			return newGroup(tcode, mv);
 		}
 
 		//未入力チェック(グループ番号のみ)
 		if (id == -1) {
 			mv.addObject("message", "グループ番号を入力してください");
-			if (tcode == 0) {
-				return newGroup01(mv);
-			} else {
-				return newGroup02(tcode, mv);
-			}
+			return newGroup(tcode, mv);
 		}
 
 		//グループ名、グループ番号の重複チェック
@@ -116,11 +95,7 @@ public class GroupController extends SuperController {
 			if (!list2.isEmpty()) {
 				mv.addObject("message2", "使用済みのグループ名です");
 			}
-			if (tcode == 0) {
-				return newGroup01(mv);
-			} else {
-				return newGroup02(tcode, mv);
-			}
+			return newGroup(tcode, mv);
 		}
 
 		//上記をクリアしていれば、グループを作成しテーブルに登録
@@ -137,54 +112,15 @@ public class GroupController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
 	}
 
-	//タスク登録からグループ編集へ遷移
-	@PostMapping("/addTask/group/edit")
-	public ModelAndView editGroup01(
-			@RequestParam(name = "gid") int gid,
-			ModelAndView mv) {
-		mv = listAndTrash(false, mv);//グループ編集ページの表示準備
-
-		//編集するグループの取得
-		Group group = null;
-		Optional<Group> recode = groupRepository.findById(gid);
-		if (recode.isEmpty() == false) {
-			group = recode.get();
-		}
-
-		//編集するグループのメンバーを取得
-		GroupM groupM = null;
-		Optional<GroupM> recode2 = groupMRepository.findById(group.getId());
-		if (recode2.isEmpty() == false) {
-			groupM = recode2.get();
-		}
-
-		//表示準備
-		mv.addObject("group", group);
-		mv.addObject("groupM", groupM);
-		mv.addObject("tcode", 0);
-
-		mv.setViewName("editGroup");//グループ編集ページへ遷移
-		return sessiontest(mv);
-	}
-
-	//タスク編集からグループ編集へ遷移
-	@PostMapping("/editTask/group/edit")
-	public ModelAndView editGroup02(
-			@RequestParam(name = "tcode") int tcode,
+	//グループ編集画面へ
+	@PostMapping("/group/edit")
+	public ModelAndView editGroup(
+			@RequestParam(name = "tcode", defaultValue="0") int tcode,
 			@RequestParam(name = "gid") int gid,
 			ModelAndView mv) {
 		mv = listAndTrash(false, mv);
@@ -226,31 +162,19 @@ public class GroupController extends SuperController {
 		//未入力チェック(グループ名、グループ番号)
 		if (name == null || name == "" && id == -1) {
 			mv.addObject("message", "グループ名とグループ番号を入力してください");
-			if (tcode == 0) {
-				return editGroup01(gid, mv);
-			} else {
-				return editGroup02(tcode, gid, mv);
-			}
+			return editGroup(tcode, gid, mv);
 		}
 
 		//未入力チェック(グループ名のみ)
 		if (name == null || name == "") {
 			mv.addObject("message", "グループ名を入力してください");
-			if (tcode == 0) {
-				return editGroup01(gid, mv);
-			} else {
-				return editGroup02(tcode, gid, mv);
-			}
+			return editGroup(tcode, gid, mv);
 		}
 
 		//未入力チェック(グループ番号のみ)
 		if (id == -1) {
 			mv.addObject("message", "グループ番号を入力してください");
-			if (tcode == 0) {
-				return editGroup01(gid, mv);
-			} else {
-				return editGroup02(tcode, gid, mv);
-			}
+			return editGroup(tcode, gid, mv);
 		}
 
 		//グループの重複チェック
@@ -260,21 +184,13 @@ public class GroupController extends SuperController {
 		if (!list.isEmpty()) {
 			if (id != gid) {
 				mv.addObject("message", "使用済みのグループ番号です");
-				if (tcode == 0) {
-					return editGroup01(gid, mv);
-				} else {
-					return editGroup02(tcode, gid, mv);
-				}
+				return editGroup(tcode, gid, mv);
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(gname)) {
 			mv.addObject("message", "使用済みのグループ名です");
-			if (tcode == 0) {
-				return editGroup01(gid, mv);
-			} else {
-				return editGroup02(tcode, gid, mv);
-			}
+			return editGroup(tcode, gid, mv);
 		}
 
 		//外部キー参照制約解消 グループ100に一時退避
@@ -310,16 +226,7 @@ public class GroupController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
 	}
@@ -334,11 +241,7 @@ public class GroupController extends SuperController {
 		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
 		mv.addObject("flag", true);
 
-		if (tcode == 0) {
-			return editGroup01(gid, mv);
-		} else {
-			return editGroup02(tcode, gid, mv);
-		}
+		return editGroup(tcode, gid, mv);
 	}
 
 	//グループ削除アクション
@@ -365,20 +268,9 @@ public class GroupController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
 	}
 
-
-	//
 }

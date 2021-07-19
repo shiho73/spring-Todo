@@ -39,7 +39,7 @@ public class CategoryController extends SuperController {
 	@Autowired
 	PriorityRepository priorityRepository;
 
-	//タスク編集から新規カテゴリー作成画面へ
+	//新規カテゴリー作成画面へ
 	@RequestMapping("/category/new/{tcode}")
 	public ModelAndView newCategory(
 			@PathVariable(name = "tcode") int tcode,
@@ -257,20 +257,5 @@ public class CategoryController extends SuperController {
 			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
-	}
-
-	//タスク編集ページの表示準備
-	private ModelAndView returnTaskEdit(int tcode, ModelAndView mv) {
-		//タスクのレコードを取得
-		Optional<Task> recode = taskRepository.findById(tcode);
-		//変数taskの初期化
-		Task task = null;
-		//レコードが存在すれば、レコードからタスクを取得
-		if (recode.isEmpty() == false) {
-			task = recode.get();
-		}
-		mv.addObject("task", task);//表示の準備
-		mv.setViewName("editTask");//遷移先(編集ページ)を指定
-		return mv;
 	}
 }

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -175,4 +176,19 @@ public class SuperController {
 		return mv;
 	}
 
+
+	//タスク編集ページの表示準備
+	public ModelAndView returnTaskEdit(int tcode, ModelAndView mv) {
+		//タスクのレコードを取得
+		Optional<Task> recode = taskRepository.findById(tcode);
+		//変数taskの初期化
+		Task task = null;
+		//レコードが存在すれば、レコードからタスクを取得
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+		mv.addObject("task", task);//表示の準備
+		mv.setViewName("editTask");//遷移先(編集ページ)を指定
+		return mv;
+	}
 }

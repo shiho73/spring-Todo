@@ -60,7 +60,7 @@
 			<select name="cgCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}" th:selected="${cgCode==c.code}">
 			</select>
-		<a href="/category/new/0" onclick="openPopup();">新規カテゴリ登録</a>
+		<a href="/category/new/0">新規カテゴリ登録</a>
 	</td>
 	</tr>
 
@@ -70,7 +70,7 @@
 			<select name="groupId">
 				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${groupId==g.id}">
 			</select>
-			<a href="/addTask/group/new" onclick="openPopup();">新規グループ登録</a>
+			<a href="/group/new/0">新規グループ登録</a>
 		</td>
 	</tr>
 
@@ -97,7 +97,7 @@
 			</form>
 
 <!-- グループ編集ボタン -->
-			<form action="/addTask/group/edit" method="post">
+			<form action="/group/edit" method="post">
 			<select name="gid">
 				<option th:each="g:${glist}" th:if="${g.id!=100 && g.id!=0}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
 			</select>
