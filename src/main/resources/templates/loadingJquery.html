@@ -2,12 +2,12 @@
 <!-- ローディングjQuery ＆ CSS -->
 
 <!-- jQuery使用のための記述 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 <!-- ロード時間についてjQuery -->
-	<link rel="stylesheet" href="/Loading.css" id="css">
+		<link rel="stylesheet" href="/Loading.css" id="css">
 
 		<script type="text/javascript">
 			$(function() {
@@ -16,30 +16,21 @@
 			  $('#wrap').css('display','none');
 			  $('#try ,#triangles').height(h).css('display','block');
 
-			  // bodyのスクロールバーを非表示
+			  //スクロールバーを非表示
 			  $('body').css('overflow', 'hidden');
 			});
 
-			$(window).load(function () { //全ての読み込みが完了したら実行
+			//全ての読み込みが完了したら実行
+			$(window).load(function () {
 			  $('#try').delay(900).fadeOut(800);
 			  $('#triangles').delay(600).fadeOut(300);
 			  $('#wrap').css('display', 'block');
 
-/*  			  setTimeout(function chengeCss(){
-   				 document.getElementById("css").href = "";
-   	 			  }, 1700);
-
- */ 			  setTimeout(function(){
+			//17秒経過後CSS変更＆スクロールバー表示
+			  setTimeout(function(){
 					 var e = document.getElementById("css");
 					 e.href = "/line.css";
  				  	$('body').css('overflow', 'visible');
  	 			  }, 1700);
-
-/*  			  setTimeout(function(){
- 				  	$('body').css('background','#fffff9');
- 	 			  }, 1700);
- */ 			});
-
-
+			});
 		</script>
-

@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="/logo.css">
 <!-- ノートロゴ -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+<!-- リスト表示並び替えjQuery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/extras/jquery.metadata.min.js"></script>
 		<script>
@@ -37,7 +37,6 @@
 
 </head>
 <body>
-
 
 <!-- ローディング画面表示 -->
 		  <div id="try">
@@ -58,7 +57,6 @@
 		</div>
 		</div>
 
-
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
 <span th:replace="line"></span>
@@ -66,7 +64,9 @@
 <!-- ロゴ -->
 	    <img src="/logo.png" class="img">
 
-<div class="ALL">
+<!-- リストをくくる -->
+		<div class="ALL">
+
 		<h1><i class="fa fa-file-text-o" id="i"></i><span>タスク一覧</span><i class="fa fa-file-text-o" id="i"></i></h1>
 
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
@@ -80,7 +80,8 @@
 			<div id="datepicker"/>
 			<br/>
 		</header>
-<br>
+		<br>
+
 <!-- 検索ボタン -->
 		<div style="display:inline-flex" class="allbutton">
 
@@ -102,12 +103,10 @@
 				</select>
 				<input type="submit" value="優先度検索" class="btn-gradient-radius">
 			</form>
-
 		</div>
 		<hr>
 
 <!-- 操作ボタン -->
-
 		<div style="display:inline-flex">
 
 			<form action="/list/new"  method="post">
@@ -117,33 +116,32 @@
 			<form action="/task/update"  method="post">
 				<input type="button"  value="更新" onclick="f();" class="btn2">
 			</form>
-
 		</div>
 
 <!-- 並べ方変更 -->
-	<table class="tablesorter" id="taskTable">
+			<table class="tablesorter" id="taskTable">
 
 <!-- 表示バー -->
-	<thead>
-	<tr>
-		<th class="{sorter: 'metadata'}">タスク番号</th>
-		<th>タスク名</th>
-		<th>作成者</th>
-		<th>期限</th>
-		<th>優先順位</th>
-		<th>カテゴリ番号</th>
-		<th class="{sorter: 'metadata'}">進捗度</th>
-		<th>削除</th>
-		<th>編集</th>
-	</tr>
-	</thead>
+			<thead>
+			<tr>
+				<th class="{sorter: 'metadata'}">タスク番号</th>
+				<th>タスク名</th>
+				<th>作成者</th>
+				<th>期限</th>
+				<th>優先順位</th>
+				<th>カテゴリ番号</th>
+				<th class="{sorter: 'metadata'}">進捗度</th>
+				<th>削除</th>
+				<th>編集</th>
+			</tr>
+			</thead>
 
 <!-- タスク一覧表示 -->
-	<tbody>
-	<tr th:each="list:${list}">
+			<tbody>
+			<tr th:each="list:${list}">
 
 <!-- ダイアログ作成、コード取得 -->
-		<td th:class="'{sortValue: '+${list.code}+'}'">
+			<td th:class="'{sortValue: '+${list.code}+'}'">
 					<input class="dialog-link" type="submit" th:value="${list.code}">
 					<div th:id="'dialog' + ${list.code}" style="display:none;" class="nameAll">
  <!-- ダイアログに表示させる内容記述 -->
@@ -156,47 +154,49 @@
  					<span>メンバー:</span><span th:each="gm:${gmlist}" th:if="${list.groupId==gm.groupId}" th:text="${gm.member}"></span>
  					<br>
  					<span>メモ:</span><span th:text="${list.memo}"></span>
-				</div>
-		</td>
-		<td th:text="${list.name}"></td>
-		<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
-		<td name="dline">
-			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==false}" style="color:red" th:text="${list.dline}"></span>
-			<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==true}" th:text="${list.dline}"></span>
-		</td>
-		<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
-		<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
-		<td th:class="'{sortValue: '+${list.progress}+'}'"><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
+					</div>
+					</td>
+					<td th:text="${list.name}"></td>
+					<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
+					<td name="dline">
+						<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==false}" style="color:red" th:text="${list.dline}"></span>
+						<span th:each="a:${almost}" th:if="${list.code==a.code && a.almost==true}" th:text="${list.dline}"></span>
+					</td>
+					<td><span th:each="p:${plist}" th:if="${list.prtNum==p.num}" th:text="${p.name}"></span></td>
+					<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
+					<td th:class="'{sortValue: '+${list.progress}+'}'"><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 
 <!-- 消去ボタン -->
-		<td><form action="/list/trash" method="post">
-				<input type="hidden" th:value="${list.code}" name="code">
-				<input type="submit" value="削除">
-			</form>
-		</td>
+			<td><form action="/list/trash" method="post">
+					<input type="hidden" th:value="${list.code}" name="code">
+					<input type="submit" value="削除">
+				</form>
+			</td>
 
 <!-- 編集ボタン -->
-		<td><form action="/list/edit" method="post">
-				<input type="hidden" th:value="${list.code}" name="code">
-				<input type="submit" value="編集">
+			<td><form action="/list/edit" method="post">
+					<input type="hidden" th:value="${list.code}" name="code">
+					<input type="submit" value="編集">
+				</form>
+			</td>
+			</tr>
+			</tbody>
+			</table>
+
+			<form action="/look/trash"  method="post">
+				<input type="submit"  value="ゴミ箱を見る"  class="btn">
 			</form>
-		</td>
-	</tr>
-</tbody>
-</table>
+			</div>
 
-		<form action="/look/trash"  method="post">
-			<input type="submit"  value="ゴミ箱を見る"  class="btn">
-		</form>
-</div>
+<!-- 管理者画面へ -->
+			<div th:if="${flag==true}">
+				<form action="/users/list">
+					ユーザ管理画面：パスワードを入力
+				<input type="password" name="pw">
+				<input type="submit" value="送信">
+				</form>
+			</div>
 
-<div th:if="${flag==true}">
-	<form action="/users/list">
-		ユーザ管理画面：パスワードを入力
-	<input type="password" name="pw">
-	<input type="submit" value="送信">
-	</form>
-</div>
-</div>
+		</div>
 </body>
 </html>
