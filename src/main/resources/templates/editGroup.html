@@ -27,7 +27,8 @@
 <!-- 入力アラート -->
 	<p th:text="${message}" style="color:red"></p>
 
-		<form action="/addTask/group/update"  method="post">
+		<form action="/group/update"  method="post">
+		<input type="hidden" th:value="${tcode}" name="tcode">
 		<input type="hidden" name="gid" th:value="${group.id}">
 		<input type="hidden" name="gname" th:value="${group.name}">
 
@@ -51,7 +52,8 @@
 			<button class="btnSubmit" value="更新">更新</button>
 		</form>
 
-		<form action="/addTask/group/delete/check" method="post">
+		<form action="/group/delete/check" method="post">
+			<input type="hidden" th:value="${tcode}" name="tcode">
 			<input type="hidden" name="gid" th:value="${group.id}">
 			<button class="btnSubmit" value="削除">削除</button>
 		</form>
@@ -63,13 +65,23 @@
 			<span th:text="${check}" style="color:red"></span>
 			<div style="display:inline-flex">
 			<form action="/group/delete" method="post">
-			<input type="hidden" name="gid" th:value="${group.id}">
-			<input type="submit" value="はい">
+				<input type="hidden" th:value="${tcode}" name="tcode">
+				<input type="hidden" name="gid" th:value="${group.id}">
+				<input type="submit" value="はい">
 			</form>
-			<form action="/group/edit" method="post">
-			<input type="hidden" name="gid" th:value="${group.id}">
-			<input type="submit" value="いいえ">
-			</form>
+			<span th:if="${tcode==0}">
+				<form action="/addTask/group/edit" method="post">
+					<input type="hidden" name="gid" th:value="${group.id}">
+					<input type="submit" value="いいえ">
+				</form>
+			</span>
+			<span th:if="${tcode!=0}">
+				<form action="/editTask/group/edit" method="post">
+					<input type="hidden" th:value="${tcode}" name="tcode">
+					<input type="hidden" name="gid" th:value="${group.id}">
+					<input type="submit" value="いいえ">
+				</form>
+			</span>
 			</div>
 			<br>
 			<span th:text="${check2}"></span>

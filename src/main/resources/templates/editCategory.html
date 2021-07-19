@@ -64,10 +64,9 @@
 		<input type="submit" value="はい">
 	</form>
 	<span th:if="${tcode==0}">
-		<form action="/category/edit" method="post">
-		<input type="hidden" th:value="${tcode}" name="tcode">
-		<input type="hidden" name="cCode" th:value="${category.code}">
-		<input type="submit" value="いいえ">
+		<form action="/addTask/category/edit" method="post">
+			<input type="hidden" name="cCode" th:value="${category.code}">
+			<input type="submit" value="いいえ">
 		</form>
 	</span>
 	<span th:if="${tcode!=0}">

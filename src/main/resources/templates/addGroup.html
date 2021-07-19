@@ -22,7 +22,8 @@
 <!-- 入力アラート -->
 		<p th:text="${message}" style="color:red"></p>
 
-	<form action="/addTask/group/add" method="post">
+	<form action="/group/add" method="post">
+	<input type="hidden" th:value="${tcode}" name="tcode">
 
 		※のついた項目は必須です<br>
 

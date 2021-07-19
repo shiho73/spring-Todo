@@ -40,7 +40,7 @@ public class CategoryController extends SuperController {
 	PriorityRepository priorityRepository;
 
 	//タスク登録から新規カテゴリー作成
-	@RequestMapping("/category/new")
+	@RequestMapping("/addTask/category/new")
 	public ModelAndView newCategory(ModelAndView mv) {
 		mv.addObject("tcode", 0);
 		mv = listAndTrash(false, mv);
@@ -67,7 +67,7 @@ public class CategoryController extends SuperController {
 			@RequestParam(name = "code", defaultValue = "-1") int code,
 			ModelAndView mv) {
 
-		// 空の場合にエラーとする(やばい)
+		//未入力チェック(カテゴリ番号、カテゴリ名)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
 			if (tcode == 0) {
@@ -77,6 +77,7 @@ public class CategoryController extends SuperController {
 			}
 		}
 
+		//未入力チェック(カテゴリ名)
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
 			if (tcode == 0) {
@@ -86,6 +87,7 @@ public class CategoryController extends SuperController {
 			}
 		}
 
+		//未入力チェック(カテゴリ番号)
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
 			if (tcode == 0) {
@@ -112,11 +114,13 @@ public class CategoryController extends SuperController {
 			}
 		}
 
+		//カテゴリ作成
 		Category category = new Category(code, name);
 		categoryRepository.saveAndFlush(category);
 
 		mv = listAndTrash(false, mv);//遷移先の表示準備
 
+		//カテゴリ作成に移る前の画面(タスク登録・編集)に戻る
 		if (tcode == 0) {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
@@ -133,11 +137,10 @@ public class CategoryController extends SuperController {
 			mv.setViewName("editTask");//遷移先(編集ページ)を指定
 			return sessiontest(mv);
 		}
-
 	}
 
-	//タスク登録からカテゴリ編集
-	@PostMapping("/category/edit")
+	//タスク登録からカテゴリ編集へ遷移
+	@PostMapping("/addTask/category/edit")
 	public ModelAndView editCategory(
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
@@ -157,7 +160,7 @@ public class CategoryController extends SuperController {
 		return sessiontest(mv);
 	}
 
-	//タスク編集からカテゴリ編集
+	//タスク編集からカテゴリ編集へ遷移
 	@PostMapping("/editTask/category/edit")
 	public ModelAndView editCategory02(
 			@RequestParam(name = "tcode") int tcode,
@@ -281,7 +284,7 @@ public class CategoryController extends SuperController {
 	//カテゴリ削除確認
 	@PostMapping("/category/delete/check")
 	public ModelAndView deleteCategoryCheck(
-			@RequestParam(name="tcode") int tcode,
+			@RequestParam(name = "tcode") int tcode,
 			@RequestParam(name = "cCode") int cCode,
 			ModelAndView mv) {
 		mv.addObject("check", "本当に削除しますか？");
@@ -298,7 +301,7 @@ public class CategoryController extends SuperController {
 	//カテゴリ削除アクション
 	@PostMapping("/category/delete")
 	public ModelAndView deleteGroup(
-			@RequestParam(name="tcode") int tcode,
+			@RequestParam(name = "tcode") int tcode,
 			@RequestParam(name = "cCode") int id,
 			ModelAndView mv) {
 
