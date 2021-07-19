@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -68,6 +70,28 @@ public class EditController extends SuperController {
 			} else if (dline == null || dline == "") {
 				mv.addObject("message", "期限を設定してください");
 			}
+
+			mv.addObject("name", name);
+			mv.addObject("dline", dline);
+			mv.addObject("prtNum", prtNum);
+			mv.addObject("cgCode", cgCode);
+			mv.addObject("groupId", groupId);
+			mv.addObject("memo", memo);
+			return listnew(mv);//編集ページに戻る
+		}
+
+		// 正規表現のパターンを作成
+		Pattern p = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
+		Matcher m = p.matcher(dline);
+
+		if (m.find() == false) {
+			mv.addObject("message", "日付の値が不正です");
+			mv.addObject("name", name);
+			mv.addObject("dline", dline);
+			mv.addObject("prtNum", prtNum);
+			mv.addObject("cgCode", cgCode);
+			mv.addObject("groupId", groupId);
+			mv.addObject("memo", memo);
 			return listnew(mv);//編集ページに戻る
 		}
 
@@ -120,6 +144,17 @@ public class EditController extends SuperController {
 		//未入力チェック
 		if (name == null || name == "") {
 			mv.addObject("message", "タスク名を入力してください");
+			edit(code, mv);//編集画面を再表示
+			return sessiontest(mv);
+		}
+
+		//日付の入力書式チェック
+		Pattern p = Pattern.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}");
+		Pattern p2 = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+		Matcher m = p.matcher(dline);
+		Matcher m2 = p2.matcher(dline);
+		if(m.find() == false && m2.find() == false) {
+			mv.addObject("message", "日付の値が不正です");
 			edit(code, mv);//編集画面を再表示
 			return sessiontest(mv);
 		}

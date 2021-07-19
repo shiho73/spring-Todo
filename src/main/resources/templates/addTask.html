@@ -35,7 +35,7 @@
 
 		<table border="1">
 	<tr>
-		<th>タスク名</th><td><input type="text" name="name" size="43"></td>
+		<th>タスク名</th><td><input type="text" name="name" size="43" th:value="${name}"></td>
 	</tr>
 
 	<tr>
@@ -43,13 +43,13 @@
  	</tr>
 
  	<tr>
-		<th>期限</th><td><input type="text" name="dline" id="datepicker" size="43"></td>
+		<th>期限</th><td><input type="text" name="dline" id="datepicker" size="43" th:value="${dline}"></td>
 	</tr>
 
 	<tr>
 		<th>優先順位</th>
 	<td><select name="prtNum">
-			<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
+			<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}" th:selected="${prtNum==p.num}">
 		</select>
 	</td>
 	</tr>
@@ -58,7 +58,7 @@
 		<th>カテゴリ番号</th>
 		<td>
 			<select name="cgCode">
-				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}" th:selected="${cgCode==c.code}">
 			</select>
 		<a href="/addTask/category/new" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>
@@ -68,14 +68,14 @@
 		<th>グループ番号</th>
 		<td>
 			<select name="groupId">
-				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}">
+				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${groupId==g.id}">
 			</select>
 			<a href="/addTask/group/new" onclick="openPopup();">新規グループ登録</a>
 		</td>
 	</tr>
 
 	<tr>
-		<th>備考</th><td><textarea name="memo" cols="40" rows="5"></textarea></td>
+		<th>備考</th><td><textarea name="memo" cols="40" rows="5" th:text="${memo}"></textarea></td>
 	</tr>
 
 </table>

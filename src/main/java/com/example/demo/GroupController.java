@@ -76,7 +76,7 @@ public class GroupController extends SuperController {
 			ModelAndView mv) {
 
 		//未入力チェック(グループ名、グループ番号)
-		if (name == null || name == "" && id == -1) {
+		if ((name == null || name == "") && id == -1) {
 			mv.addObject("message", "グループ名とグループ番号を入力してください");
 			if (tcode == 0) {
 				return newGroup01(mv);
@@ -105,7 +105,7 @@ public class GroupController extends SuperController {
 			}
 		}
 
-		//グループの重複チェック/
+		//グループ名、グループ番号の重複チェック
 		Optional<Group> list = groupRepository.findById(id);
 		List<Group> list2 = groupRepository.findByName(name);
 
@@ -114,7 +114,7 @@ public class GroupController extends SuperController {
 				mv.addObject("message", "使用済みのグループ番号です");
 			}
 			if (!list2.isEmpty()) {
-				mv.addObject("message", "使用済みのグループ名です");
+				mv.addObject("message2", "使用済みのグループ名です");
 			}
 			if (tcode == 0) {
 				return newGroup01(mv);
@@ -379,4 +379,6 @@ public class GroupController extends SuperController {
 		}
 	}
 
+
+	//
 }

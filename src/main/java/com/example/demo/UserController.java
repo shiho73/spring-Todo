@@ -287,7 +287,7 @@ public class UserController {
 	}
 
 
-	//諸々のデフォルト設定
+	//諸々のデフォルト設定・dbの初回起動時にのみ発生
 	//カテゴリコードのデフォルト設定
 	private void categoryZero() {
 		//カテゴリテーブルに0番・なしが存在しなければ、作成
