@@ -334,5 +334,4 @@ public class CategoryController extends SuperController {
 			return sessiontest(mv);
 		}
 	}
-
 }

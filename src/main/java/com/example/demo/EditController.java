@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,9 +63,9 @@ public class EditController extends SuperController {
 		if (name == null || name == "" || dline == null || dline == "") {
 			if ((name == null || name == "") && (dline == null || dline == "")) {
 				mv.addObject("message", "タスク名と期限を入力してください");
-			}else if (name == null || name == "") {
+			} else if (name == null || name == "") {
 				mv.addObject("message", "タスク名を設定してください");
-			}else if (dline == null || dline == "") {
+			} else if (dline == null || dline == "") {
 				mv.addObject("message", "期限を設定してください");
 			}
 			return listnew(mv);//編集ページに戻る
@@ -131,7 +132,24 @@ public class EditController extends SuperController {
 		return sessiontest(mv);
 	}
 
-
+	//カテゴリ作成・編集からタスク編集へ戻る
+	@RequestMapping("/list/edit{tcode}")
+	public ModelAndView returnEditTask(
+			@PathVariable(name = "tcode") int tcode,
+			ModelAndView mv) {
+		mv = listAndTrash(false, mv);//遷移先の表示準備
+		//タスクのレコードを取得
+		Optional<Task> recode = taskRepository.findById(tcode);
+		//変数taskの初期化
+		Task task = null;
+		//レコードが存在すれば、レコードからタスクを取得
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+		mv.addObject("task", task);//表示の準備
+		mv.setViewName("editTask");//遷移先(編集ページ)を指定
+		return sessiontest(mv);
+	}
 
 	//期限日型変換
 	private void dateExchange(int code, String name, int userId, String dline, int prtNum, int cgCode, int groupId,
