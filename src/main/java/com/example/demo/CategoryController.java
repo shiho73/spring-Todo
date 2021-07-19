@@ -39,7 +39,7 @@ public class CategoryController extends SuperController {
 	@Autowired
 	PriorityRepository priorityRepository;
 
-	//タスク登録から新規カテゴリー作成
+	//タスク登録から新規カテゴリー作成画面へ
 	@RequestMapping("/addTask/category/new")
 	public ModelAndView newCategory(ModelAndView mv) {
 		mv.addObject("tcode", 0);
@@ -48,7 +48,7 @@ public class CategoryController extends SuperController {
 		return sessiontest(mv);
 	}
 
-	//タスク編集から新規カテゴリー作成
+	//タスク編集から新規カテゴリー作成画面へ
 	@RequestMapping("/editTask{tcode}/category/new")
 	public ModelAndView newCategory02(
 			@PathVariable(name = "tcode") int tcode,
@@ -68,33 +68,21 @@ public class CategoryController extends SuperController {
 			ModelAndView mv) {
 
 		//未入力チェック(カテゴリ番号、カテゴリ名)
-		if (name == null || name.length() == 0 && code == -1) {
+		if ((name == null || name.length() == 0) && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			if (tcode == 0) {
-				return newCategory(mv);
-			} else {
-				return newCategory02(tcode, mv);
-			}
+			return returnNewCategory(tcode, mv);//カテゴリ作成ページに戻る
 		}
 
 		//未入力チェック(カテゴリ名)
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
-			if (tcode == 0) {
-				return newCategory(mv);
-			} else {
-				return newCategory02(tcode, mv);
-			}
+			return returnNewCategory(tcode, mv);//カテゴリ作成ページに戻る
 		}
 
 		//未入力チェック(カテゴリ番号)
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
-			if (tcode == 0) {
-				return newCategory(mv);
-			} else {
-				return newCategory02(tcode, mv);
-			}
+			return returnNewCategory(tcode, mv);//カテゴリ作成ページに戻る
 		}
 
 		//カテゴリの重複チェック
@@ -107,11 +95,7 @@ public class CategoryController extends SuperController {
 			if (!list2.isEmpty()) {
 				mv.addObject("message", "使用済みのカテゴリ名です");
 			}
-			if (tcode == 0) {
-				return newCategory(mv);
-			} else {
-				return newCategory02(tcode, mv);
-			}
+			return returnNewCategory(tcode, mv);//カテゴリ作成ページに戻る
 		}
 
 		//カテゴリ作成
@@ -125,16 +109,7 @@ public class CategoryController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
 	}
@@ -194,29 +169,17 @@ public class CategoryController extends SuperController {
 		//未入力チェック(番号と名前どちらも)
 		if (name == null || name.length() == 0 && code == -1) {
 			mv.addObject("message", "カテゴリー番号とカテゴリー名を入力してください");
-			if (tcode == 0) {
-				return editCategory(cCode, mv);
-			} else {
-				return editCategory02(tcode, cCode, mv);
-			}
+			return returnEditCategory(cCode, tcode, mv);
 		}
 
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "カテゴリー名を入力してください");
-			if (tcode == 0) {
-				return editCategory(cCode, mv);
-			} else {
-				return editCategory02(tcode, cCode, mv);
-			}
+			return returnEditCategory(cCode, tcode, mv);
 		}
 
 		if (code == -1) {
 			mv.addObject("message", "カテゴリー番号を入力してください");
-			if (tcode == 0) {
-				return editCategory(cCode, mv);
-			} else {
-				return editCategory02(tcode, cCode, mv);
-			}
+			return returnEditCategory(cCode, tcode, mv);
 		}
 
 		//カテゴリの重複チェック/
@@ -226,21 +189,13 @@ public class CategoryController extends SuperController {
 		if (!list.isEmpty()) {
 			if (code != cCode) {
 				mv.addObject("message", "使用済みのカテゴリ番号です");
-				if (tcode == 0) {
-					return editCategory(cCode, mv);
-				} else {
-					return editCategory02(tcode, cCode, mv);
-				}
+				return returnEditCategory(cCode, tcode, mv);
 			}
 		}
 
 		if (!list2.isEmpty() && !name.equals(cName)) {
 			mv.addObject("message", "使用済みのカテゴリ名です");
-			if (tcode == 0) {
-				return editCategory(cCode, mv);
-			} else {
-				return editCategory02(tcode, cCode, mv);
-			}
+			return returnEditCategory(cCode, tcode, mv);
 		}
 
 		//外部キー参照制約解消 グループ100に一時退避
@@ -267,16 +222,7 @@ public class CategoryController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
 	}
@@ -291,11 +237,7 @@ public class CategoryController extends SuperController {
 		mv.addObject("check2", "登録されたタスクの作業者グループは「なし」に分類されます");
 		mv.addObject("flag", true);
 
-		if (tcode == 0) {
-			return editCategory(cCode, mv);
-		} else {
-			return editCategory02(tcode, cCode, mv);
-		}
+		return returnEditCategory(cCode, tcode, mv);
 	}
 
 	//カテゴリ削除アクション
@@ -321,17 +263,41 @@ public class CategoryController extends SuperController {
 			mv.setViewName("addTask");
 			return sessiontest(mv);
 		} else {
-			//タスクのレコードを取得
-			Optional<Task> recode = taskRepository.findById(tcode);
-			//変数taskの初期化
-			Task task = null;
-			//レコードが存在すれば、レコードからタスクを取得
-			if (recode.isEmpty() == false) {
-				task = recode.get();
-			}
-			mv.addObject("task", task);//表示の準備
-			mv.setViewName("editTask");//遷移先(編集ページ)を指定
+			mv = returnTaskEdit(tcode, mv);//タスク編集ページの表示準備
 			return sessiontest(mv);
 		}
+	}
+
+
+	//エラー時のページ遷移
+	private ModelAndView returnNewCategory(int tcode, ModelAndView mv) {
+		if (tcode == 0) {
+			return newCategory(mv);
+		} else {
+			return newCategory02(tcode, mv);
+		}
+	}
+
+	private ModelAndView returnEditCategory(int cCode, int tcode, ModelAndView mv) {
+		if (tcode == 0) {
+			return editCategory(cCode, mv);
+		} else {
+			return editCategory02(tcode, cCode, mv);
+		}
+	}
+
+	//タスク編集ページの表示準備
+	private ModelAndView returnTaskEdit(int tcode, ModelAndView mv) {
+		//タスクのレコードを取得
+		Optional<Task> recode = taskRepository.findById(tcode);
+		//変数taskの初期化
+		Task task = null;
+		//レコードが存在すれば、レコードからタスクを取得
+		if (recode.isEmpty() == false) {
+			task = recode.get();
+		}
+		mv.addObject("task", task);//表示の準備
+		mv.setViewName("editTask");//遷移先(編集ページ)を指定
+		return mv;
 	}
 }
