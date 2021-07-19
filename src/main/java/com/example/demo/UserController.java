@@ -66,9 +66,23 @@ public class UserController {
 			@RequestParam("name") String name,
 			@RequestParam("pw") String pw) {
 
-		//未入力チェック
-		if (name == null || name.length() == 0 || pw == null || pw.length() == 0) {
+		//未入力チェック(名前とpw)
+		if ((name == null || name.length() == 0) && (pw == null || pw.length() == 0)) {
 			mv.addObject("message", "名前とパスワードを入力してください");
+			mv.setViewName("top");
+			return mv;
+		}
+
+		//未入力チェック(名前のみ)
+		if (name == null || name.length() == 0) {
+			mv.addObject("message", "名前を入力してください");
+			mv.setViewName("top");
+			return mv;
+		}
+
+		//未入力チェック(pwのみ)
+		if (pw == null || pw.length() == 0) {
+			mv.addObject("message", "パスワードを入力してください");
 			mv.setViewName("top");
 			return mv;
 		}
@@ -123,7 +137,7 @@ public class UserController {
 			@RequestParam("touroku") String touroku) {
 
 		//未入力チェック(名前、パスワード)
-		if (name == null || name.length() == 0 || pw == null || pw.length() == 0 || pw1 == null || pw1.length() == 0) {
+		if ((name == null || name.length() == 0) && (pw == null || pw.length() == 0) && (pw1 == null || pw1.length() == 0)) {
 			mv.addObject("message", "名前とパスワードを入力してください");
 			mv.setViewName("newUser");
 			return mv;
@@ -139,13 +153,14 @@ public class UserController {
 		//未入力チェック(登録用コード)
 		if (touroku == null || touroku.length() == 0) {
 			mv.addObject("message", "登録用コードを入力してください");
-			mv.setViewName("top");
+			mv.setViewName("newUser");
 			return mv;
 		}
 
 		//入力された登録用コードがtodoLetsと一致しなければ、エラー
 		if (!touroku.equals("todoLets")) {
-			mv.addObject("message", "登録用コードが違います。管理者に問い合わせてください");
+			mv.addObject("message", "登録用コードが違います");
+			mv.addObject("message2", "管理者に問い合わせてください");
 			mv.setViewName("newUser");
 			return mv;
 		}
@@ -177,12 +192,12 @@ public class UserController {
 	}
 
 	//パスワード忘れた人向けの画面へ遷移
-	@RequestMapping("/change")
-	public ModelAndView change(ModelAndView mv) {
+	@RequestMapping("/forget/password")
+	public ModelAndView forgetPw(ModelAndView mv) {
 		//名前入力ボタン表示用フラッグ
 		mv.addObject("flag", false);
 		//表示画面を設定
-		mv.setViewName("changePw");
+		mv.setViewName("forgetPw");
 		return mv;
 	}
 
@@ -194,7 +209,7 @@ public class UserController {
 		//未入力チェック
 		if (name == null || name.length() == 0) {
 			mv.addObject("message", "名前を入力してください");
-			return change(mv);
+			return forgetPw(mv);
 		}
 
 		//ユーザ名からユーザを検索
@@ -203,7 +218,7 @@ public class UserController {
 		//ユーザが見つからなかった場合、エラー
 		if (user.isEmpty()) {
 			mv.addObject("message", "入力された情報は登録されていません");
-			return change(mv);
+			return forgetPw(mv);
 		}
 
 		//ユーザが見つかっていれば、秘密の質問コードを取得
@@ -221,21 +236,21 @@ public class UserController {
 
 		mv.addObject("userName", user1.getName());
 		mv.addObject("flag", true);
-		mv.setViewName("changePw");
+		mv.setViewName("forgetPw");
 
 		return mv;
 	}
 
 	//パスワード忘れた人アクション
-	@PostMapping("/change/pw")
-	public ModelAndView changepw(
+	@PostMapping("/show/pw")
+	public ModelAndView showPw(
 			@RequestParam("userName") String name,
 			@RequestParam("himitu") String himitu,
 			ModelAndView mv) {
 		//未入力チェック
 		if (name == null || name.length() == 0 || himitu == null || himitu.length() == 0) {
 			mv.addObject("message", "名前と秘密の言葉を入力してください");
-			return change(mv);
+			return forgetPw(mv);
 		}
 
 		//ユーザ名からユーザを検索
@@ -244,7 +259,7 @@ public class UserController {
 		//ヒットしなかった場合、エラー
 		if (user.isEmpty()) {
 			mv.addObject("message", "入力された情報は登録されていません");
-			return change(mv);
+			return forgetPw(mv);
 		}
 
 		//ヒットした場合、ユーザ情報を取得
@@ -258,7 +273,7 @@ public class UserController {
 		} else if (himitu.equals(userInfo.getHimitu())) {
 			//一致すれば、パスワード表示画面へ遷移
 			mv.addObject("pw", userInfo.getPw());
-			mv.setViewName("change");
+			mv.setViewName("showPw");
 		}
 		return mv;
 	}

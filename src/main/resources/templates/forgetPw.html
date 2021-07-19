@@ -36,7 +36,7 @@
 		<span th:if="${flag==false}"class="container"><button value="送信" class="btn-gradient-flat">送信</button></span>
 	</form>
 
-	<form action="/change/pw" method="post">
+	<form action="/show/pw" method="post">
 		<span th:text="${quiz}"></span><br>
 		答え：<input type="text" name="himitu">
 		<input type="hidden" th:value="${userName}" name="userName">
