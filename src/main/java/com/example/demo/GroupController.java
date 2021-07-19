@@ -262,7 +262,7 @@ public class GroupController extends SuperController {
 		groupMRepository.deleteById(gid);
 		groupRepository.deleteById(gid);
 
-		mv = listAndTrash(false, mv);
+		mv = listAndTrash(false, mv);//遷移先の表示準備
 
 		if (tcode == 0) {
 			mv.setViewName("addTask");
