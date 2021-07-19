@@ -12,8 +12,10 @@
 		<script type="text/javascript">
 			$(function() {
 			  var h = $(window).height();
+			  var w = $(window).width();
 
 			  $('#wrap').css('display','none');
+			  $('#try').width(w);
 			  $('#try ,#triangles').height(h).css('display','block');
 
 			  //スクロールバーを非表示

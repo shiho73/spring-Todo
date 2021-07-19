@@ -186,17 +186,18 @@
 			<form action="/look/trash"  method="post">
 				<input type="submit"  value="ゴミ箱を見る"  class="btn">
 			</form>
-			</div>
+
 
 <!-- 管理者画面へ -->
 			<div th:if="${flag==true}">
+			<span th:text="${msg00}" style="color:red"></span>
 				<form action="/users/list">
 					ユーザ管理画面：パスワードを入力
 				<input type="password" name="pw">
 				<input type="submit" value="送信">
 				</form>
 			</div>
-
+</div>
 		</div>
 </body>
 </html>
