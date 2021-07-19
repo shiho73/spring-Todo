@@ -3,13 +3,13 @@
 
 		@charset "UTF-8";
 
+
+
 		a{color:#58bff6;text-decoration: none;}
 		a:hover{color:#aaa; }
 		.pull-right{float: right;}
 		.pull-left{float: left;}
 		.clear-fix{clear:both;}
-		div.logo{text-align: center; margin: 20px 20px 30px 20px; fill: #566375;}
-		.logo-active{fill: #44aacc !important;}
 		#formWrapper{
 		  background: rgba(0,0,0,.2);
 		  width:100%;
