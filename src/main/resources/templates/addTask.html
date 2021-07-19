@@ -60,7 +60,7 @@
 			<select name="cgCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}" th:selected="${cgCode==c.code}">
 			</select>
-		<a href="/addTask/category/new" onclick="openPopup();">新規カテゴリ登録</a>
+		<a href="/category/new/0" onclick="openPopup();">新規カテゴリ登録</a>
 	</td>
 	</tr>
 
@@ -89,7 +89,7 @@
 		<br>
 
 <!-- カテゴリ編集ボタン -->
-			<form action="/addTask/category/edit" method="post">
+			<form action="/category/edit" method="post">
 			<select name="cCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 			</select>

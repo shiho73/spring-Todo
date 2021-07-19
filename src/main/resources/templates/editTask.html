@@ -57,7 +57,7 @@
 			<td><select name="cgCode">
 						<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 					</select>
-				<a th:href="'/editTask'+${task.code}+'/category/new'" onclick="openPopup();">新規カテゴリ登録</a>
+				<a th:href="'/category/new/'+${task.code}">新規カテゴリ登録</a>
 			</td>
 		</tr>
 
@@ -66,7 +66,7 @@
 				<td><select name="groupId">
 				<option th:each="g:${glist}" th:if="${g.id!=100}" th:value="${g.id}" th:text="${g.id}+'：'+${g.name}" th:selected="${task.groupId==g.id}">
 					</select>
-					<a th:href="'/editTask'+${task.code}+'/group/new'" onclick="openPopup();">新規グループ登録</a>
+					<a th:href="'/editTask'+${task.code}+'/group/new'">新規グループ登録</a>
 				</td>
 			</tr>
 
@@ -90,7 +90,7 @@
 			<br>
 
 <!-- カテゴリ編集ボタン -->
-			<form action="/editTask/category/edit" method="POST">
+			<form action="/category/edit" method="POST">
 			<input type="hidden" th:value="${task.code}" name="tcode">
 			<select name="cCode">
 				<option th:each="c:${clist}" th:if="${c.code!=100 && c.code!=0}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
