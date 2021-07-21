@@ -3,11 +3,6 @@
 
 			@charset "UTF-8";
 
-/* SVGがうまくつながらない理由とは... */
-			/* body { */
-			/* 	background-image: url("/list.svg"); */
-			/* } */
-
 /* リスト一覧の位置設定 */
 			.ALL{
 				position: absolute;
@@ -17,8 +12,7 @@
 
 /* 背景の線	 */
 			#home {
-			  clip-path: url(#cache) ;
-			  background-repeat: repeat-y;
+			  clip-path: url(#cache);
 			}
 
 			#red {
