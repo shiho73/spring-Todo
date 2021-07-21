@@ -17,7 +17,8 @@
 
 /* 背景の線	 */
 			#home {
-			  clip-path: url(#cache);
+			  clip-path: url(#cache) ;
+			  background-repeat: repeat-y;
 			}
 
 			#red {

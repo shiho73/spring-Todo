@@ -63,12 +63,59 @@
 		<div id="wrap">
 <span th:replace="line"></span>
 
+
+
 <!-- ロゴ -->
 	    <img src="/logo.png" class="img">
 
 <!-- リストをくくる -->
 		<div class="ALL">
 
+<!-- miniバー -->
+<div class="nav">
+		<div style="display:inline-flex" class="color">
+
+			<form action="/task/search/name"  method="post">
+				<span>　　　</span>検索：<input type="search" name="keyword" th:value="${keyword}" >
+				<input type="submit"  value="検索" >｜
+			</form>
+
+			<form action="/task/search/category" method="post">
+				<select name="category">
+					<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+				</select>
+
+				<input type="submit" value="カテゴリ検索" >｜
+			</form>
+
+			<form action="/task/search/priority" method="post">
+				<select name="priority">
+					<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
+				</select>
+				<input type="submit" value="優先度検索" >
+			</form>
+
+				<form action="/list/new"  method="post">
+				<input type="submit"  value="タスク作成">
+			</form>
+
+			<form action="/task/update"  method="post">
+				<input type="button"  value="更新" onclick="f();">
+			</form>
+
+				<form action="/look/trash"  method="post">
+				<input type="submit"  value="ゴミ箱を見る" >
+			</form>
+
+			<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
+
+			<a href="/logout">ログアウト</a>
+
+		</div>
+
+<!-- /#nav --></div>
+
+<div class="topnav">
 		<h1><i class="fa fa-file-text-o" id="i"></i><span>タスク一覧</span><i class="fa fa-file-text-o" id="i"></i></h1>
 
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
@@ -118,7 +165,13 @@
 			<form action="/task/update"  method="post">
 				<input type="button"  value="更新" onclick="f();" class="btn2">
 			</form>
+
+			<form action="/look/trash"  method="post">
+				<input type="submit"  value="ゴミ箱を見る"  class="btn">
+			</form>
 		</div>
+
+</div>
 
 <!-- 並べ方変更 -->
 			<table class="tablesorter" id="taskTable">
@@ -185,10 +238,48 @@
 			</tbody>
 			</table>
 
-			<form action="/look/trash"  method="post">
-				<input type="submit"  value="ゴミ箱を見る"  class="btn">
-			</form>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <!-- 管理者画面へ -->
 			<div th:if="${flag==true}">
@@ -199,6 +290,9 @@
 				<input type="submit" value="送信">
 				</form>
 			</div>
+
+<!-- 			<p id="page-top"><a href="#wrap">PAGE TOP</a></p> -->
+
 </div>
 		</div>
 </body>

@@ -104,3 +104,20 @@ h1.gr_anime span{
 			width: 165px;
 			float:left;
 			}
+
+
+/* パスワード忘れたとこminiボタン */
+
+		.btn-gradient-flat {
+		  display: inline-block;
+		  padding: 0.5em 1em;
+		  text-decoration: none;
+		  color: #FFF;
+		  background-image: linear-gradient(#6795fd 0%, #67ceff 100%);
+		  transition: .4s;
+		}
+
+		.btn-gradient-flat:hover {
+		  background-image: linear-gradient(#6795fd 0%, #67ceff 70%);
+		}
+

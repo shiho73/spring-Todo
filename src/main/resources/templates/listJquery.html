@@ -61,3 +61,29 @@
 			}
 
 		</script>
+
+<!-- topページスクロール -->
+
+<script>
+$(function() {
+	  setTimeout(function(){
+		    var nav = $('.nav');
+		    var topnav = $('.topnav');
+
+			$(window).scroll(function () {
+			    var winTop = $(this).scrollTop();
+			    if (winTop > 480) {
+			        //スクロールしたとき
+				//ちびメニュー出す
+				topnav.addClass('mini1');
+				nav.addClass('mini');
+			    } else {
+			        //スクロールしてない時
+				//ちびメニュー消す
+					nav.removeClass('mini');
+					topnav.removeClass('mini1');
+			    }
+			});
+		  }, 1700);
+});
+</script>

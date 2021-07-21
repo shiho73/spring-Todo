@@ -10,12 +10,12 @@
 		  border-radius: 10px;/*角丸に*/
 		  position: relative;
 		  display: inline-block;
-		  height: 40px;/*高さ*/
+		  height: 30px;/*高さ*/
 		  width: 120px;/*幅*/
 		  text-align: center;/*中身を中央寄せ*/
 		  font-size: 15px;/*文字のサイズ*/
 		  font-weight: bold;
-		  line-height: 40px;/*高さと合わせる*/
+		  line-height: 30px;/*高さと合わせる*/
 		  background: linear-gradient(45deg, #FFC107 0%, #ff8b5f 70%);/*グラデーション①*/
 		  overflow: hidden;/*はみ出た部分を隠す*/
 		  text-decoration:none;/*下線は消す*/
@@ -53,7 +53,7 @@
 		  position: relative;
 		  display: inline-block;
 		  height: 40px;/*高さ*/
-		  width: 100px;/*幅*/
+		  width: 120px;/*幅*/
 		  text-align: center;/*中身を中央寄せ*/
 		  font-size: 15px;/*文字のサイズ*/
 		  font-weight: bold;
@@ -75,7 +75,7 @@
 		  position: relative;
 		  display: inline-block;
 		  height: 40px;/*高さ*/
-		  width: 100px;/*幅*/
+		  width: 120px;/*幅*/
 		  text-align: center;/*中身を中央寄せ*/
 		  font-size: 15px;/*文字のサイズ*/
 		  font-weight: bold;
@@ -106,7 +106,7 @@
 		  background: linear-gradient(135deg, #00008b 0%, #708090 70%) no-repeat;/*グラデーション①*/
 		  overflow: hidden;/*はみ出た部分を隠す*/
 		  text-decoration:none;/*下線は消す*/
-		  margin-left: auto;
+		  margin:10px;
 		}
 		.btn:hover {
 		  background-image: linear-gradient(135deg, #006400 0%, #6a5acd 70%);
