@@ -153,7 +153,7 @@ public class EditController extends SuperController {
 		Pattern p2 = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
 		Matcher m = p.matcher(dline);
 		Matcher m2 = p2.matcher(dline);
-		if(m.find() == false && m2.find() == false) {
+		if (m.find() == false && m2.find() == false) {
 			mv.addObject("message", "日付の値が不正です");
 			edit(code, mv);//編集画面を再表示
 			return sessiontest(mv);
@@ -186,7 +186,9 @@ public class EditController extends SuperController {
 		return sessiontest(mv);
 	}
 
-	//期限日型変換
+
+
+	//期限日型変換しタスク更新
 	private void dateExchange(int code, String name, int userId, String dline, int prtNum, int cgCode, int groupId,
 			int progress, String memo) {
 

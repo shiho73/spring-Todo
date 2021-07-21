@@ -52,7 +52,6 @@
 		<br>
 
 <div>ユーザ登録用コード<h4 style="color:red">todoLets</h4></div>
-
 <span th:text="${finish}" style="color:red"></span>
 
 <br>
@@ -61,26 +60,26 @@
 	<thead>
 	<tr>
 		<th>ユーザ名</th>
-		<th>秘密の質問</th>
-		<th>秘密の言葉</th>
 		<th>削除</th>
+		<th>編集</th>
 	</tr>
 	</thead>
 
 	<tbody>
 	<tr th:each="list:${ulist}">
 		<td th:text="${list.name}"></td>
-		<td>
-			<span th:if="${list.himituCode==1}" th:text="${h1}"></span>
-			<span th:if="${list.himituCode==2}" th:text="${h2}"></span>
-			<span th:if="${list.himituCode==3}" th:text="${h3}"></span>
-		</td>
-		<td th:text="${list.himitu}"></td>
 
 <!-- 消去ボタン -->
 		<td><form action="/user/delete/check" method="post">
 				<input type="hidden" th:value="${list.id}" name="id">
 				<input type="submit" value="削除">
+			</form>
+		</td>
+
+<!-- 編集ボタン -->
+		<td><form th:action="'/userInfo'+${list.id}" method="post">
+				<input type="hidden" th:value="${list.id}" name="id">
+				<input type="submit" value="編集">
 			</form>
 		</td>
 	</tr>

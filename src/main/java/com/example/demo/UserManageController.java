@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -194,6 +195,83 @@ public class UserManageController extends SuperController {
 		String pw = "himituToDo";
 		mv = usersList(mv, pw);
 
+		return sessiontest(mv);
+	}
+
+	//ユーザ情報更新ページへ
+	@PostMapping("/userInfo{id}")
+	public ModelAndView userInfo(
+			@PathVariable("id") int id,
+			ModelAndView mv) {
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			mv.addObject("name", user.getName());
+			mv.addObject("himituCode", user.getHimituCode());
+			mv.addObject("himitu", user.getHimitu());
+			mv.addObject("user", user);
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//ユーザネーム更新
+	@PostMapping("/userInfo/change/name")
+	public ModelAndView changeUserName(
+			@RequestParam("id") Integer id,
+			@RequestParam("name") String name,
+			ModelAndView mv) {
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setName(name);
+			userRepository.saveAndFlush(user);
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//ユーザpw更新
+	@PostMapping("/userInfo/change/pw")
+	public ModelAndView changeUserPw(
+			@RequestParam("id") Integer id,
+			@RequestParam("pw") String pw,
+			@RequestParam("pw2") String pw2,
+			ModelAndView mv) {
+		//パスワードと確認用が一致していなければ、エラー
+		if (!pw.equals(pw2)) {
+			mv.addObject("message", "パスワードが一致していません");
+			return mv;
+		}
+
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setPw(pw);
+			userRepository.saveAndFlush(user);
+			mv.addObject("message", "パスワードが変更されました");
+		} else {
+			mv.addObject("message", "エラーが発生しました。もう一度操作を行ってください");
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//秘密の質問更新
+	@PostMapping("/userInfo/change/himitu")
+	public ModelAndView changeUserHimitu(
+			@RequestParam("id") Integer id,
+			@RequestParam("himitu") String himitu,
+			@RequestParam("himituCode") Integer himituCode,
+			ModelAndView mv) {
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setHimitu(himitu);
+			user.setHimituCode(himituCode);
+			userRepository.saveAndFlush(user);
+		}
+		mv.setViewName("changeUserInfo");
 		return sessiontest(mv);
 	}
 

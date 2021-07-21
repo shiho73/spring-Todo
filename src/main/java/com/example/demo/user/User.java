@@ -54,6 +54,15 @@ public class User {
 		this.himituCode = himituCode;
 	}
 
+	public User(Integer id, String name, String pw, String himitu, Integer himituCode) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.pw = pw;
+		this.himitu = himitu;
+		this.himituCode = himituCode;
+	}
+
 	public Integer getHimituCode() {
 		return himituCode;
 	}

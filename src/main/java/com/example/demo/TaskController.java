@@ -1,9 +1,6 @@
 package com.example.demo;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -154,32 +151,12 @@ public class TaskController extends SuperController {
 		mv = listAndTrash(false, mv);//リスト一覧を準備
 		mv = almostDeadline(mv);//期限の文字色を変更
 
-		//期限日の型変換
-		//String型の期限日(dline)をjavaのDate型(yyyy/MM/dd)に変換
-		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
-		java.util.Date date = null;
-		try {
-			date = sdFormat.parse(dateText);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		//書式を(yyyy/MM/dd)から(yyyy-MM-dd)に変換
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		//String型に戻す
-		String date2 = sdf.format(date);
-
-		//String型をData型(SQL)dateText2に変換
-		Date dateText2 = Date.valueOf(date2);
+		Date date = Date.valueOf(dateText);
 
 		//指定された日付で検索
-		ArrayList<Task> list = new ArrayList<Task>();
-		List<Task> taskList = taskRepository.findAll();
-		for (Task t : taskList) {
-			if (t.getDline().equals(dateText2)) {
-				list.add(t);
-			}
-		}
-		mv.addObject("list", list);
+		List<Task> taskList = taskRepository.findByDline(date);
+
+		mv.addObject("list", taskList);
 
 		mv.setViewName("list");//タスク一覧画面に遷移
 		return sessiontest(mv);

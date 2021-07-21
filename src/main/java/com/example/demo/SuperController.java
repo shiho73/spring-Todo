@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -136,31 +135,25 @@ public class SuperController {
 
 		//全てのタスクに対して処理を実行
 		for (Task d : taskList) {
+
 			//sqlDate型のdlineを取得
 			Date dline = d.getDline();
-			//dlineをsqlDate型の書式のままString型のdline2に変換
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String dline2 = sdf.format(dline);
-			//dline2をjava.utilのDate型dline3に変換
-			java.util.Date dline3 = Date.valueOf(dline2);
 
-			//現在の日付dateをjava.utilのDate型で取得
-			java.util.Date date = new java.util.Date();
-			//dateをCalendar型に変換
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			//現在日時から2日後の日付を計算
-			calendar.add(Calendar.DATE, 2);
-			//dateをDate型date2に変換
-			java.util.Date date2 = calendar.getTime();
+			//現在日時を取得
+			Calendar cl = Calendar.getInstance();
+			//日を2加算する
+	        cl.add(Calendar.DATE, 2);
+			//clをsqlのDate型dateに変換
+	        java.util.Date dt = cl.getTime();
+	        Date date = new Date(dt.getTime());
 
-			//dline3とdate2と比較
 			boolean flag = false;
-			if (date2.after(dline3)) {
+			if(date.after(dline)) {
 				flag = false;//期限が3日以内なら、flagをfalseに
 			} else {
 				flag = true;//期限がまだであれば、flagをtrueに
 			}
+
 			AlmostD a = new AlmostD(d.getCode(), dline, flag);
 			almost.add(a);
 		}
