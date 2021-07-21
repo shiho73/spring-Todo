@@ -32,14 +32,14 @@
 	<br>
 
 	<form action="/himitu/get" method="POST">
-		NAME:<input type="text" name="name" th:value="${userName}">
+		NAME:<input type="text" name="name" th:value="${name}">
 		<span th:if="${flag==false}"class="container"><button value="送信" class="btn-gradient-flat">送信</button></span>
 	</form>
 
-	<form action="/show/pw" method="post">
+	<form action="/change/pw" method="post">
 		<span th:text="${quiz}"></span><br>
 		答え：<input type="text" name="himitu">
-		<input type="hidden" th:value="${userName}" name="userName">
+		<input type="hidden" th:value="${name}" name="name">
 		<span th:if="${flag==true}" class="container"><button value="送信" class="btn-gradient-flat">送信</button></span>
 	</form>
 	<br>

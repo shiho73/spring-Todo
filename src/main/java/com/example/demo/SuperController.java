@@ -68,18 +68,12 @@ public class SuperController {
 		List<GroupM> gmList = groupMRepository.findByOrderByGroupIdAsc();
 
 		//退避用のグループ100(id順で最後尾)を非表示に
-		int x = -1;
-		for (Group y : groupList) {
-			x++;
-		}
+		int x = groupList.size() - 1;
 		groupList.remove(x);
 
 		//退避用のカテゴリ100(コード順で最後尾)を非表示に
-		int a = -1;
-		for (Category b : categoryList) {
-			a++;
-		}
-		categoryList.remove(a);
+		int y = categoryList.size() -1;
+		categoryList.remove(y);
 
 		//空のタスク表示用リストを生成
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -91,7 +85,7 @@ public class SuperController {
 		if (tflag == true) {
 			//ゴミ箱に入れていれば、表示用リストに追加
 			for (Task task : taskList) {
-				if (task.isTrash() == false) {
+				if (!task.isTrash()) {
 					list.add(task);
 				}
 			}
@@ -102,7 +96,7 @@ public class SuperController {
 		} else if (tflag == false) {
 			//ゴミ箱に入れていなければ、表示用リストに追加
 			for (Task task1 : taskList) {
-				if (task1.isTrash() == true) {
+				if (task1.isTrash()) {
 					list.add(task1);
 				}
 			}

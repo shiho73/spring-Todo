@@ -61,7 +61,6 @@
 	<thead>
 	<tr>
 		<th>ユーザ名</th>
-		<th>パスワード</th>
 		<th>秘密の質問</th>
 		<th>秘密の言葉</th>
 		<th>削除</th>
@@ -71,7 +70,6 @@
 	<tbody>
 	<tr th:each="list:${ulist}">
 		<td th:text="${list.name}"></td>
-		<td th:text="${list.pw}"></td>
 		<td>
 			<span th:if="${list.himituCode==1}" th:text="${h1}"></span>
 			<span th:if="${list.himituCode==2}" th:text="${h2}"></span>

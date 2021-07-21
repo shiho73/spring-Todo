@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +47,7 @@ public class UserManageController extends SuperController {
 	CategoryRepository categoryRepository;
 
 	//ユーザ管理画面へ遷移
-	@RequestMapping("/users/list")
+	@PostMapping("/users/list")
 	public ModelAndView usersList(
 			ModelAndView mv,
 			@RequestParam("pw") String pw) {

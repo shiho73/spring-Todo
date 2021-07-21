@@ -28,6 +28,8 @@
 			$(document).ready(function(){
 				$("#taskTable").tablesorter({
 					headers: {
+						1: { sorter: false },
+						2: { sorter: false },
 						7: { sorter: false },
 						8: { sorter: false }
 					}
@@ -129,7 +131,7 @@
 				<th>作成者</th>
 				<th>期限</th>
 				<th>優先順位</th>
-				<th>カテゴリ番号</th>
+				<th>カテゴリ</th>
 				<th class="{sorter: 'metadata'}">進捗度</th>
 				<th>削除</th>
 				<th>編集</th>
@@ -149,9 +151,9 @@
  					<br>
  					<span>カテゴリ:</span><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span>
 					<br>
-					<span>グループ:</span><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span>
+					<span>担当グループ:</span><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span>
  					<br>
- 					<span>メンバー:</span><span th:each="gm:${gmlist}" th:if="${list.groupId==gm.groupId}" th:text="${gm.member}"></span>
+ 					<span>担当メンバー:</span><span th:each="gm:${gmlist}" th:if="${list.groupId==gm.groupId}" th:text="${gm.member}"></span>
  					<br>
  					<span>メモ:</span><span th:text="${list.memo}"></span>
 					</div>
@@ -191,7 +193,7 @@
 <!-- 管理者画面へ -->
 			<div th:if="${flag==true}">
 			<span th:text="${msg00}" style="color:red"></span>
-				<form action="/users/list">
+				<form action="/users/list", method="post">
 					ユーザ管理画面：パスワードを入力
 				<input type="password" name="pw">
 				<input type="submit" value="送信">

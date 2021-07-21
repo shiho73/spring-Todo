@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>ユーザー情報</title>
+<title>ToDo List|パスワード変更</title>
 
 <!-- 入力フォームjQuery & CSS -->
 		<span th:replace="topJquery"></span>
@@ -20,11 +20,15 @@
 	<div id="formWrapper">
 	<div id="form">
 
-	<h1>登録情報</h1>
+	<h1>新しいパスワード</h1>
 
-	あなたのpassは・・・
-	<h2 th:text="${pw}"></h2>
-	です
+	<form action="/change/pw/action" method="POST">
+	<input type="hidden" name="userId" th:value="${user.id}">
+	PASS:<input type="password" name="pw"><br>
+	PASS再確認:<input type="password" name="pw2">
+	<input type="submit" value="変更">
+	</form>
+
 	<br>
 	<a href="/">ログイン画面へ</a>
 

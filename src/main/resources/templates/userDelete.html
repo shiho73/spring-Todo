@@ -54,8 +54,6 @@
 <div th:if="${flag0==true}">
 <span>本当に削除しますか？</span>
 <br>
-<br>
-
 	<div style="display:inline-flex">
 		<form action="/user/delete/check02" method="post">
 			<input type="hidden" name="id" th:value="${user.id}">
