@@ -59,10 +59,9 @@
 			<th>作成者</th>
 			<th>期限</th>
 			<th>優先順位</th>
-			<th>カテゴリ番号</th>
-			<th>グループ番号</th>
+			<th>カテゴリ名</th>
+			<th>グループ名</th>
 			<th>進歩度</th>
-			<th>備考</th>
 			<th>復元</th>
 			<th>完全削除</th>
 		</tr>
@@ -77,7 +76,6 @@
 			<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
 			<td><span th:each="g:${glist}" th:if="${list.groupId==g.id}" th:text="${g.name}"></span></td>
 			<td th:text="${list.progress}"></td>
-			<td th:text="${list.memo}"></td>
 			<td><form action="/trash/recovery" method="post">
 					<input type="hidden" th:value="${list.code}" name="code">
 					<input type="submit" value="復元">
