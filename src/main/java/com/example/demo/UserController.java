@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 
 @Controller
-public class UserController {
+public class UserController extends SuperController {
 
 	//セッションのレポジトリをセット
 	@Autowired
@@ -68,7 +69,6 @@ public class UserController {
 		return "top1";
 	}
 
-
 	//ログイン処理
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
@@ -97,22 +97,27 @@ public class UserController {
 		}
 
 		//ユーザ名からユーザを検索
-		List<User> user = userRepository.findByNameAndPw(name, pw);
+		List<User> record = userRepository.findByName(name);
 
 		//ヒットしなかったら、エラー
-		if (user.isEmpty()) {
+		if(record.isEmpty()) {
 			mv.addObject("message", "名前とパスワードが違います");
 			mv.setViewName("top");
 			return mv;
 		}
 
-		//ユーザ情報を取得
-		User userInfo = user.get(0);
+		User user = record.get(0);
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		if(!bcrypt.matches(pw, user.getPw())) {
+			mv.addObject("message", "名前とパスワードが違います");
+			mv.setViewName("top");
+			return mv;
+		}
 
 		//上記全てをクリアしたら、ログインを実行
 		// セッションスコープにユーザ情報を格納する
 		session.setAttribute("name", name);
-		session.setAttribute("userInfo", userInfo);
+		session.setAttribute("userInfo", user);
 
 		//タスク一覧へ遷移
 		mv.setViewName("redirect:/list");
@@ -186,8 +191,12 @@ public class UserController {
 			return mv;
 		}
 
+		//PWをハッシュ化して保存
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String hash = bcrypt.encode(pw);
+
 		//上記全てをクリアしていれば、登録処理を実行
-		User user1 = new User(name, pw, himitu, himituCode);
+		User user1 = new User(name, hash, himitu, himituCode);
 		userRepository.saveAndFlush(user1);
 
 		//登録完了画を表示
@@ -222,7 +231,7 @@ public class UserController {
 		Integer code;
 
 		//ユーザが見つからなかった場合、ランダムで質問を出力
-		if(user.isEmpty()) {
+		if (user.isEmpty()) {
 			Random r = new Random();
 			code = r.nextInt(3) + 1;
 		} else {
@@ -286,7 +295,7 @@ public class UserController {
 			ModelAndView mv) {
 		Optional<User> record = userRepository.findById(userId);
 
-		if(record.isEmpty()) {
+		if (record.isEmpty()) {
 			mv.addObject("message", "エラーが発生しました");
 			mv.setViewName("/top");
 			return task(mv);
@@ -307,6 +316,81 @@ public class UserController {
 
 		mv.addObject("message", "パスワードが変更されました");
 		return task(mv);
+	}
+
+	//ユーザ情報更新ページへ
+	@PostMapping("/userInfo")
+	public ModelAndView userInfo(ModelAndView mv) {
+		User user = (User) session.getAttribute("userInfo");
+		if (user == null) {
+			session.invalidate();
+			mv.addObject("message", "セッションがタイムアウトしました");
+			mv.setViewName("top");
+			return mv;
+		}
+		mv.addObject("user", user);
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//ユーザネーム更新
+	@PostMapping("/userInfo/change/name")
+	public ModelAndView changeUserName(
+			@RequestParam("id") Integer id,
+			@RequestParam("name") String name,
+			ModelAndView mv) {
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setName(name);
+			userRepository.saveAndFlush(user);
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//ユーザpw更新
+	@PostMapping("/userInfo/change/pw")
+	public ModelAndView changeUserPw(
+			@RequestParam("id") Integer id,
+			@RequestParam("pw") String pw,
+			@RequestParam("pw2") String pw2,
+			ModelAndView mv) {
+		//パスワードと確認用が一致していなければ、エラー
+		if (!pw.equals(pw2)) {
+			mv.addObject("message", "パスワードが一致していません");
+			return mv;
+		}
+
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setPw(pw);
+			userRepository.saveAndFlush(user);
+			mv.addObject("message", "パスワードが変更されました");
+		} else {
+			mv.addObject("message", "エラーが発生しました。もう一度操作を行ってください");
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
+	}
+
+	//秘密の質問更新
+	@PostMapping("/userInfo/change/himitu")
+	public ModelAndView changeUserHimitu(
+			@RequestParam("id") Integer id,
+			@RequestParam("himitu") String himitu,
+			@RequestParam("himituCode") Integer himituCode,
+			ModelAndView mv) {
+		Optional<User> record = userRepository.findById(id);
+		User user = new User();
+		if (!record.isEmpty()) {
+			user.setHimitu(himitu);
+			user.setHimituCode(himituCode);
+			userRepository.saveAndFlush(user);
+		}
+		mv.setViewName("changeUserInfo");
+		return sessiontest(mv);
 	}
 
 	//ログアウト
@@ -384,7 +468,4 @@ public class UserController {
 		}
 	}
 
-
 }
-
-

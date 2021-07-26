@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>カテゴリ登録</title>
+<title>ユーザ情報更新</title>
 
 <!-- ボタンjQuery & CSS -->
 		<span th:replace="buttonJquery"></span>
@@ -24,16 +24,17 @@
 
 		<table border="1">
 
-			<form action="/userInfo/change/name">
+			<form action="/userInfo/change/name" method="post">
 			<input type="hidden" name="id" th:value="${user.id}">
 			<tr>
-				<th>NAME:</th>
+				<th>NAME：</th>
 				<td><input type="text" name="name" th:value="${user.name}"></td>
 				<td><input type="submit" value="更新"></td>
 			</tr>
 			</form>
 
-			<form action="/userInfo/change/pw">
+			<form action="/userInfo/change/pw" method="post">
+			<input type="hidden" name="id" th:value="${user.id}">
 			<tr>
 				<th>PW：</th>
 				<td><input type="password" name="pw1"></td>
@@ -41,8 +42,28 @@
 			</tr>
 
 			<tr>
-				<th>PW(確認用)：</th>
+				<th>PW再確認：</th>
 				<td><input type="password" name="pw2"></td>
+				<td><input type="submit" value="更新"></td>
+			</tr>
+			</form>
+
+			<form action="/userInfo/himitu" method="post">
+			<input type="hidden" name="id" th:value="${user.id}">
+			<tr>
+				<th>秘密の質問：</th>
+				<td><select name="himituCode">
+						<option value="1" th:text="出身地は？" th:selected="${user.himituCode==1}">
+						<option value="2" th:text="ペットの名前は？" th:selected="${user.himituCode==2}">
+						<option value="3" th:text="親の旧姓は？" th:selected="${user.himituCode==3}">
+					</select>
+				</td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>秘密の言葉：</th>
+				<td><input type="text" name="himitu"></td>
 				<td><input type="submit" value="更新"></td>
 			</tr>
 			</form>
@@ -50,8 +71,6 @@
 		</table>
 
 		<br>
-
-		<a th:href="'/userInfo'+${id}">タスク編集へ戻る</a>
 
 </body>
 </html>

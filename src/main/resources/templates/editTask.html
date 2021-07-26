@@ -55,7 +55,7 @@
 		<tr>
 		<th>カテゴリ番号</th>
 			<td><select name="cgCode">
-						<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
+						<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}" th:selected="${task.cgCode==c.code}">
 					</select>
 				<a th:href="'/category/new/'+${task.code}">新規カテゴリ登録</a>
 			</td>
