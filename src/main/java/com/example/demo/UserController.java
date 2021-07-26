@@ -376,14 +376,13 @@ public class UserController extends SuperController {
 		//未入力チェック(名前、パスワード)
 		if ((pw1 == null || pw1.length() == 0) && (pw2 == null || pw2.length() == 0)) {
 			mv.addObject("message", "パスワードが空欄です");
-			mv.setViewName("newUser");
-			return mv;
+			return userInfo(mv);
 		}
 
 		//パスワードと確認用が一致していなければ、エラー
 		if (!pw1.equals(pw2)) {
 			mv.addObject("message", "パスワードが一致していません");
-			return mv;
+			return userInfo(mv);
 		}
 
 		Optional<User> record = userRepository.findById(id);
@@ -413,8 +412,7 @@ public class UserController extends SuperController {
 		//未入力チェック(秘密の質問の答え)
 		if (himitu == null || himitu.length() == 0) {
 			mv.addObject("message", "秘密の言葉を入力してください");
-			mv.setViewName("newUser");
-			return mv;
+			return userInfo(mv);
 		}
 
 		Optional<User> record = userRepository.findById(id);
