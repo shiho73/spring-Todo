@@ -61,6 +61,14 @@ public class UserController {
 		return mv;
 	}
 
+	//ログイン画面2
+	@PostMapping("/top")
+	public String top() {
+		session.invalidate();//セッションを消去
+		return "top1";
+	}
+
+
 	//ログイン処理
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
@@ -375,4 +383,8 @@ public class UserController {
 			priorityRepository.saveAndFlush(low);
 		}
 	}
+
+
 }
+
+

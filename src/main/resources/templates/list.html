@@ -61,8 +61,8 @@
 
 <!-- ローディング後に表示させるもの -->
 		<div id="wrap">
-<span th:replace="line"></span>
-
+<!-- <span th:replace="line"></span>
+ -->
 
 
 <!-- ロゴ -->
@@ -92,19 +92,19 @@
 				<select name="priority">
 					<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
 				</select>
-				<input type="submit" value="優先度検索" >
+				<input type="submit" value="優先度検索" > |
 			</form>
 
 				<form action="/list/new"  method="post">
-				<input type="submit"  value="タスク作成">
+				<input type="submit"  value="タスク作成" > |
 			</form>
 
 			<form action="/task/update"  method="post">
-				<input type="button"  value="更新" onclick="f();">
+				<input type="button"  value="更新" onclick="f();" > |
 			</form>
 
 				<form action="/look/trash"  method="post">
-				<input type="submit"  value="ゴミ箱を見る" >
+				<input type="submit"  value="ゴミ箱を見る"  > |
 			</form>
 
 			<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
