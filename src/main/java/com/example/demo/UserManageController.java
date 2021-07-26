@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -199,18 +198,8 @@ public class UserManageController extends SuperController {
 	}
 
 	//ユーザ情報更新ページへ
-	@PostMapping("/userInfo{id}")
-	public ModelAndView userInfo(
-			@PathVariable("id") int id,
-			ModelAndView mv) {
-		Optional<User> record = userRepository.findById(id);
-		User user = new User();
-		if (!record.isEmpty()) {
-			mv.addObject("name", user.getName());
-			mv.addObject("himituCode", user.getHimituCode());
-			mv.addObject("himitu", user.getHimitu());
-			mv.addObject("user", user);
-		}
+	@PostMapping("/userInfo")
+	public ModelAndView userInfo(ModelAndView mv) {
 		mv.setViewName("changeUserInfo");
 		return sessiontest(mv);
 	}

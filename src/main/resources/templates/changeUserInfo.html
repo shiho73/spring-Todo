@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>カテゴリ登録</title>
+
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
+
+</head>
+<body>
+
+<!-- ロゴ -->
+    <img src="/logo.png" class="img">
+
+<h1>ユーザ情報更新</h1>
+
+<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'"></span>
+
+<!-- 入力アラート -->
+		<p th:text="${message}" style="color:red"></p>
+
+		<table border="1">
+
+			<form action="/userInfo/change/name">
+			<input type="hidden" name="id" th:value="${user.id}">
+			<tr>
+				<th>NAME:</th>
+				<td><input type="text" name="name" th:value="${user.name}"></td>
+				<td><input type="submit" value="更新"></td>
+			</tr>
+			</form>
+
+			<form action="/userInfo/change/pw">
+			<tr>
+				<th>PW：</th>
+				<td><input type="password" name="pw1"></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>PW(確認用)：</th>
+				<td><input type="password" name="pw2"></td>
+				<td><input type="submit" value="更新"></td>
+			</tr>
+			</form>
+
+		</table>
+
+		<br>
+
+		<a th:href="'/userInfo'+${id}">タスク編集へ戻る</a>
+
+</body>
+</html>
