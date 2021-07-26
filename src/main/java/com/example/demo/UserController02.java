@@ -44,7 +44,7 @@ public class UserController02 extends SuperController {
 	PriorityRepository priorityRepository;
 
 	//ログイン画面2
-	@PostMapping("/top")
+	@RequestMapping("/top")
 	public String top1() {
 		session.invalidate();//セッションを消去
 		return "top1";

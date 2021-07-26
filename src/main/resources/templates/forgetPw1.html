@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー情報</title>
+
+<!-- 入力フォームjQuery & CSS -->
+		<span th:replace="topJquery"></span>
+<!-- 方眼背景CSS -->
+		<link rel="stylesheet" href="/background1.css">
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
+<!-- ファビコン -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+
+</head>
+<body>
+
+<!-- ロゴ -->
+    <img src="/logo.png" class="img">
+
+<div id="formWrapper">
+<div id="form">
+
+	<h1>登録情報確認</h1>
+
+	<p th:text="${message}" style="color:red"></p>
+
+	登録情報の確認を行います
+	<br>
+	名前を入力すると秘密の質問が表示されます
+	<br>
+
+	<form action="/himitu/get1" method="POST">
+		NAME:<input type="text" name="name" th:value="${name}">
+		<span th:if="${flag==false}"class="container"><button value="送信" class="btn-gradient-flat">送信</button></span>
+	</form>
+
+	<form action="/change/pw1" method="post">
+		<span th:text="${quiz}"></span><br>
+		答え：<input type="text" name="himitu">
+		<input type="hidden" th:value="${name}" name="name">
+		<span th:if="${flag==true}" class="container"><button value="送信" class="btn-gradient-flat">送信</button></span>
+	</form>
+	<br>
+	<a href="/top">ログイン画面へ</a>
+
+</div>
+</div>
+
+</body>
+</html>

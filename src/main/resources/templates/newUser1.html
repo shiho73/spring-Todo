@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新規ユーザー登録</title>
+
+<!-- 入力フォームjQuery & CSS -->
+		<span th:replace="topJquery"></span>
+<!-- ボタンjQuery & CSS -->
+		<span th:replace="buttonJquery"></span>
+<!-- 方眼背景CSS -->
+		<link rel="stylesheet" href="/background1.css">
+<!-- ロゴCSS -->
+		<link rel="stylesheet" href="/logo.css">
+<!-- ファビコン -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+
+</head>
+<body>
+
+<!-- ロゴ -->
+    <img src="/logo.png" class="img">
+
+<div id="formWrapper">
+<div id="form">
+
+<h1>新規ユーザー登録</h1>
+
+	<form action="/user/new1" method="post">
+
+		<span th:text="${message}" style="color:red"></span>
+		<br>
+		<span th:text="${message2}" style="color:red"></span>
+		<br>
+
+		<label>NAME:</label><input type="text" name="name">
+		<br>
+		<label>PASS:</label><input type="password" name="pw">
+		<br>
+		<label>PASS再確認:</label><input type="password" name="pw1">
+		<br>
+		<label>秘密の質問:</label><select name="himituCode">
+				<option value="1" th:text="出身地は？">
+				<option value="2" th:text="ペットの名前は？">
+				<option value="3" th:text="両親の旧姓は？">
+			</select>
+		<br>
+		<label>答え:</label><input type="text" name="himitu">
+		<br>
+		<label>登録用コード:</label><input type="password" name="touroku"><br>
+		<br>
+
+		<br>
+
+			<button class="btnSubmit" value="登録">登録</button>
+			<button class="btnSubmit" type="reset" value="リセット">リセット</button>
+
+	</form>
+	<br>
+	<a href="/top">ログイン画面へ</a>
+	</div>
+	</div>
+
+
+</body>
+</html>
