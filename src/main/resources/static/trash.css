@@ -5,7 +5,6 @@
 		  color: #ffffff;/*文字・アイコン色*/
 		  border-radius: 10px;/*角丸に*/
 		  position: relative;
-		  display: block;
 		  height: 40px;/*高さ*/
 		  width: 120px;/*幅*/
 		  text-align: center;/*中身を中央寄せ*/
@@ -16,7 +15,6 @@
 		  overflow: hidden;/*はみ出た部分を隠す*/
 		  text-decoration:none;/*下線は消す*/
 		  margin:10px;
-		  position:center;
 		}
 		.btn3:hover {
 		  background-image: linear-gradient(135deg, #006400 0%, #6a5acd 70%);
