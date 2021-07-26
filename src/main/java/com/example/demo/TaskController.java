@@ -113,12 +113,15 @@ public class TaskController extends SuperController {
 	}
 
 	//タスク完全消去
-	@RequestMapping("/delete")
+	@GetMapping("/delete")
 	public ModelAndView delete(
-			@RequestParam(name = "code") int code,
+			@RequestParam(name = "code") int[] code,
 			ModelAndView mv) {
-		//コードで指定したタスクを消去
-		taskRepository.deleteById(code);
+
+		//コードの数だけチェックボックスを取得する
+		for (int i = 0; i < code.length; i++) {
+			taskRepository.deleteById(code[i]);
+		}
 
 		return lookTrash(mv);//ゴミ箱を再度表示
 	}

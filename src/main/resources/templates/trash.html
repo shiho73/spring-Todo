@@ -18,6 +18,23 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
 
+<!--  チェックボックスjQuery  -->
+	 <script type="text/javascript" src="jquery-2.0.3.js"></script>
+	    <script type="text/javascript">
+	     function d(){
+	    	 var code = $(".code").get();
+	   		 var dl = $(".delete").get();
+	    	 var ary = [];
+	    	 for (var i = 0; i < dl.length; i++) {
+				if(dl[i].checked){
+					ary.push(code[i].value);
+				}
+	    	 }
+
+	    	location.href = "/delete?code="+ ary;
+	     }
+    </script>
+
 </head>
 <body>
 
@@ -47,6 +64,9 @@
 
 		<a href="/list">タスク一覧へ戻る</a>
 		<br>
+		<form action="/delete"  method="post">
+				<input type="button"  value="削除" onclick="d();" class="btn3">
+			</form>
 		<br>
 
 		<span th:text="${message}"></span>
@@ -81,10 +101,8 @@
 					<input type="submit" value="復元">
 				</form>
 			</td>
-			<td><form action="/delete" method="post">
-					<input type="hidden" th:value="${list.code}" name="code">
-					<input type="submit" value="完全削除">
-				</form>
+			<td><input type="checkbox" name="delete" class="delete">
+				<input type="hidden" class="code" th:value="${list.code}">
 			</td>
 		</tr>
 
