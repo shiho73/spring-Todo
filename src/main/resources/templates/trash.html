@@ -35,6 +35,12 @@
 
 	    	location.href = "/delete?code="+ ary;
 	     }
+
+	     $(function() {
+	    	  $('#all').on("click",function(){
+	    	    $('.delete').prop("checked", $(this).prop("checked"));
+	    	  });
+	    	});
     </script>
 
 </head>
@@ -85,7 +91,7 @@
 			<th>グループ名</th>
 			<th>進歩度</th>
 			<th>復元</th>
-			<th>完全削除</th>
+			<th>完全削除<input type="checkbox" id="all"></th>
 		</tr>
 		</thead>
 
