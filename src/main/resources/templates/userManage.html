@@ -64,7 +64,6 @@
 	<tr>
 		<th>ユーザ名</th>
 		<th>削除</th>
-		<th>編集</th>
 	</tr>
 	</thead>
 
@@ -76,13 +75,6 @@
 		<td><form action="/user/delete/check" method="post">
 				<input type="hidden" th:value="${list.id}" name="id">
 				<input type="submit" value="削除">
-			</form>
-		</td>
-
-<!-- 編集ボタン -->
-		<td><form th:action="'/userInfo'+${list.id}" method="post">
-				<input type="hidden" th:value="${list.id}" name="id">
-				<input type="submit" value="編集">
 			</form>
 		</td>
 	</tr>
