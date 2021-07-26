@@ -377,27 +377,34 @@ public class UserController extends SuperController {
 	@PostMapping("/userInfo/change/pw")
 	public ModelAndView changeUserPw(
 			@RequestParam("id") Integer id,
-			@RequestParam("pw") String pw,
+			@RequestParam("pw1") String pw1,
 			@RequestParam("pw2") String pw2,
 			ModelAndView mv) {
+		//未入力チェック(名前、パスワード)
+		if ((pw1 == null || pw1.length() == 0) && (pw2 == null || pw2.length() == 0)) {
+			mv.addObject("message", "パスワードが空欄です");
+			mv.setViewName("newUser");
+			return mv;
+		}
+
 		//パスワードと確認用が一致していなければ、エラー
-		if (!pw.equals(pw2)) {
+		if (!pw1.equals(pw2)) {
 			mv.addObject("message", "パスワードが一致していません");
 			return mv;
 		}
 
 		Optional<User> record = userRepository.findById(id);
-		User user = new User();
+		User user = record.get();
 		if (!record.isEmpty()) {
 			//PWをハッシュ化して保存
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-			String hash = bcrypt.encode(pw);
+			String hash = bcrypt.encode(pw1);
 			user.setPw(hash);
 			userRepository.saveAndFlush(user);
-			mv.addObject("message", "パスワードが変更されました");
-		} else {
-			mv.addObject("message", "エラーが発生しました。もう一度操作を行ってください");
+			mv.addObject("user", user);
+			session.setAttribute("userInfo", user);
 		}
+		mv.addObject("message", "パスワードを更新しました");
 		mv.setViewName("changeUserInfo");
 		return sessiontest(mv);
 	}
@@ -409,13 +416,24 @@ public class UserController extends SuperController {
 			@RequestParam("himitu") String himitu,
 			@RequestParam("himituCode") Integer himituCode,
 			ModelAndView mv) {
+
+		//未入力チェック(秘密の質問の答え)
+		if (himitu == null || himitu.length() == 0) {
+			mv.addObject("message", "秘密の言葉を入力してください");
+			mv.setViewName("newUser");
+			return mv;
+		}
+
 		Optional<User> record = userRepository.findById(id);
-		User user = new User();
+		User user = record.get();
 		if (!record.isEmpty()) {
 			user.setHimitu(himitu);
 			user.setHimituCode(himituCode);
 			userRepository.saveAndFlush(user);
+			mv.addObject("user", user);
+			session.setAttribute("userInfo", user);
 		}
+		mv.addObject("message", "秘密の質問・言葉を更新しました");
 		mv.setViewName("changeUserInfo");
 		return sessiontest(mv);
 	}
@@ -462,13 +480,15 @@ public class UserController extends SuperController {
 		//ユーザテーブルに「1番・管理者」が存在しなければ、作成
 		Optional<User> kanri = userRepository.findById(1);
 		if (kanri.isEmpty()) {
-			User user = new User("管理者", "himitu", "sv7awe#78d$%dert6&%(&560", 1);
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			String hash = bcrypt.encode("himitu");
+			User user = new User("管理者", hash, hash, 1);
 			userRepository.saveAndFlush(user);
 		}
 		//ユーザテーブルに「2番・削除済のユーザ」が存在しなければ、作成
 		Optional<User> taihi = userRepository.findById(2);
 		if (taihi.isEmpty()) {
-			User user = new User("削除済のユーザ", "himitu", "yt75yt8yury6bfx#$%78&&", 1);
+			User user = new User("削除済のユーザ", "himitu", "yt75yt8yury6bfx#$%78&&", 0);
 			userRepository.saveAndFlush(user);
 		}
 	}

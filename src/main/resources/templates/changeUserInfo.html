@@ -33,7 +33,7 @@
 			<tr>
 				<th>NAME：</th>
 				<td><input type="text" name="name" th:value="${user.name}"></td>
-				<td><input type="submit" value="更新"></td>
+				<td><input type="submit" value="名前更新"></td>
 			</tr>
 			</form>
 
@@ -48,11 +48,11 @@
 			<tr>
 				<th>PW再確認：</th>
 				<td><input type="password" name="pw2"></td>
-				<td><input type="submit" value="更新"></td>
+				<td><input type="submit" value="PW更新"></td>
 			</tr>
 			</form>
 
-			<form action="/userInfo/himitu" method="post">
+			<form action="/userInfo/change/himitu" method="post">
 			<input type="hidden" name="id" th:value="${user.id}">
 			<tr>
 				<th>秘密の質問：</th>
@@ -68,13 +68,16 @@
 			<tr>
 				<th>秘密の言葉：</th>
 				<td><input type="text" name="himitu"></td>
-				<td><input type="submit" value="更新"></td>
+				<td><input type="submit" value="秘密の言葉更新"></td>
 			</tr>
 			</form>
 
 		</table>
 
 		<br>
+
+<a href="/list">タスク一覧へ</a>
+<br>
 
 </body>
 </html>
