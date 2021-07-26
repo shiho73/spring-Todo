@@ -36,7 +36,7 @@
 
 		<label>NAME:</label><input type="text" name="name">
 		<br>
-		<label>PASS:</label><input type="password" name="pw">
+		<label>PASS:</label><input type="password" name="pw" placeholder="8～15文字" pattern=^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9.?/-]{8,15}$ title="半角英数字1字以上を含めた8字以上15字以内で設定してください">
 		<br>
 		<label>PASS再確認:</label><input type="password" name="pw1">
 		<br>
