@@ -2,7 +2,64 @@
 /* リスト内ボタン */
 
 @charset "UTF-8";
-/* ミニボタン */
+
+/* タスクテーブル用CSS */
+		#taskTable .tablesorter-header {
+		cursor: pointer;
+		outline: none;
+		}
+
+		#taskTable .tablesorter-header-inner::after {
+			content: '▼';
+			font-size: 12px;
+			margin-left: 5px;
+		}
+
+/* カレンダー用CSS */
+		#datepicker {
+			display: flex;
+			justify-content: center;
+		}
+
+/* ダイアログ文字そろえ */
+		.nameAll{
+		text-align: left;
+		float:left;
+		}
+
+/* 上のminiバー */
+		.nav{
+			display:none;
+		    width: 100%;
+		    z-index: 100;
+		}
+
+		.nav.mini{
+			display:block;
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		}
+
+		.color{
+			background-color: #89d7f8;
+		    color: snow;
+		    height: 40px;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    line-height: 40px;/*高さと合わせる*/
+		    position:center;
+		    display: inline-block;
+
+		}
+
+		.btn10{
+			margin-left:5px;
+		}
+
+/* 検索ボタン */
 
 		.btn-gradient-radius {
 		  /*ボタンの下地*/
@@ -24,25 +81,6 @@
 		}
 		.btn-gradient-radius:hover {
 		  background-image: linear-gradient(45deg,#ffb894 0%, #ff8484 70%);
-		}
-
-
-/* タスクテーブル用CSS */
-		#taskTable .tablesorter-header {
-		cursor: pointer;
-		outline: none;
-		}
-
-		#taskTable .tablesorter-header-inner::after {
-			content: '▼';
-			font-size: 12px;
-			margin-left: 5px;
-		}
-
-/* カレンダー用CSS */
-		#datepicker {
-			display: flex;
-			justify-content: center;
 		}
 
 /*新規作成ボタン */
@@ -134,8 +172,3 @@
 		  background-image: linear-gradient(135deg, #006400 0%, #6a5acd 70%);
 		}
 
-/* ダイアログ文字そろえ */
-		.nameAll{
-		text-align: left;
-		float:left;
-		}

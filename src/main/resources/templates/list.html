@@ -17,9 +17,8 @@
 <!-- ロゴCSS -->
 		<link rel="stylesheet" href="/logo.css">
 <!-- ファビコン -->
-<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
-<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
-
+		<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+		<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
 <!-- ノートロゴ -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <!-- リスト表示並び替えjQuery -->
@@ -94,7 +93,7 @@
 
 <!-- miniバー -->
 
-<div class="nav">
+	<div class="nav">
 		<div style="display:inline-flex" class="color">
 
 			<form action="/task/search/name"  method="post">
@@ -139,9 +138,9 @@
 
 		</div>
 
-<!-- /#nav --></div>
+	</div>
 
-<div class="topnav">
+	<div class="topnav">
 		<h1><i class="fa fa-file-text-o" id="i"></i><span>タスク一覧</span><i class="fa fa-file-text-o" id="i"></i></h1>
 
 		<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
@@ -202,7 +201,7 @@
 			</form>
 		</div>
 
-</div>
+	</div>
 
 <!-- 並べ方変更 -->
 			<table class="tablesorter" id="taskTable">
@@ -266,49 +265,6 @@
 			</tbody>
 			</table>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 <!-- 管理者画面へ -->
 			<div th:if="${flag==true}">
 			<span th:text="${msg00}" style="color:red"></span>
@@ -318,8 +274,6 @@
 				<input type="submit" value="送信">
 				</form>
 			</div>
-
-<!-- 			<p id="page-top"><a href="#wrap">PAGE TOP</a></p> -->
 
 </div>
 		</div>
