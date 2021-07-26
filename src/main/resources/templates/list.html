@@ -240,6 +240,7 @@
  					<span>メモ:</span><span th:text="${list.memo}"></span>
 					</div>
 					</td>
+
 					<td th:text="${list.name}"></td>
 					<td><span th:each="u:${ulist}" th:if="${list.userId==u.id}" th:text="${u.name}"></span></td>
 					<td name="dline">
