@@ -70,7 +70,9 @@
 			    opacity: 0.15;
 			 }
 			    }
-			    
-			    body{
-			    background:;
+
+			    svg{
+			    position:fixed;
+			    left:0;
+			    top:0;
 			    }
