@@ -71,19 +71,23 @@ public class TaskController extends SuperController {
 	}
 
 	//ゴミ箱へ投げる
-	@RequestMapping("/list/trash")
+	@GetMapping("/list/trash")
 	public ModelAndView goTrash(
-			@RequestParam(name = "code") int code,
+			@RequestParam(name = "code") int[] code,
 			ModelAndView mv) {
-		//削除対象のタスクのレコードを取得
-		Optional<Task> record = taskRepository.findById(code);
 
-		//レコードが存在すれば、レコードからタスクを取得
-		if (record.isEmpty() == false) {
-			Task task = record.get();
-			//表示場所(一覧/ゴミ箱)の判定フラッグを更新
-			task.setTrash(false);
-			taskRepository.saveAndFlush(task);
+		//コードの数だけチェックボックスを取得する
+		for (int i = 0; i < code.length; i++) {
+			//タスクのレコードを取得
+			Optional<Task> record = taskRepository.findById(code[i]);
+
+			//レコードが存在すれば、レコードからタスクを取得
+			if (record.isEmpty() == false) {
+				Task task = record.get();
+				//タスクの進捗度を更新
+				task.setTrash(false);
+				taskRepository.saveAndFlush(task);
+			}
 		}
 
 		return lookList(mv);//リスト一覧を再度表示

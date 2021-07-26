@@ -36,6 +36,27 @@
 				});
 			});
 		</script>
+<!-- チェックボックスjQuery -->
+ <script type="text/javascript" src="jquery-2.0.3.js"></script>
+    <script type="text/javascript">
+     function t(){
+    	 var dialogLink = $(".dialog-link").get();
+    	 /* var ary3 = [];
+    		 for (var i = 0; i < dialogLink.length; i++) {
+					ary3[i] = dialogLink[i].value
+				} */
+
+   		 var trash = $(".trash").get();
+    	 var ary3 = [];
+    	 for (var i = 0; i < trash.length; i++) {
+			if(trash[i].checked){
+				ary3.push(dialogLink[i].value);
+			}
+    	 }
+
+    	location.href = "/list/trash?code="+ ary3;
+     }
+    </script>
 
 </head>
 <body>
@@ -103,6 +124,10 @@
 				<input type="button"  value="更新" onclick="f();" > |
 			</form>
 
+			<form action="/list/trash"  method="post">
+				<input type="button"  value="削除" onclick="t();">
+			</form>
+
 				<form action="/look/trash"  method="post">
 				<input type="submit"  value="ゴミ箱を見る"  > |
 			</form>
@@ -166,6 +191,10 @@
 				<input type="button"  value="更新" onclick="f();" class="btn2">
 			</form>
 
+			<form action="/list/trash"  method="post">
+				<input type="button"  value="削除" onclick="t();" class="btn3">
+			</form>
+
 			<form action="/look/trash"  method="post">
 				<input type="submit"  value="ゴミ箱を見る"  class="btn">
 			</form>
@@ -221,12 +250,8 @@
 					<td><span th:each="c:${clist}" th:if="${list.cgCode==c.code}" th:text="${c.name}"></span></td>
 					<td th:class="'{sortValue: '+${list.progress}+'}'"><input type="range" min="0" max="100" step="10" th:value="${list.progress}" name="progress" class="progress"></td>
 
-<!-- 消去ボタン -->
-			<td><form action="/list/trash" method="post">
-					<input type="hidden" th:value="${list.code}" name="code">
-					<input type="submit" value="削除">
-				</form>
-			</td>
+<!-- 消去チェックボックス -->
+			<td><input type="checkbox" name="trash" class="trash"></td>
 
 <!-- 編集ボタン -->
 			<td><form action="/list/edit" method="post">
