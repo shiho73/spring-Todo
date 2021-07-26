@@ -100,7 +100,7 @@ public class UserController extends SuperController {
 		List<User> record = userRepository.findByName(name);
 
 		//ヒットしなかったら、エラー
-		if(record.isEmpty()) {
+		if (record.isEmpty()) {
 			mv.addObject("message", "名前とパスワードが違います");
 			mv.setViewName("top");
 			return mv;
@@ -108,7 +108,7 @@ public class UserController extends SuperController {
 
 		User user = record.get(0);
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		if(!bcrypt.matches(pw, user.getPw())) {
+		if (!bcrypt.matches(pw, user.getPw())) {
 			mv.addObject("message", "名前とパスワードが違います");
 			mv.setViewName("top");
 			return mv;
@@ -311,7 +311,11 @@ public class UserController extends SuperController {
 		}
 
 		//パスワードと確認用が一致して入れば、パスワードを更新
-		user.setPw(pw);
+		//PWをハッシュ化して保存
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String hash = bcrypt.encode(pw);
+
+		user.setPw(hash);
 		userRepository.saveAndFlush(user);
 
 		mv.addObject("message", "パスワードが変更されました");
@@ -319,7 +323,7 @@ public class UserController extends SuperController {
 	}
 
 	//ユーザ情報更新ページへ
-	@PostMapping("/userInfo")
+	@RequestMapping("/userInfo")
 	public ModelAndView userInfo(ModelAndView mv) {
 		User user = (User) session.getAttribute("userInfo");
 		if (user == null) {
@@ -338,13 +342,33 @@ public class UserController extends SuperController {
 	public ModelAndView changeUserName(
 			@RequestParam("id") Integer id,
 			@RequestParam("name") String name,
+			@RequestParam("NAME") String name2,
 			ModelAndView mv) {
-		Optional<User> record = userRepository.findById(id);
-		User user = new User();
-		if (!record.isEmpty()) {
-			user.setName(name);
-			userRepository.saveAndFlush(user);
+
+		//未入力チェック(名前のみ)
+		if (name == null || name.length() == 0) {
+			mv.addObject("message", "名前を入力してください");
+			return userInfo(mv);
 		}
+
+		//ユーザ名からユーザを検索
+		List<User> user = userRepository.findByName(name);
+
+		//同じ名前がヒットしたら、エラー
+		if (!user.isEmpty() && !name.equals(name2)) {
+			mv.addObject("message", "その名前は既に使われています");
+			return userInfo(mv);
+		}
+
+		Optional<User> record = userRepository.findById(id);
+		if (!record.isEmpty()) {
+			User user2 = record.get();
+			user2.setName(name);
+			userRepository.saveAndFlush(user2);
+			mv.addObject("user", user2);
+			session.setAttribute("userInfo", user2);
+		}
+		mv.addObject("message", "名前を更新しました");
 		mv.setViewName("changeUserInfo");
 		return sessiontest(mv);
 	}
@@ -365,7 +389,10 @@ public class UserController extends SuperController {
 		Optional<User> record = userRepository.findById(id);
 		User user = new User();
 		if (!record.isEmpty()) {
-			user.setPw(pw);
+			//PWをハッシュ化して保存
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			String hash = bcrypt.encode(pw);
+			user.setPw(hash);
 			userRepository.saveAndFlush(user);
 			mv.addObject("message", "パスワードが変更されました");
 		} else {

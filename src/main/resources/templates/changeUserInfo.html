@@ -29,6 +29,7 @@
 
 			<form action="/userInfo/change/name" method="post">
 			<input type="hidden" name="id" th:value="${user.id}">
+			<input type="hidden" name="NAME" th:value="${user.name}">
 			<tr>
 				<th>NAME：</th>
 				<td><input type="text" name="name" th:value="${user.name}"></td>
