@@ -473,7 +473,7 @@ public class UserController extends SuperController {
 		if (kanri.isEmpty()) {
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 			String hash = bcrypt.encode("himitu");
-			User user = new User("管理者", hash, hash, 1);
+			User user = new User("管理者", hash, "ひみつ", 1);
 			userRepository.saveAndFlush(user);
 		}
 		//ユーザテーブルに「2番・削除済のユーザ」が存在しなければ、作成
