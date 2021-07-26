@@ -41,20 +41,20 @@
 		</script>
 
 <!--  チェックボックスjQuery  -->
- <script type="text/javascript" src="jquery-2.0.3.js"></script>
-    <script type="text/javascript">
-     function t(){
-    	 var dialogLink = $(".dialog-link").get();
-   		 var trash = $(".trash").get();
-    	 var ary3 = [];
-    	 for (var i = 0; i < trash.length; i++) {
-			if(trash[i].checked){
-				ary3.push(dialogLink[i].value);
-			}
-    	 }
+	 <script type="text/javascript" src="jquery-2.0.3.js"></script>
+	    <script type="text/javascript">
+	     function t(){
+	    	 var dialogLink = $(".dialog-link").get();
+	   		 var trash = $(".trash").get();
+	    	 var ary3 = [];
+	    	 for (var i = 0; i < trash.length; i++) {
+				if(trash[i].checked){
+					ary3.push(dialogLink[i].value);
+				}
+	    	 }
 
-    	location.href = "/list/trash?code="+ ary3;
-     }
+	    	location.href = "/list/trash?code="+ ary3;
+	     }
     </script>
 
 </head>
@@ -96,40 +96,39 @@
 	<div class="nav">
 		<div style="display:inline-flex" class="color">
 
-			<form action="/task/search/name"  method="post">
+			<form action="/task/search/name"  method="post" class="btn10">
 				<span>　　　</span>検索：<input type="search" name="keyword" th:value="${keyword}" >
-				<input type="submit"  value="検索" >｜
+				<input type="submit"  value="検索" class="btn11">｜
 			</form>
 
-			<form action="/task/search/category" method="post">
+			<form action="/task/search/category" method="post" class="btn10">
 				<select name="category">
 					<option th:each="c:${clist}" th:if="${c.code!=100}" th:value="${c.code}" th:text="${c.code}+'：'+${c.name}">
 				</select>
-
-				<input type="submit" value="カテゴリ検索" >｜
+				<input type="submit" value="カテゴリ検索" class="btn11">｜
 			</form>
 
-			<form action="/task/search/priority" method="post">
+			<form action="/task/search/priority" method="post" class="btn10">
 				<select name="priority">
 					<option th:each="p:${plist}" th:value="${p.num}" th:text="${p.name}">
 				</select>
-				<input type="submit" value="優先度検索" > |
+				<input type="submit" value="優先度検索" class="btn11"> |
 			</form>
 
 				<form action="/list/new"  method="post" class="btn10">
-				<input type="submit"  value="タスク作成" > |
+				<input type="submit"  value="タスク作成" class="btn11"> |
 			</form>
 
 			<form action="/task/update"  method="post" class="btn10">
-				<input type="button"  value="更新" onclick="f();" > |
+				<input type="button"  value="更新" onclick="f();"  class="btn11"> |
 			</form>
 
 			<form action="/list/trash"  method="post" class="btn10">
-				<input type="button"  value="削除" onclick="t();"> |
+				<input type="button"  value="削除" onclick="t();" class="btn11"> |
 			</form>
 
 				<form action="/look/trash"  method="post" class="btn10">
-				<input type="submit"  value="ゴミ箱を見る"  > |
+				<input type="submit"  value="ゴミ箱を見る"  class="btn11"> |
 			</form>
 
 			<span th:text="'（'+${session.userInfo.name}+' さんがログイン中）'" id="name"></span>
@@ -277,5 +276,67 @@
 
 </div>
 		</div>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 </body>
 </html>

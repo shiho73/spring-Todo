@@ -43,7 +43,7 @@
 		}
 
 		.color{
-			background-color: #89d7f8;
+		 	background-image: linear-gradient(135deg, #006400 0%, #7f7fff 70%);
 		    color: snow;
 		    height: 40px;
 		    top: 0;
@@ -57,6 +57,16 @@
 
 		.btn10{
 			margin-left:5px;
+			border-radius: 10px;/*角丸に*/
+		}
+
+		.btn11{
+			border-radius: 10px;/*角丸に*/
+			}
+
+		.btn11:hover{
+			background-color: #f7ef62;
+
 		}
 
 /* 検索ボタン */
