@@ -62,13 +62,6 @@ public class UserController extends SuperController {
 		return mv;
 	}
 
-	//ログイン画面2
-	@PostMapping("/top")
-	public String top() {
-		session.invalidate();//セッションを消去
-		return "top1";
-	}
-
 	//ログイン処理
 	@PostMapping("/login")
 	public ModelAndView login(ModelAndView mv,
@@ -297,7 +290,7 @@ public class UserController extends SuperController {
 
 		if (record.isEmpty()) {
 			mv.addObject("message", "エラーが発生しました");
-			mv.setViewName("/top");
+			mv.setViewName("top");
 			return task(mv);
 		}
 
